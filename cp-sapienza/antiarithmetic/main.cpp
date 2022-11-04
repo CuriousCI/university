@@ -19,14 +19,22 @@ int main() {
       cin >> number;
 
     auto positions = vector<int32_t>(numbers.size());
-    for (size_t position = 0; position < numbers.size(); position++)
+    for (int32_t position = 0; position < numbers.size(); position++)
       positions[numbers[position]] = position;
 
     bool has_sequence = false;
 
-    for (size_t first = 0; first < numbers.size() - 2; first++) {
-      for (size_t offset = 0; numbers[first] + offset * 2 < numbers.size();
+    for (int32_t first = 0; first < numbers.size(); first++) {
+      for (int32_t offset = 1; numbers[first] + offset * 2 < numbers.size();
            offset++) {
+
+        if (positions[numbers[first]] > positions[numbers[first] + offset] &&
+            positions[numbers[first] + offset] >
+                positions[numbers[first] + 2 * offset]) {
+          has_sequence = true;
+          break;
+        }
+
         if (positions[numbers[first]] < positions[numbers[first] + offset] &&
             positions[numbers[first] + offset] <
                 positions[numbers[first] + 2 * offset]) {
