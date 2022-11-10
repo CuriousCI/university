@@ -12,16 +12,7 @@ if __name__ == "__main__":
     )
 
     inputs = (
-        ['test01/A.txt'],
-        ['test02/bullfight.txt'],
-        ['test03/woodchuck.txt'],
-        ['test04/pampers.txt'],
-        ['test05/avocados.txt'],
-        ['test06/strums.txt'],
-        ['test07/sinew.txt'],
-        ['test08/boilings.txt'],
-        ['test09/meddles.txt'],
-        ['test10/aileron.txt'],
+        # ['param1', 'param2', 'etc...'],
     )
 
     for args in inputs:
@@ -31,6 +22,7 @@ if __name__ == "__main__":
         print()
 
     edge_cases = (
+        # ['param1', 'param2', 'etc...'],
     )
 
     for args in edge_cases:
