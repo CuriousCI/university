@@ -1,0 +1,82 @@
+$date
+	Mon Dec 26 10:55:50 2022
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb4 $end
+$var wire 1 ! y $end
+$var reg 4 " a [3:0] $end
+$scope module exercise $end
+$var wire 4 # a [3:0] $end
+$var wire 1 ! y $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 #
+b0 "
+0!
+$end
+#10
+1!
+b1 "
+b1 #
+#30
+b10 "
+b10 #
+#60
+0!
+b11 "
+b11 #
+#100
+1!
+b100 "
+b100 #
+#150
+0!
+b101 "
+b101 #
+#210
+b110 "
+b110 #
+#280
+1!
+b111 "
+b111 #
+#360
+b1000 "
+b1000 #
+#450
+0!
+b1001 "
+b1001 #
+#550
+b1010 "
+b1010 #
+#660
+1!
+b1011 "
+b1011 #
+#780
+0!
+b1100 "
+b1100 #
+#910
+1!
+b1101 "
+b1101 #
+#1050
+b1110 "
+b1110 #
+#1200
+0!
+b1111 "
+b1111 #
