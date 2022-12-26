@@ -1,0 +1,103 @@
+$date
+	Mon Dec 26 11:52:00 2022
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb7 $end
+$var wire 7 ! display [6:0] $end
+$var reg 4 " number [3:0] $end
+$scope module exercise $end
+$var wire 4 # number [3:0] $end
+$var reg 7 $ display [6:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b1111111 $
+b0 #
+b0 "
+b1111111 !
+$end
+#1
+b1111000 !
+b1111000 $
+b1 "
+b1 #
+#3
+b1101101 !
+b1101101 $
+b10 "
+b10 #
+#6
+b1111001 !
+b1111001 $
+b11 "
+b11 #
+#10
+b110011 !
+b110011 $
+b100 "
+b100 #
+#15
+b1011011 !
+b1011011 $
+b101 "
+b101 #
+#21
+b1011111 !
+b1011111 $
+b110 "
+b110 #
+#28
+b1110000 !
+b1110000 $
+b111 "
+b111 #
+#36
+b1111111 !
+b1111111 $
+b1000 "
+b1000 #
+#45
+b1110011 !
+b1110011 $
+b1001 "
+b1001 #
+#55
+b1110111 !
+b1110111 $
+b1010 "
+b1010 #
+#66
+b11111 !
+b11111 $
+b1011 "
+b1011 #
+#78
+b1001110 !
+b1001110 $
+b1100 "
+b1100 #
+#91
+b111101 !
+b111101 $
+b1101 "
+b1101 #
+#105
+b1001111 !
+b1001111 $
+b1110 "
+b1110 #
+#120
+b1000111 !
+b1000111 $
+b1111 "
+b1111 #
