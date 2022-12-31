@@ -132,3 +132,8 @@ dmypy.json
 # Other
 *.digitaljs
 .vscode
+*.exe
+*.ilk
+*.obj
+*.pdb
+/dump
