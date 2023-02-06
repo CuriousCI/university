@@ -4,10 +4,10 @@ module mux (
 );
 	always_comb
 		case ({c, a, b})
-			3'd1: y = c; 
-			3'd3: y = 1; 
-			3'd5: y = 0; 
-			3'd7: y = a ^ b; 
+			1: y = c; 
+			3: y = 1; 
+			5: y = 0; 
+			7: y = a ^ b; 
 			default: y = a & b;
 		endcase
 endmodule
