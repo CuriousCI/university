@@ -1,4 +1,5 @@
 import java.util.Random;
+import util.Day;
 
 class Main {
     public static void main(String[] args) {
@@ -12,6 +13,9 @@ class Main {
         System.out.printf("%.2f\n", price);
 
         // Ex 16
-        // var day = new Day(); // LOLz must import the class
+        var day = new Day(24, 3, 2023);
+        var later = day.addDays(10);
+        System.out.println(later.daysFrom(day)); // 9?
+
     }
 }
