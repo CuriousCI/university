@@ -14,6 +14,7 @@ class Main {
         var rect2 = new Rectangle(1, 20); // Perimeter 42
         System.out.println(rect1.getWidth() + " " + rect1.getHeight());
         System.out.println(rect2.getWidth() + " " + rect2.getHeight());
+        System.out.println(rect1);
 
         // Ex 6
         var dist = new Rectangle(16, 22, 89, 79);
