@@ -22,7 +22,7 @@
 
 
     factorial:
-        blez $a0, base
+        blez $a0, base # if base case
 
         recursion:
             subi $sp, $sp, 8 # I need 2 words for $ra & $a0, which holds the value of n
