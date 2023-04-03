@@ -26,8 +26,14 @@ class Main {
 
         System.out.printf("Count %d in sorted - %d\n", 12, upperBound(list, 12) - lowerBound(list, 12) + 1);
         System.out.printf("Count %d in sorted - %d\n", 3, upperBound(list, 3) - lowerBound(list, 3) + 1);
-        // System.out.printf("Count %d in sorted - %d\n", 1024, upperBound(list, 1024) -
-        // lowerBound(list, 1024) + 1);
+        System.out.printf("upperBound %d in sorted %d\n", 3, upperBound(list, 3));
+        System.out.printf("lowerBound %d in sorted %d\n", 3, lowerBound(list, 3));
+        System.out.printf("Count %d in sorted - %d\n", 1024, upperBound(list, 1024) - lowerBound(list, 1024) + 1);
+        System.out.printf("upperBound %d in sorted %d\n", 1024, upperBound(list, 1024));
+        System.out.printf("lowerBound %d in sorted %d\n", 1024, lowerBound(list, 1024));
+        System.out.printf("Count occurences in range [%d, %d] in unsorted - %d\n", 3, 100, countRange(array, 3, 100));
+        System.out.printf("Count occurences in range [%d, %d] in sorted - %d\n", 3, 100,
+                upperBound(list, 100) - lowerBound(list, 3) + 1);
     }
 
     public static <T> Boolean search(List<T> list, T toFind) {
@@ -93,5 +99,12 @@ class Main {
         return index;
     }
 
-    // TODO: count numbers in range!
+    public static <T extends Comparable<T>> Integer countRange(List<T> list, T lowerBound, T upperBound) {
+        var occurences = 0;
+        for (var item : list)
+            if (item.compareTo(lowerBound) >= 0 && item.compareTo(upperBound) <= 0)
+                occurences++;
+
+        return occurences;
+    }
 }

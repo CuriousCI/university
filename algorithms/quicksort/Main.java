@@ -6,8 +6,11 @@ import static java.util.Collections.sort;
 class Main {
     public static void main(String args[]) {
         var dualArray = new Integer[] { 0, 2, 0, 0, 2, 0, 2, 0, 2, 0, 0 };
+        System.out.println("= Before =");
         printArray(dualArray);
-        System.out.println(dualSort(dualArray));
+
+        dualSort(dualArray);
+        System.out.println("\n= After =");
         printArray(dualArray);
 
         // var worstCase = new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7 };
@@ -19,7 +22,12 @@ class Main {
         // O(n^2)
 
         Integer[][] matrix = { { -1, 9, 2 }, { 4, -21, 9 }, { 121, 8, 7 } };
+        System.out.println("\n\n= Before =");
+        for (var row : matrix)
+            printArray(row);
+
         matrixSort(matrix);
+        System.out.println("\n= After =");
         for (var row : matrix)
             printArray(row);
     }
@@ -31,7 +39,6 @@ class Main {
                 numbers.add(number);
 
         sort(numbers);
-        printArray(numbers);
 
         for (var y = 0; y < matrix.length; y++)
             for (var x = 0; x < matrix[y].length; x++)

@@ -23,7 +23,6 @@
         syscall
 
     gcd:
-
         equals: # if x == y set $v0 = x, return
             bne $a0, $a1, greater
             move $v0, $a0
