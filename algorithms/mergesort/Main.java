@@ -44,15 +44,11 @@ class Main {
             }
         }
 
-        while (l < middle) {
-            merge.add(list.get(l));
-            l++;
-        }
+        while (l < middle)
+            merge.add(list.get(l++));
 
-        while (r < right) {
-            merge.add(list.get(r));
-            r++;
-        }
+        while (r < right)
+            merge.add(list.get(r++));
 
         for (var index = 0; left + index < right; index++)
             list.set(left + index, merge.get(index));
