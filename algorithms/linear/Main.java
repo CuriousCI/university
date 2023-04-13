@@ -9,8 +9,15 @@ class Main {
 
         print(numbers);
         // countingSort(numbers);
-        countingAddSort(numbers);
+        stableCountingSort(numbers); // There's no need for demonstrations baby, it's stable!
         print(numbers);
+
+        // bucketSort - worst case O(n^2) if insertion sort is used for buckets, because
+        // in the worst case, a bucket has size O(n)
+        // This algorithm can be used with countingSort,
+        // considering that each bucket contain
+        // numbers t, such that a < t < b, where 0 < b - a < k
+        // but I have to know a and b in advance for each bucket, so it must be fixed
 
     }
 
@@ -39,7 +46,7 @@ class Main {
             }
     }
 
-    public static void countingAddSort(List<Integer> numbers) {
+    public static void stableCountingSort(List<Integer> numbers) {
         // find max
         var max = numbers.get(0);
         for (var number : numbers)

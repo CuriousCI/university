@@ -5,8 +5,7 @@ import java.util.List;
 
 class Main {
     public static void main(String[] args) {
-        var list = asList(new Integer[] { -1, -22, 8, 128, 201, -123, 2, 9090, 2, -1190, 0
-        });
+        var list = asList(new Integer[] { -1, -22, 8, 128, 201, -123, 2, 9090, 2, -1190, 0 });
         // var list = asList(new Integer[] { 2, 0, 8, 3, 1, -2, 6 });
         print(list);
         mergeSort(list, 0, list.size());
@@ -22,7 +21,7 @@ class Main {
     public static <T extends Comparable<T>> void mergeSort(List<T> list, Integer start, Integer end) {
         var middle = (int) Math.floor((end + start) / 2);
 
-        if (end - start <= 1)
+        if (end - start == 1)
             return;
 
         mergeSort(list, start, middle);
@@ -30,28 +29,24 @@ class Main {
         merge(list, start, middle, end);
     }
 
-    public static <T extends Comparable<T>> void merge(List<T> list, Integer left, Integer middle, Integer right) {
+    public static <T extends Comparable<T>> void merge(List<T> list, Integer start, Integer middle, Integer end) {
         var merge = new ArrayList<T>();
-        int l = left, r = middle;
+        Integer left = start, right = middle;
 
-        while (l < middle && r < right) {
-            if (list.get(l).compareTo(list.get(r)) < 0) {
-                merge.add(list.get(l));
-                l++;
-            } else {
-                merge.add(list.get(r));
-                r++;
-            }
-        }
+        while (left < middle && right < end)
+            if (list.get(left).compareTo(list.get(right)) < 0)
+                merge.add(list.get(left++));
+            else
+                merge.add(list.get(right++));
 
-        while (l < middle)
-            merge.add(list.get(l++));
+        while (left < middle)
+            merge.add(list.get(left++));
 
-        while (r < right)
-            merge.add(list.get(r++));
+        while (right < end)
+            merge.add(list.get(right++));
 
-        for (var index = 0; left + index < right; index++)
-            list.set(left + index, merge.get(index));
+        for (var index = 0; start + index < end; index++)
+            list.set(start + index, merge.get(index));
     }
 
 }

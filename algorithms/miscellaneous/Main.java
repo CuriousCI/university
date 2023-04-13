@@ -1,72 +1,61 @@
+import static java.util.Arrays.asList;
+
 import java.util.ArrayList;
+import java.util.List;
 
 class Main {
     public static void main(String[] args) {
         // var array = new Integer[] { -1, -22, 8, 128, 201, -123, 2, 9090, 2, -1190, 0
         // };
-        var array = new Integer[] { 2, 0, 8, 3, 1, -2, 6 };
-        System.out.println(hasDuplicates(array, 0, array.length - 1));
-        for (var item : array)
-            System.out.print(item + " ");
-        System.out.println();
-
+        // var list = asList(new Integer[] { 2, 1, 2 });
+        var list = asList(new Integer[] { 2, 0, 8, 3, 12, -2, 6, 1 });
+        System.out.println(hasDuplicates(list, 0, list.size()));
     }
 
-    public static <T extends Comparable<? super T>> Boolean hasDuplicates(T[] array, int start, int end) {
-        if (start == end)
+    public static <T extends Comparable<T>> Boolean hasDuplicates(List<T> list, Integer start, Integer end) {
+        var middle = (int) Math.floor((end + start) / 2);
+
+        if (end - start == 1)
             return false;
 
-        var middle = (int) Math.floor((start + end) / 2);
-        if (hasDuplicates(array, start, middle) ||
-                hasDuplicates(array, middle + 1, end) ||
-                merge(array, start, middle, end))
-            return true;
-
-        return false;
+        return hasDuplicates(list, start, middle) ||
+                hasDuplicates(list, middle, end) ||
+                merge(list, start, middle, end);
     }
 
-    public static <T extends Comparable<? super T>> Boolean merge(
-            T[] array,
-            int left_start,
-            int middle,
-            int right_end) {
-
-        int left_end = middle, right_start = middle + 1;
-        var start = left_start;
+    public static <T extends Comparable<T>> Boolean merge(List<T> list, Integer start, Integer middle, Integer end) {
         var merge = new ArrayList<T>();
+        Integer left = start, right = middle;
 
-        while (left_start < left_end && right_start < right_end) {
-            var comparison = array[left_start].compareTo(array[right_start]);
-            if (comparison == 0) {
+        while (left < middle && right < end) {
+            var comparison = list.get(left).compareTo(list.get(right));
+            if (comparison == 0)
                 return true;
-            } else if (comparison < 0) {
-                merge.add(array[left_start]);
-                left_start++;
-            } else {
-                merge.add(array[right_start]);
-                right_start++;
-            }
+
+            if (comparison < 0)
+                merge.add(list.get(left++));
+            else
+                merge.add(list.get(right++));
         }
 
-        while (left_start < left_end) {
-            merge.add(array[left_start]);
-            if (left_start + 1 < left_end)
-                if (array[left_start].compareTo(array[left_start + 1]) == 0)
+        while (left < middle) {
+            if (left < middle - 1)
+                if (list.get(left).compareTo(list.get(left + 1)) == 0)
                     return true;
-            left_start++;
+            merge.add(list.get(left++));
         }
 
-        while (right_start < right_end) {
-            merge.add(array[right_start]);
-            if (right_start + 1 < right_end)
-                if (array[right_start].compareTo(array[right_start + 1]) == 0)
+        while (right < end) {
+            if (right < end - 1)
+                if (list.get(right).compareTo(list.get(right + 1)) == 0)
                     return true;
-            right_start++;
+            merge.add(list.get(right++));
         }
 
-        for (var index = left_start; index < right_end - 1; index++)
-            array[index] = merge.get(index - left_start);
+        for (var index = 0; start + index < end; index++)
+            list.set(start + index, merge.get(index));
 
         return false;
     }
+
 }

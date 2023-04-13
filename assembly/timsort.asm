@@ -1,8 +1,11 @@
 .globl main
 
 .data
-    array: .word 98, 19, 22, 12, 8943, 23, 12, 4441, 24, 1244124, 895, 181, 109, 121901, 10001, 2190
-    size: .word 16
+    # array: .word 98, 19, 22, 12, 8943, 23, 12, 4441, 24, 1244124, 895, 181, 109, 121901, 10001, 2190
+    # size: .word 16
+
+    array: .word 7, 8, 9, 12, 2, 4, 8, 10 
+    size: .word 8
 
 .text
     main:
@@ -11,12 +14,29 @@
         lw $a1, size
         jal print
 
+
         # sort array
-        la $a0, array # start = array pointer
-        lw $a1, size 
-        sll $a1, $a1, 2
-        add $a1, $a1, $a0 # base address + size * 4
-        jal insertionSort
+        # la $a0, array # start = array pointer
+        # lw $a1, size 
+        # sll $a1, $a1, 2
+        # add $a1, $a1, $a0 # base address + size * 4
+        # jal insertionSort
+
+
+        # merge
+
+        la $a0, array # array start 
+
+        la $a1, array # array middle 
+        lw $t0, size # mid = size 
+        slr $t0, 2 # mid = size / 2
+        add $a1, $a1, $t0 # start + mid
+
+        la $a2, array  # array end
+        lw $t0, size
+        add $a2, $a2, $t0 # end = array + size
+
+        jal merge
 
         # print array
         la $a0, array
@@ -24,6 +44,7 @@
         jal print
 
 
+        # return 0
         li $v0, 17 # exit
         li $a0, 0 # 0 
         syscall
@@ -62,12 +83,6 @@
     # a0 = from where 
     # a1 = to where 
     insertionSort:
-        #  for int i = 0; i < a0 + a2 * 4; i++ 
-        #    for j = i; j > 0; j--
-        #      if a[j] < a[j - 1]: swap a[j] a[j - 1]
-        #      else break
-
-
         move $s0, $a0 # start
         move $s1, $a1 # end
         
@@ -103,27 +118,69 @@
 
 
     # a0 = left start pointer 
-    # a1 = left end pointer 
-    # a2 = right start pointer 
-    # a3 = right end pointer
+    # a1 = middle pointer 
+    # a2 = right end pointer 
     merge:
-        move $s0, $a0 # left start pointer 
-        move $s1, $a1 # left end pointer
-        move $s2, $a2 # right start pointer
-        move $s3, $a3 # right end pointer
+        move $s0, $a0 # I need to store the start, for the final merging phase
+        move $s1, $a1 # I need to store the end of the left part 
+        move $s2, $a2 # end pointer
 
         li $v0, 9 # allocate in heap
-        sub $a0, $s3, $s0 # right end - left start
+        sub $a0, $s2, $s0 # end - start
         srl $a0, $a0, 2 # div (right end - left start) / 4 to get size
         syscall
 
-        move $s4, $v0 # address of heap allocated space!
+        move $s3, $v0 # address of heap allocated space!
 
+        move $t0, $a0 # start pointer, which moves
+        move $t1, $a1 # right pointer, which moves
+        move $t2, $v0 # moving pointer to current location in array
+
+        whileBothNotEmpty:
+            beq $t0, $s1, whileRightNotEmpty # if left == middle, empty right items
+            beq $t1, $s2, whileLeftNotEmpty # if right == end, empty left items
+
+            lw $t3, ($t0)
+            lw $t4, ($t1)
+
+            # compare left value
+            leftSmaller:
+                bgt $t3, $t4, rightSmaller
+                sw $t2, $t3 # store left value in merged array
+                addi $t2, $t2, 1 # merged array pointer++
+                addi $t0, $t0, 1 # left++
+            
+            # compare right value
+            rightSmaller:
+                sw $t2, $t4 # store right value in merged array
+                addi $t2, $t2, 1 # merged array pointer++
+                addi $t1, $t1, 1 # left++
+                
+            # set value at current heap position
+            # increment left ($t0) or right ($t1) by 1
+            # increment heap address ($t2) by 1 
+
+            j whileBothNotEmpty
+
+        whileLeftNotEmpty:
+            beq $t0, $s1, replaceArray # if left == middle, empty right items
+            
+            j whileLeftNotEmpty
+
+        whileRightNotEmpty:
+            beq $t1, $s2, replaceArray # if right == end, empty left items
+            
+            j whileRightNotEmpty
+
+
+        replaceArray:
         # allocate empty array
         # create 3 indexes: merge, left, righ 
         # merge operation (while)
         # merge all left remaining 
         # merge all right remaining 
+
+        jr $ra
 
     timSort:
         # fin k
