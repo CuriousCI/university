@@ -8,8 +8,27 @@ class Main {
         // var array = new Integer[] { -1, -22, 8, 128, 201, -123, 2, 9090, 2, -1190, 0
         // };
         // var list = asList(new Integer[] { 2, 1, 2 });
-        var list = asList(new Integer[] { 2, 0, 8, 3, 12, -2, 6, 1 });
-        System.out.println(hasDuplicates(list, 0, list.size()));
+        // var list = asList(new Integer[] { 2, 0, 8, 3, 12, -2, 6, 1 });
+        // System.out.println(hasDuplicates(list, 0, list.size()));
+        var list1 = asList(new Integer[] { 101, 5, 9, 31, 33, 10, 100, 4, 8, 32, 500, 11, 99, 34 });
+        System.out.println(findTuple(list1));
+    }
+
+    public static Integer findTuple(List<Integer> list) {
+        var dict = new Boolean[100];
+
+        for (var index = 0; index < dict.length; index++)
+            dict[index] = false;
+
+        for (var item : list)
+            if (item < 100)
+                dict[item] = true;
+
+        for (var index = dict.length - 2; index > 0; index--)
+            if (dict[index - 1] && dict[index] && dict[index + 1])
+                return index;
+
+        return -1;
     }
 
     public static <T extends Comparable<T>> Boolean hasDuplicates(List<T> list, Integer start, Integer end) {

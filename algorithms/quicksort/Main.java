@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.sort;
 
 class Main {
@@ -9,9 +10,25 @@ class Main {
         System.out.println("= Before =");
         printArray(dualArray);
 
-        dualSort(dualArray);
+        // dualSort(dualArray);
+        quickSort(asList(dualArray), 0, dualArray.length - 1);
         System.out.println("\n= After =");
         printArray(dualArray);
+
+        var list = asList(new Item[] {
+                new Item(2, 0),
+                new Item(12, 0),
+                new Item(-3, 0),
+                new Item(-30, 0),
+                new Item(1, 0),
+                new Item(12, 1),
+                new Item(1902, 0),
+                new Item(1829, 0),
+                new Item(2, 1),
+                new Item(12, 2),
+        });
+        quickSort(list, 0, list.size() - 1);
+        printArray(list);
 
         // var worstCase = new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7 };
 
@@ -30,6 +47,34 @@ class Main {
         System.out.println("\n= After =");
         for (var row : matrix)
             printArray(row);
+    }
+
+    static <T extends Comparable<? super T>> Integer partition(List<T> list, Integer low, Integer high) {
+        var pivot = list.get(high);
+        Integer i = (low - 1);
+        for (int j = low; j < high; j++) {
+            if (list.get(j).compareTo(pivot) <= 0) {
+                i++;
+                var temp = list.get(i);
+                list.set(i, list.get(j));
+                list.set(j, temp);
+            }
+        }
+        var temp = list.get(i + 1);
+        list.set(i + 1, list.get(high));
+        list.set(high, temp);
+        // array[i + 1] = array[high];
+        //
+        // array[high] = temp;
+        return (i + 1);
+    }
+
+    static <T extends Comparable<? super T>> void quickSort(List<T> list, Integer low, Integer high) {
+        if (low < high) {
+            var pi = partition(list, low, high);
+            quickSort(list, low, pi - 1);
+            quickSort(list, pi + 1, high);
+        }
     }
 
     public static void matrixSort(Integer[][] matrix) {
@@ -68,7 +113,7 @@ class Main {
 
     public static <T> void printArray(List<T> array) {
         for (var item : array)
-            System.out.printf("%d ", item);
+            System.out.printf("%s ", item);
         System.out.println();
     }
 
@@ -76,5 +121,24 @@ class Main {
         for (var item : array)
             System.out.printf("%d ", item);
         System.out.println();
+    }
+}
+
+class Item implements Comparable<Item> {
+    Integer first, second;
+
+    Item(Integer first, Integer second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    @Override
+    public int compareTo(Item item) {
+        return first.compareTo(item.first);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("first: %d - second: %d\n", first, second);
     }
 }
