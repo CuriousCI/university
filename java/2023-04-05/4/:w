@@ -1,8 +1,10 @@
+import static java.util.Arrays.fill;
 import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
         var numbers = new Double[100];
+        fill(numbers, 0.0);
 
         var input = new Scanner(System.in);
         try {
@@ -17,13 +19,11 @@ class Main {
 
         Double sum = 0.0, min = numbers[0];
         for (var number : numbers) {
-            if (number == null)
-                continue;
-
-            if (number < min)
-                min = number;
+            min = Math.min(min, number);
             sum += number;
         }
+
+        System.out.println(min);
         System.out.println(sum - min);
     }
 }
