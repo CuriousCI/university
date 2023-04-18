@@ -1,23 +1,22 @@
-package util;
+package algorithms.struct;
 
 public class Node<T> {
     public T value;
     Node<T> next;
-    Node<T> previous;
+    Node<T> prev;
 
     Node(T value) {
         this.value = value;
     }
 
     Node(T value, Node<T> next) {
-        this.value = value;
+        this(value);
         this.next = next;
     }
 
-    Node(T value, Node<T> next, Node<T> previous) {
-        this.value = value;
-        this.next = next;
-        this.previous = previous;
+    Node(T value, Node<T> next, Node<T> prev) {
+        this(value, next);
+        this.prev = prev;
     }
 
     @Override

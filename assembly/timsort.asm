@@ -89,7 +89,7 @@
             j whilePrint
 
 
-	# Return
+	    # Return
 	
         returnPrint:
             li $v0, 11 # print char
@@ -139,6 +139,7 @@
     # a0 = left start pointer 
     # a1 = middle pointer 
     # a2 = right end pointer 
+
     merge:
         move $s0, $a0 # I need to store the start, for the final merging phase
         move $s1, $a1 # I need to store the end of the left part 
@@ -158,6 +159,9 @@
         move $t1, $s1 # right pointer, which moves
         move $t2, $s3 # moving pointer to current location in array
 
+        sub $s4, $s2, $s1 # start pointer - end pointer
+        sll $s4, $s4, 2 # size / 4 to get actual size
+
         whileBothNotEmpty:
             beq $t0, $s1, whileRightNotEmpty # if left == middle, empty right items
             beq $t1, $s2, whileLeftNotEmpty # if right == end, empty left items
@@ -169,14 +173,14 @@
             leftSmaller:
                 bgt $t3, $t4, rightSmaller
                 sw $t3, ($t2) # store left value in merged array
-                addi $t2, $t2, 1 # merged array pointer++
-                addi $t0, $t0, 1 # left++
+                addi $t2, $t2, 4 # merged array pointer++
+                addi $t0, $t0, 4 # left++
             
             # compare right value
             rightSmaller:
                 sw $t4, ($t2)  # store right value in merged array
-                addi $t2, $t2, 1 # merged array pointer++
-                addi $t1, $t1, 1 # left++
+                addi $t2, $t2, 4 # merged array pointer++
+                addi $t1, $t1, 4 # left++
                 
             # set value at current heap position
             # increment left ($t0) or right ($t1) by 1
@@ -188,8 +192,8 @@
             beq $t0, $s1, replaceArray # if left == middle, return 
             lw $t3, ($t0)
             sw $t3, ($t2)
-            addi $t2, $t2, 1 # merged array pointer++
-            addi $t0, $t0, 1 # left++
+            addi $t2, $t2, 4 # merged array pointer++
+            addi $t0, $t0, 4 # left++
 
             j whileLeftNotEmpty
 
@@ -197,23 +201,33 @@
             beq $t1, $s2, replaceArray # if right == end, return 
             lw $t4, ($t1)
             sw $t4, ($t2)
-            addi $t2, $t2, 1 # merged array pointer++
-            addi $t1, $t1, 1 # right++
+            addi $t2, $t2, 4 # merged array pointer++
+            addi $t1, $t1, 4 # right++
             
             j whileRightNotEmpty
 
-
         replaceArray:
-        # allocate empty array
-        # create 3 indexes: merge, left, righ 
-        # merge operation (while)
-        # merge all left remaining 
-        # merge all right remaining 
+            li $t3, 0 # offset = 0 
+            beq $t3, $s4, returnMerge # if offset == size: return
 
-        jr $ra
+            move $t4, $s2 # heap array 
+            add $t4, $t4, $t3 # offset to heap address 
+            move $t5, $s0 # array
+            add $t5, $t5, $t3 # offset to array
 
+            lw $t6, ($t4) # load value from merge array
+            sw $t6, ($t5) # store value to original array
+
+            add $t3, $t3, 4 # offset++
+
+        returnMerge:
+            jr $ra
+
+    # array pointer
+    # array end?
+    # add to .data sqrt of size? Or pass to function?
     timSort:
         # fin k
         # check wheter dimension is good 
-        # if dimension is good, do an insertionSort
+        # if dimension is log(n), do an insertionSort
         # else split in two, and merge

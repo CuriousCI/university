@@ -1,4 +1,4 @@
-package util;
+package algorithms.struct;
 
 import java.util.List;
 

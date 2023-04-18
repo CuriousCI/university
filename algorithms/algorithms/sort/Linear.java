@@ -1,25 +1,9 @@
-import static java.util.Arrays.asList;
+package algorithms.sort;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class Main {
-    public static void main(String[] args) {
-        var numbers = asList(new Integer[] { 0, 6, 7, 2, 5, 6, 1, 0, 4, 4, 1, 6 });
-
-        print(numbers);
-        // countingSort(numbers);
-        stableCountingSort(numbers); // There's no need for demonstrations baby, it's stable!
-        print(numbers);
-
-        // bucketSort - worst case O(n^2) if insertion sort is used for buckets, because
-        // in the worst case, a bucket has size O(n)
-        // This algorithm can be used with countingSort,
-        // considering that each bucket contain
-        // numbers t, such that a < t < b, where 0 < b - a < k
-        // but I have to know a and b in advance for each bucket, so it must be fixed
-
-    }
+public abstract class Linear {
 
     public static void countingSort(List<Integer> numbers) {
         // find max
@@ -79,11 +63,5 @@ class Main {
     }
 
     public static <T> void bucketSort(List<T> list) {
-    }
-
-    public static <T> void print(List<T> list) {
-        for (var item : list)
-            System.out.printf("%s ", item);
-        System.out.println();
     }
 }

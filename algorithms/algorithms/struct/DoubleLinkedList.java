@@ -1,9 +1,9 @@
-package util;
+package algorithms.struct;
 
 /**
  * Comparable is needed for search, min and max
  */
-public class LinkedList<T extends Comparable<T>> {
+public class DoubleLinkedList<T extends Comparable<T>> {
     Node<T> list;
 
     public void append(T value) {
@@ -11,6 +11,7 @@ public class LinkedList<T extends Comparable<T>> {
             list = new Node<T>(value);
         else {
             var node = new Node<T>(value, list);
+            list.prev = node;
             list = node;
         }
     }
@@ -21,12 +22,10 @@ public class LinkedList<T extends Comparable<T>> {
     }
 
     public void remove(Node<T> node) {
-        var item = list;
-
-        while (item.next != node)
-            item = item.next;
-
-        item.next = node.next;
+        if (node.prev != null)
+            node.prev.next = node.next;
+        if (node.next != null)
+            node.next.prev = node.prev;
     }
 
     public Node<T> index(Integer index) throws IndexOutOfBoundsException {

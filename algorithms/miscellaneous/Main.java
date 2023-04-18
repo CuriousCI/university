@@ -77,4 +77,56 @@ class Main {
         return false;
     }
 
+    public static <T> Integer countOccurences(List<T> list, T toCount) {
+        int occurences = 0;
+
+        for (var item : list)
+            if (item == toCount)
+                occurences++;
+
+        return occurences;
+    }
+
+    public static <T extends Comparable<T>> Integer countRange(List<T> list, T lowerBound, T upperBound) {
+        var occurences = 0;
+        for (var item : list)
+            if (item.compareTo(lowerBound) >= 0 && item.compareTo(upperBound) <= 0)
+                occurences++;
+
+        return occurences;
+    }
+
+    public static void matrixSort(Integer[][] matrix) {
+        var numbers = new ArrayList<Integer>();
+        for (var row : matrix)
+            for (var number : row)
+                numbers.add(number);
+
+        sort(numbers);
+
+        for (var y = 0; y < matrix.length; y++)
+            for (var x = 0; x < matrix[y].length; x++)
+                matrix[y][x] = numbers.get(y * matrix[y].length + x);
+
+    }
+
+    public static int dualSort(Integer[] array) {
+        var iterations = 0;
+
+        for (int start = 0, end = array.length - 1; start < end; iterations++) {
+            if (array[start] > array[end]) {
+                // swap
+                final var temp = array[start];
+                array[start] = array[end];
+                array[end] = temp;
+            }
+
+            if (array[end] == 2)
+                end--;
+            else
+                start++;
+        }
+
+        return iterations;
+    }
 }

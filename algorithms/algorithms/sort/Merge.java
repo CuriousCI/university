@@ -1,21 +1,25 @@
-import static java.util.Arrays.asList;
+package algorithms.sort;
 
+import static algorithms.sort.Naive.insertionSort;
 import java.util.ArrayList;
 import java.util.List;
 
-class Main {
-    public static void main(String[] args) {
-        var list = asList(new Integer[] { -1, -22, 8, 128, 201, -123, 2, 9090, 2, -1190, 0 });
-        // var list = asList(new Integer[] { 2, 0, 8, 3, 1, -2, 6 });
-        print(list);
-        mergeSort(list, 0, list.size());
-        print(list);
-    }
+public abstract class Merge {
+    static final double BASE_2 = Math.log(2);
 
-    public static <T> void print(List<T> list) {
-        for (var item : list)
-            System.out.printf("%s ", item);
-        System.out.println();
+    public static <T extends Comparable<? super T>> void timSort(List<T> list, Integer start, Integer end) {
+        var middle = (int) Math.floor((end + start) / 2);
+
+        if (end - start == 1)
+            return;
+
+        if (end - start > Math.log(list.size()) / BASE_2) {
+            timSort(list, start, middle);
+            timSort(list, middle, end);
+            merge(list, start, middle, end);
+        } else
+            insertionSort(list, start, end);
+
     }
 
     public static <T extends Comparable<T>> void mergeSort(List<T> list, Integer start, Integer end) {
@@ -29,7 +33,7 @@ class Main {
         merge(list, start, middle, end);
     }
 
-    public static <T extends Comparable<T>> void merge(List<T> list, Integer start, Integer middle, Integer end) {
+    static <T extends Comparable<? super T>> void merge(List<T> list, Integer start, Integer middle, Integer end) {
         var merge = new ArrayList<T>();
         Integer left = start, right = middle;
 
@@ -48,5 +52,4 @@ class Main {
         for (var index = 0; start + index < end; index++)
             list.set(start + index, merge.get(index));
     }
-
 }
