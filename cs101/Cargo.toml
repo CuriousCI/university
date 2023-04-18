@@ -6,3 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+[[bin]]
+name = "cs101"
+path = "src/main.rs"
+
+[lib]
+name = "algorithms"
+path = "src/algorithms/lib.rs"
+
