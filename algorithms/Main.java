@@ -1,69 +1,18 @@
-import algorithms.struct.Node;
-import algorithms.struct.LinkedList;
+import static java.util.Arrays.asList;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        var left = new LinkedList<Integer>();
-        var right = new LinkedList<Integer>();
-
-        left.push(30);
-        left.push(20);
-        left.push(10);
-
-        right.push(50);
-        right.push(15);
-        right.push(10);
-        right.push(5);
-
-        System.out.println(right);
-        System.out.println(left);
-
-        var node = merge(left.head, right.head);
-        while (node != null) {
-            System.out.print(node + " ");
-            node = node.next;
-        }
-
+        var list = asList(new Integer[] { 10, 20, 1902, 190, 290, 10, 128810, 812001, -12982, -122198, 124 });
+        System.out.println(hasDuplicates(list));
     }
 
-    public static <T extends Comparable<? super T>> Node<T> merge(Node<T> left, Node<T> right) {
-        Node<T> merged = null;
+    public static <T extends Comparable<? super T>> Boolean hasDuplicates(List<T> list) {
 
-        while (left != null && right != null) {
-            if (left.value.compareTo(right.value) <= 0) {
-                var next = left.next;
-                left.next = merged;
-                merged = left;
-                left = next;
-            } else {
-                var next = right.next;
-                right.next = merged;
-                merged = right;
-                right = next;
-            }
-        }
-
-        while (left != null) {
-            var next = left.next;
-            left.next = merged;
-            merged = left;
-            left = next;
-        }
-
-        while (right != null) {
-            var next = right.next;
-            right.next = merged;
-            merged = right;
-            right = next;
-        }
-
-        return merged;
-    }
-
-    public static <T extends Comparable<? super T>> void mergeSort(Node<T> list, Integer size) {
-        if (size == 2) {
-            // strange merge stuff, get all the results
-        }
-
+        for (var value : list)
+            System.out.printf("%s ", value);
+        System.out.println();
+        return false;
     }
 }

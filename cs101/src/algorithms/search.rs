@@ -1,3 +1,5 @@
+use std::cmp::Ordering::{Equal, Greater, Less};
+
 pub fn search<T: Eq, L>(iterable: L, value: T) -> Option<usize>
 where
     for<'a> &'a L: IntoIterator<Item = &'a T>,
@@ -16,17 +18,15 @@ pub fn binary_search<T: Ord>(vector: Vec<T>, value: T) -> Option<usize> {
 
     while step > 0 {
         while index + step < vector.len() {
-            match vector.get(index + step) {
-                Some(v) => {
-                    if *v == value {
-                        return Some(index + step);
-                    } else if *v < value {
-                        index += step;
-                    } else {
-                        break;
-                    }
-                }
+            let cmp = match vector.get(index + step) {
+                Some(v) => v.cmp(&value),
                 None => break,
+            };
+
+            match cmp {
+                Equal => return Some(index + step),
+                Less => index += step,
+                Greater => break,
             }
         }
 
