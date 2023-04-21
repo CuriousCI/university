@@ -1,22 +1,11 @@
-use algorithms::search::{binary_search, search};
+use algorithms::naive_sorting::insertion_sort;
 
 fn main() {
-    println!(
-        "{}",
-        match search(vec![10, 21, 2123, 25, 80, 91, 290], 80) {
-            Some(index) => format!("Item found at index {}", index),
-            None => String::from("Item not found"),
-        }
-    );
+    let mut v = vec![
+        10, 1290, 21904, 290, -19, 910, 09201, 8012, 980122220, 09, -12801, -29, 2901,
+    ];
 
-    println!(
-        "{}",
-        match binary_search(
-            vec![10, 20, 30, 40, 50, 60, 80, 85, 90, 100, 120, 12901, 9012901],
-            80
-        ) {
-            Some(index) => format!("Item found at index {}", index),
-            None => String::from("Item not found"),
-        }
-    );
+    insertion_sort(&mut v);
+
+    println!("{:?}", v);
 }

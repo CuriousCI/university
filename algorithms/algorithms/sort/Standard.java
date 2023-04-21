@@ -35,4 +35,20 @@ public abstract class Standard {
 
         return i + 1;
     }
+
+    public static void dualElementsSort(Integer[] array) {
+        for (int start = 0, end = array.length - 1; start < end;) {
+            if (array[start] > array[end]) {
+                // swap
+                final var temp = array[start];
+                array[start] = array[end];
+                array[end] = temp;
+            }
+
+            if (array[end] == 2)
+                end--;
+            else
+                start++;
+        }
+    }
 }

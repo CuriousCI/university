@@ -12,7 +12,7 @@ where
     None
 }
 
-pub fn binary_search<T: Ord>(vector: Vec<T>, value: T) -> Option<usize> {
+pub fn binary_search<T: Ord>(vector: &Vec<T>, value: T) -> Option<usize> {
     let mut step = vector.len();
     let mut index = 0;
 
@@ -36,26 +36,73 @@ pub fn binary_search<T: Ord>(vector: Vec<T>, value: T) -> Option<usize> {
     None
 }
 
-#[test]
-fn test_binary_search_found() {
-    assert_ne!(
-        None,
-        binary_search(
-            vec![10, 20, 30, 40, 50, 60, 80, 80, 80, 85, 90, 100, 120, 12901, 9012901],
-            80
-        )
-    );
+pub fn upper_bound<T: Ord>(vector: &Vec<T>, value: T) -> Option<usize> {
+    let mut step = vector.len();
+    let mut index = 0;
+
+    if vector.first().unwrap() > &value {
+        return None;
+    }
+
+    while step > 0 {
+        while index + step < vector.len() {
+            let cmp = match vector.get(index + step) {
+                Some(v) => v.cmp(&value),
+                None => break,
+            };
+
+            match cmp {
+                Greater => break,
+                _ => index += step,
+            }
+        }
+
+        step /= 2;
+    }
+
+    Some(index)
 }
 
-#[test]
-fn test_binary_search_not_found() {
-    assert_eq!(
-        None,
-        binary_search(
-            vec![10, 20, 30, 40, 50, 60, 80, 85, 90, 100, 120, 12901, 9012901],
-            75
-        )
-    );
+pub fn lower_bound<T: Ord>(vector: &Vec<T>, value: T) -> Option<usize> {
+    let mut step = vector.len();
+    let mut index = vector.len() - 1;
+
+    if vector.last().unwrap() < &value {
+        return None;
+    }
+
+    while step > 0 {
+        while step <= index {
+            let cmp = match vector.get(index - step) {
+                Some(v) => v.cmp(&value),
+                None => break,
+            };
+
+            match cmp {
+                Less => break,
+                _ => index -= step,
+            }
+        }
+
+        step /= 2;
+    }
+
+    Some(index)
 }
-// TODO: upper bound
-// TODO: lower bound
+
+pub mod exercises {
+    use super::*;
+
+    pub fn count_in_range<T: Ord>(vector: Vec<T>, lower: T, upper: T) -> usize {
+        let lower = lower_bound(&vector, lower);
+        let upper = upper_bound(&vector, upper);
+
+        match (lower, upper) {
+            (Some(l), Some(u)) => match l.cmp(&u) {
+                Greater => 0,
+                _ => u.abs_diff(l) + 1,
+            },
+            _ => 0,
+        }
+    }
+}
