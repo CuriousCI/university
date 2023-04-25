@@ -1,11 +1,14 @@
-use algorithms::naive_sorting::insertion_sort;
+use std::time::Instant;
+
+use algorithms::naive_sorting::exercises::has_duplicates;
 
 fn main() {
-    let mut v = vec![
-        10, 1290, 21904, 290, -19, 910, 09201, 8012, 980122220, 09, -12801, -29, 2901,
-    ];
+    let v = vec![190, 901, -1290, 2, 2901, 920000, -124590, -90, 2];
+    println!("{}", has_duplicates(&v));
+}
 
-    insertion_sort(&mut v);
-
-    println!("{:?}", v);
+pub fn bench(f: impl Fn()) {
+    let now = Instant::now();
+    f();
+    println!("{:.2?}", now.elapsed());
 }

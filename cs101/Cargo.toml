@@ -14,4 +14,3 @@ path = "src/main.rs"
 [lib]
 name = "algorithms"
 path = "src/algorithms/lib.rs"
-
