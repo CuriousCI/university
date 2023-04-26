@@ -1,3 +1,4 @@
-pub mod merge_sort;
-pub mod naive_sorting;
+pub mod heap;
+pub mod naive;
 pub mod search;
+pub mod standard;

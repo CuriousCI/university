@@ -33,6 +33,8 @@ pub fn bubble_sort<T: Ord>(vector: &mut Vec<T>) {
 }
 
 pub mod exercises {
+    use std::ops::Range;
+
     pub fn reversed_bubble_sort<T: Ord>(vector: &mut Vec<T>) {
         for i in (0..vector.len() - 1).rev() {
             for j in 0..=i {
@@ -43,20 +45,20 @@ pub mod exercises {
         }
     }
 
-    pub fn min<T: Ord>(vector: &Vec<T>, from: usize) -> usize {
-        let (index, _) = (&vector[from..])
+    pub fn min_in_range<T: Ord>(vector: &Vec<T>, r: Range<usize>) -> usize {
+        let (index, _) = (&vector[r])
             .iter()
             .enumerate()
             .min_by(|&(_, x), &(_, y)| x.cmp(y))
             .unwrap();
 
-        from + index
+        index
     }
 
     pub fn min_selection_sort<T: Ord>(vector: &mut Vec<T>) {
         for i in 0..vector.len() - 1 {
-            let j = min(vector, i);
-            vector.swap(i, j);
+            let j = min_in_range(vector, i..vector.len());
+            vector.swap(i, i + j);
         }
     }
 

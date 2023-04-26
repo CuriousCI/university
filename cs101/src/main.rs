@@ -1,10 +1,11 @@
 use std::time::Instant;
 
-use algorithms::naive_sorting::exercises::has_duplicates;
+use algorithms::heap::{heap_sort, Heap};
 
 fn main() {
-    let v = vec![190, 901, -1290, 2, 2901, 920000, -124590, -90, 2];
-    println!("{}", has_duplicates(&v));
+    let mut a = [190, 901, -1290, 2, 2901, 9200, -124590, -90, 2];
+    heap_sort(&mut Heap::new(&mut a));
+    println!("{:?}", a);
 }
 
 pub fn bench(f: impl Fn()) {
