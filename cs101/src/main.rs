@@ -1,11 +1,11 @@
 use std::time::Instant;
 
-use algorithms::heap::{heap_sort, Heap};
+use algorithms::heap::heap_sort;
 
 fn main() {
-    let mut a = [190, 901, -1290, 2, 2901, 9200, -124590, -90, 2];
-    heap_sort(&mut Heap::new(&mut a));
-    println!("{:?}", a);
+    let mut array = [190, 901, -1290, 2, 2901, 9200, -124590, -90, 2];
+    heap_sort(&mut array);
+    println!("{:?}", array)
 }
 
 pub fn bench(f: impl Fn()) {

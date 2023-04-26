@@ -1,5 +1,3 @@
-use std::cmp::Ordering;
-
 pub struct Heap<'a, T> {
     array: &'a mut [T],
     size: usize,
@@ -8,12 +6,13 @@ pub struct Heap<'a, T> {
 impl<'a, T: Ord> Heap<'a, T> {
     pub fn new(array: &'a mut [T]) -> Self {
         let size = array.len();
-        let mut instance = Self { array, size };
-        instance.build_heap();
-        instance
+        let mut heap = Self { array, size };
+
+        heap.build();
+        heap
     }
 
-    fn build_heap(&mut self) {
+    fn build(&mut self) {
         for node in (0..(self.array.len() / 2) + 1).rev() {
             self.heapify(node);
         }
@@ -22,30 +21,39 @@ impl<'a, T: Ord> Heap<'a, T> {
     fn heapify(&mut self, index: usize) {
         let value = self.array.get(index).unwrap();
 
-        match (self.left(index), self.right(index)) {
+        match (self.child(index, 1), self.child(index, 2)) {
             (Some((x_index, x)), Some((y_index, y))) => {
                 if value < x || value < y {
-                    match x.cmp(y) {
-                        Ordering::Greater => {
-                            self.array.swap(x_index, index);
-                            self.heapify(x_index);
-                        }
-                        _ => {
-                            self.array.swap(y_index, index);
-                            self.heapify(y_index);
-                        }
-                    }
+                    let child = if x > y { x_index } else { y_index };
+
+                    self.array.swap(child, index);
+                    self.heapify(child);
                 }
             }
-            (Some((x_index, x)), None) => match value.cmp(x) {
-                Ordering::Greater => self.array.swap(x_index, index),
-                _ => (),
-            },
+            (Some((x_index, x)), None) => {
+                if value > x {
+                    self.array.swap(x_index, index);
+                }
+            }
             _ => (),
         };
     }
 
-    pub fn pop(&mut self) -> Option<&T> {
+    fn child(&self, index: usize, offset: usize) -> Option<(usize, &T)> {
+        let index = 2 * index + offset;
+
+        if index >= self.size {
+            return None;
+        }
+
+        self.array.get(index).and_then(|v| Some((index, v)))
+    }
+}
+
+impl<'a, T: Ord + Copy> Iterator for Heap<'a, T> {
+    type Item = T;
+
+    fn next(&mut self) -> Option<T> {
         if self.size == 0 {
             return None;
         }
@@ -54,36 +62,10 @@ impl<'a, T: Ord> Heap<'a, T> {
         self.size -= 1;
         self.heapify(0);
 
-        self.array.get(self.size)
-    }
-
-    fn left(&self, node: usize) -> Option<(usize, &T)> {
-        let i = 2 * node + 1;
-
-        if i >= self.size {
-            return None;
-        }
-
-        match self.array.get(i) {
-            Some(v) => Some((i, v)),
-            None => None,
-        }
-    }
-
-    fn right(&self, node: usize) -> Option<(usize, &T)> {
-        let i = 2 * node + 2;
-
-        if i >= self.size {
-            return None;
-        }
-
-        match self.array.get(i) {
-            Some(v) => Some((i, v)),
-            None => None,
-        }
+        Some(self.array[self.size])
     }
 }
 
-pub fn heap_sort<T: Ord>(heap: &mut Heap<T>) {
-    while heap.pop().is_some() {}
+pub fn heap_sort<T: Ord + Copy>(array: &mut [T]) {
+    Heap::new(array).into_iter().for_each(drop);
 }
