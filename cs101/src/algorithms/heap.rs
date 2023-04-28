@@ -1,5 +1,3 @@
-// use std::cmp::Reverse;
-
 pub enum Category {
     Max,
     Min,
@@ -75,7 +73,7 @@ impl<'a, T: Ord> Heap<'a, T> {
     }
 }
 
-impl<'a, T: Ord> Iterator for Heap<'a, T> {
+impl<'a, T: Ord + Copy> Iterator for Heap<'a, T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -95,9 +93,19 @@ pub fn heap_sort<T: Ord + Copy>(array: &mut [T]) {
     Heap::new(array, Category::Max).into_iter().for_each(drop);
 }
 
+// Pdf 11, Slide 26
 pub mod exercises {
     use super::*;
 
+    // Ex 1, O(n) for MaxHeap, O(1) for MinHeap
+    pub fn min<'a, T: Ord + Copy>(heap: &mut Heap<'a, T>) -> Option<T> {
+        match heap.category {
+            Category::Max => heap.last(),
+            Category::Min => heap.next(),
+        }
+    }
+
+    // Ex 2, Build a MinHeap struct
     pub struct MinHeap<'a, T> {
         heap: Heap<'a, T>,
     }
@@ -110,19 +118,25 @@ pub mod exercises {
         }
     }
 
-    impl<'a, T: Ord> Heap<'a, T> {
-        pub fn insert(&mut self, value: T) {
-            self.array[0] = value;
-            self.heapify(0);
+    impl<'a, T: Ord + Copy> Iterator for MinHeap<'a, T> {
+        type Item = T;
+
+        fn next(&mut self) -> Option<Self::Item> {
+            self.heap.next()
         }
     }
 
-    impl<'a, T: Ord> Iterator for MinHeap<'a, T> {
-        type Item = &'a T;
+    // Ex 3, insert in Heap with available space
+    impl<'a, T: Ord> Heap<'a, T> {
+        pub fn insert(&mut self, value: T) -> Result<(), &'static str> {
+            if self.size >= self.array.len() {
+                return Err("Array is full");
+            }
 
-        fn next(&mut self) -> Option<&'a T> {
-            None
-            // self.heap.next()
+            self.array[self.size] = value;
+            self.size += 1;
+            self.build();
+            Ok(())
         }
     }
 }
