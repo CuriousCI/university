@@ -1,22 +1,30 @@
-pub enum Category {
-    Max,
-    Min,
-}
+// pub enum Category {
+//     Max,
+//     Min,
+// }
+//     match self.category {
+//     Category::Max => value < v,
+//     Category::Min => value > v,
+// }
+//     match self.category {
+//     Category::Max => value < x,
+//     Category::Min => value > x,
+// }
+// if match self.category {
+//Category::Max => left > right,
+//Category::Min => left < right,
+// (Reverse(1)
 
+// TODO: implement IntoIter instead of Iterator, for reusability!
 pub struct Heap<'a, T> {
     array: &'a mut [T],
     size: usize,
-    category: Category,
 }
 
 impl<'a, T: Ord> Heap<'a, T> {
-    pub fn new(array: &'a mut [T], category: Category) -> Self {
+    pub fn new(array: &'a mut [T]) -> Self {
         let size = array.len();
-        let mut heap = Self {
-            array,
-            size,
-            category,
-        };
+        let mut heap = Self { array, size };
 
         heap.build();
         heap
@@ -33,28 +41,14 @@ impl<'a, T: Ord> Heap<'a, T> {
 
         match (self.child(index, 1), self.child(index, 2)) {
             (Some(left), Some(right)) => {
-                let (v, child) = if match self.category {
-                    Category::Max => left > right,
-                    Category::Min => left < right,
-                } {
-                    left
-                } else {
-                    right
-                };
-
-                if match self.category {
-                    Category::Max => value < v,
-                    Category::Min => value > v,
-                } {
+                let (v, child) = if left > right { left } else { right };
+                if value < v {
                     self.array.swap(child, index);
                     self.heapify(child);
                 }
             }
             (Some((x, x_index)), None) => {
-                if match self.category {
-                    Category::Max => value < x,
-                    Category::Min => value > x,
-                } {
+                if value < x {
                     self.array.swap(x_index, index);
                 }
             }
@@ -90,7 +84,7 @@ impl<'a, T: Ord + Copy> Iterator for Heap<'a, T> {
 }
 
 pub fn heap_sort<T: Ord + Copy>(array: &mut [T]) {
-    Heap::new(array, Category::Max).into_iter().for_each(drop);
+    Heap::new(array).into_iter().for_each(drop);
 }
 
 // Pdf 11, Slide 26
@@ -113,7 +107,7 @@ pub mod exercises {
     impl<'a, T: Ord> MinHeap<'a, T> {
         pub fn new(array: &'a mut [T]) -> Self {
             Self {
-                heap: Heap::new(array, Category::Min),
+                heap: Heap::new(array.iter().map(|v| Reverse(v)).collect()),
             }
         }
     }

@@ -1,4 +1,3 @@
-public interface Measurable
-{
-   double getMeasure();
+public interface Measurable {
+    double getMeasure();
 }
