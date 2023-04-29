@@ -1,55 +1,40 @@
-// pub enum Category {
-//     Max,
-//     Min,
-// }
-//     match self.category {
-//     Category::Max => value < v,
-//     Category::Min => value > v,
-// }
-//     match self.category {
-//     Category::Max => value < x,
-//     Category::Min => value > x,
-// }
-// if match self.category {
-//Category::Max => left > right,
-//Category::Min => left < right,
-// (Reverse(1)
-
 // TODO: implement IntoIter instead of Iterator, for reusability!
 pub struct Heap<'a, T> {
-    array: &'a mut [T],
+    buffer: &'a mut [T],
     size: usize,
 }
 
-impl<'a, T: Ord> Heap<'a, T> {
-    pub fn new(array: &'a mut [T]) -> Self {
-        let size = array.len();
-        let mut heap = Self { array, size };
+impl<'a, T: 'a + Ord> Heap<'a, T> {
+    pub fn new(buffer: &'a mut [T]) -> Self {
+        let mut heap = Self {
+            size: buffer.len(),
+            buffer,
+        };
 
         heap.build();
         heap
     }
 
     fn build(&mut self) {
-        for node in (0..(self.array.len() / 2) + 1).rev() {
-            self.heapify(node);
-        }
+        (0..self.buffer.len() / 2)
+            .rev()
+            .for_each(|index| self.heapify(index))
     }
 
     fn heapify(&mut self, index: usize) {
-        let value = self.array.get(index).unwrap();
+        let value = self.buffer.get(index).unwrap();
 
         match (self.child(index, 1), self.child(index, 2)) {
             (Some(left), Some(right)) => {
                 let (v, child) = if left > right { left } else { right };
                 if value < v {
-                    self.array.swap(child, index);
+                    self.buffer.swap(child, index);
                     self.heapify(child);
                 }
             }
             (Some((x, x_index)), None) => {
                 if value < x {
-                    self.array.swap(x_index, index);
+                    self.buffer.swap(x_index, index);
                 }
             }
             _ => (),
@@ -63,23 +48,26 @@ impl<'a, T: Ord> Heap<'a, T> {
             return None;
         }
 
-        self.array.get(index).and_then(|v| Some((v, index)))
+        self.buffer
+            .get(index)
+            .and_then(|value| Some((value, index)))
     }
 }
 
-impl<'a, T: Ord + Copy> Iterator for Heap<'a, T> {
-    type Item = T;
+impl<'a, T: 'a + Ord + Copy> Iterator for Heap<'a, T> {
+    type Item = &'a T;
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.size == 0 {
             return None;
         }
 
-        self.array.swap(0, self.size - 1);
+        self.buffer.swap(0, self.size - 1);
         self.size -= 1;
         self.heapify(0);
 
-        Some(self.array[self.size])
+        None
+        // self.buffer.get(self.size)
     }
 }
 
@@ -92,11 +80,8 @@ pub mod exercises {
     use super::*;
 
     // Ex 1, O(n) for MaxHeap, O(1) for MinHeap
-    pub fn min<'a, T: Ord + Copy>(heap: &mut Heap<'a, T>) -> Option<T> {
-        match heap.category {
-            Category::Max => heap.last(),
-            Category::Min => heap.next(),
-        }
+    pub fn min<'a, T: Ord + Copy>(heap: &mut Heap<'a, T>) -> Option<&'a T> {
+        heap.last()
     }
 
     // Ex 2, Build a MinHeap struct
@@ -107,13 +92,13 @@ pub mod exercises {
     impl<'a, T: Ord> MinHeap<'a, T> {
         pub fn new(array: &'a mut [T]) -> Self {
             Self {
-                heap: Heap::new(array.iter().map(|v| Reverse(v)).collect()),
+                heap: Heap::new(array),
             }
         }
     }
 
-    impl<'a, T: Ord + Copy> Iterator for MinHeap<'a, T> {
-        type Item = T;
+    impl<'a, T: 'a + Ord + Copy> Iterator for MinHeap<'a, T> {
+        type Item = &'a T;
 
         fn next(&mut self) -> Option<Self::Item> {
             self.heap.next()
@@ -123,14 +108,33 @@ pub mod exercises {
     // Ex 3, insert in Heap with available space
     impl<'a, T: Ord> Heap<'a, T> {
         pub fn insert(&mut self, value: T) -> Result<(), &'static str> {
-            if self.size >= self.array.len() {
+            if self.size >= self.buffer.len() {
                 return Err("Array is full");
             }
 
-            self.array[self.size] = value;
+            self.buffer[self.size] = value;
             self.size += 1;
             self.build();
+
             Ok(())
         }
     }
 }
+
+// mod exam {
+//     use std::ops::Mul;
+//
+//     pub struct MulHeap<'a> {
+//         buffer: Vec<i64>,
+//         size: usize,
+//     }
+//
+//     impl<'a, T> MulHeap<'a> {
+//         pub fn new(array: &'a mut [i64], len: usize) {
+//             Self {
+//                 size: buffer.len(),
+//                 buffer,
+//             }
+//         }
+//     }
+// }

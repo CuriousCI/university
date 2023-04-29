@@ -1,13 +1,7 @@
-use std::{cmp::Reverse, time::Instant};
-
-use algorithms::heap::Heap;
+use std::time::Instant;
 
 fn main() {
-    let a = [1, 2, 4, 190, -20, -2980, 29, -902, 90];
-    let heap = Heap::new(&mut a);
-    for value in heap {
-        println!("{:?}", value);
-    }
+    println!("{:?}", Some(10) > None)
 }
 
 pub fn bench(f: impl Fn()) {
