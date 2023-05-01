@@ -1,5 +1,7 @@
+pub mod array;
 pub mod heap;
 pub mod linear;
+pub mod linkedlist;
 pub mod naive;
 pub mod queue;
 pub mod search;

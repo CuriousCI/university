@@ -90,19 +90,23 @@ pub fn lower_bound<T: Ord>(vector: &Vec<T>, value: T) -> Option<usize> {
     Some(index)
 }
 
+// Pdf 4, Slide 4
 pub mod exercises {
     use super::*;
+
+    // Ex 1, find all items inside an array with value between lower and upper (included)
 
     pub fn count_in_range<T: Ord>(vector: Vec<T>, lower: T, upper: T) -> usize {
         let lower = lower_bound(&vector, lower);
         let upper = upper_bound(&vector, upper);
 
-        match (lower, upper) {
-            (Some(l), Some(u)) => match l.cmp(&u) {
+        if let (Some(l), Some(u)) = (lower, upper) {
+            return match l.cmp(&u) {
                 Greater => 0,
                 _ => u.abs_diff(l) + 1,
-            },
-            _ => 0,
+            };
         }
+
+        0
     }
 }

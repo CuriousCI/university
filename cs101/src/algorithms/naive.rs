@@ -32,9 +32,11 @@ pub fn bubble_sort<T: Ord>(vector: &mut Vec<T>) {
     }
 }
 
+// Pdf 8, Slide 35
 pub mod exercises {
     use std::ops::Range;
 
+    // Ex 1, pt. 1
     pub fn reversed_bubble_sort<T: Ord>(vector: &mut Vec<T>) {
         for i in (0..vector.len() - 1).rev() {
             for j in 0..=i {
@@ -45,6 +47,10 @@ pub mod exercises {
         }
     }
 
+    // Ex 1, pt. 2, Which are stable?
+    // Ex 1, pt. 3, Cost if sorted? Cost if all equal?
+
+    // Ex 2, pt. 1, Write an insertion_sort using a separate function for min
     pub fn min_in_range<T: Ord>(vector: &Vec<T>, r: Range<usize>) -> usize {
         let (index, _) = (&vector[r])
             .iter()
@@ -62,6 +68,7 @@ pub mod exercises {
         }
     }
 
+    // Ex 2, pt. 2, Check if array has_duplicates, based on naive sorting algorithms
     pub fn has_duplicates<T: Eq>(vector: &Vec<T>) -> bool {
         for (index, value) in vector.iter().enumerate() {
             if (vector[index + 1..]).iter().filter(|&x| x == value).count() > 0 {

@@ -41,3 +41,13 @@ pub fn stable_counting_sort<'a, T: Clone + Copy + IntoIndex + Default>(array: &'
 }
 
 // TODO bucket_sort
+
+// Pdf 12, Slide 15
+mod exercises {
+    // Ex 1, Is stable_counting_sort stable? Yes
+
+    // Ex 2, Worst case for bucket_sort? O(n^2) if insertion_sort is used for buckets, O(n) if
+    // counting sort is used
+
+    // Ex 3, bucket_sort using counting_sort for buckets, hypotesis on k?
+}
