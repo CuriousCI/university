@@ -1,7 +1,7 @@
 /**
  * This program tests the Quiz and DataSet classes.
  */
-public class Main {
+public class QuizTester {
     public static void main(String[] args) {
         Measurable quizData[] = new Measurable[3];
         quizData[0] = new Quiz(89, "B+");

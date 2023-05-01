@@ -1,7 +1,7 @@
 /**
  * Tests bag functionality.
  */
-public class Main {
+public class BagTester {
     public static void main(String[] args) {
         Bag bag = new Bag();
 
