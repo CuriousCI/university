@@ -1,61 +1,55 @@
 // TODO: implement IntoIter instead of Iterator, for reusability!
-pub struct Heap<'a, T> {
-    buffer: &'a mut [T],
+
+pub struct Heap<T> {
+    buffer: Box<[T]>,
     size: usize,
 }
 
-impl<'a, T: 'a + Ord> Heap<'a, T> {
-    pub fn new(buffer: &'a mut [T]) -> Self {
+impl<T: Ord + Default + Copy> Heap<T> {
+    pub fn new<const SIZE: usize>() -> Self {
+        Self {
+            buffer: Box::new([Default::default(); SIZE]),
+            size: 0,
+        }
+    }
+
+    pub fn from(buffer: Box<[T]>) -> Self {
         let mut heap = Self {
             size: buffer.len(),
             buffer,
         };
-
         heap.build();
         heap
     }
 
     fn build(&mut self) {
-        (0..self.buffer.len() / 2)
-            .rev()
-            .for_each(|index| self.heapify(index))
+        (0..self.size / 2).rev().for_each(|n| self.heapify(n));
     }
 
-    fn heapify(&mut self, index: usize) {
-        let value = self.buffer.get(index).unwrap();
+    fn heapify(&mut self, node: usize) {
+        use std::cmp::max;
 
-        match (self.child(index, 1), self.child(index, 2)) {
-            (Some(left), Some(right)) => {
-                let (v, child) = if left > right { left } else { right };
-                if value < v {
-                    self.buffer.swap(child, index);
-                    self.heapify(child);
-                }
+        if let Some((v, i)) = max(self.child(node, 1), self.child(node, 2)) {
+            if self.buffer.get(node) < v {
+                self.buffer.swap(node, i);
+                self.heapify(i)
             }
-            (Some((x, x_index)), None) => {
-                if value < x {
-                    self.buffer.swap(x_index, index);
-                }
-            }
-            _ => (),
-        };
+        }
     }
 
-    fn child(&self, index: usize, offset: usize) -> Option<(&T, usize)> {
-        let index = 2 * index + offset;
+    fn child(&self, node: usize, child: usize) -> Option<(Option<&T>, usize)> {
+        let node = 2 * node + child;
 
-        if index >= self.size {
+        if node >= self.size {
             return None;
         }
 
-        self.buffer
-            .get(index)
-            .and_then(|value| Some((value, index)))
+        Some((self.buffer.get(node), node))
     }
 }
 
-impl<'a, T: 'a + Ord + Copy> Iterator for Heap<'a, T> {
-    type Item = &'a T;
+impl<T: Ord + Default + Copy> Iterator for Heap<T> {
+    type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.size == 0 {
@@ -66,39 +60,56 @@ impl<'a, T: 'a + Ord + Copy> Iterator for Heap<'a, T> {
         self.size -= 1;
         self.heapify(0);
 
-        None
-        // self.buffer.get(self.size)
+        Some(self.buffer[self.size])
     }
 }
 
-pub fn heap_sort<T: Ord + Copy>(array: &mut [T]) {
-    Heap::new(array).into_iter().for_each(drop);
+pub fn heap_sort<T: Ord + Copy + Default>(buffer: Box<[T]>) {
+    Heap::from(buffer).into_iter().for_each(drop);
 }
 
 // Pdf 11, Slide 26
 pub mod exercises {
+    use std::cmp::Reverse;
+
     use super::*;
 
     // Ex 1, O(n) for MaxHeap, O(1) for MinHeap
-    pub fn min<'a, T: Ord + Copy>(heap: &mut Heap<'a, T>) -> Option<&'a T> {
-        heap.last()
+
+    pub enum BinaryHeap<T> {
+        MaxHeap(Heap<T>),
+        MinHeap(MinHeap<T>),
+    }
+
+    pub fn min<T: Ord + Copy + Default>(heap: &mut BinaryHeap<T>) -> Option<T> {
+        match heap {
+            BinaryHeap::MaxHeap(heap) => heap.last(),
+            BinaryHeap::MinHeap(heap) => heap.next(),
+        }
     }
 
     // Ex 2, Build a MinHeap struct
-    pub struct MinHeap<'a, T> {
-        heap: Heap<'a, T>,
+
+    pub struct MinHeap<T> {
+        heap: Heap<T>,
     }
 
-    impl<'a, T: Ord> MinHeap<'a, T> {
-        pub fn new(array: &'a mut [T]) -> Self {
+    impl<T: Ord + Default + Copy> MinHeap<Reverse<T>> {
+        pub fn from(buffer: Box<[T]>) -> Self {
             Self {
-                heap: Heap::new(array),
+                heap: Heap::from(
+                    buffer
+                        .iter()
+                        .map(|v| Reverse(*v))
+                        .collect::<Vec<Reverse<T>>>()
+                        .into_boxed_slice(),
+                ),
             }
         }
     }
 
-    impl<'a, T: 'a + Ord + Copy> Iterator for MinHeap<'a, T> {
-        type Item = &'a T;
+    impl<T: Ord + Default + Copy> Iterator for MinHeap<T> {
+        type Item = T;
 
         fn next(&mut self) -> Option<Self::Item> {
             self.heap.next()
@@ -106,7 +117,8 @@ pub mod exercises {
     }
 
     // Ex 3, insert in Heap with available space
-    impl<'a, T: Ord> Heap<'a, T> {
+
+    impl<T: Ord + Default + Copy> Heap<T> {
         pub fn insert(&mut self, value: T) -> Result<(), &'static str> {
             if self.size >= self.buffer.len() {
                 return Err("Array is full");
