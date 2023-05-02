@@ -1,5 +1,8 @@
 use std::cmp::Ordering::{Equal, Greater, Less};
 
+// TODO: use boxed array instead of iterable / vec
+// because iter can be collected into Vec, and converted into boxed
+
 pub fn search<T: Eq, L>(iterable: L, value: T) -> Option<usize>
 where
     for<'a> &'a L: IntoIterator<Item = &'a T>,
