@@ -102,13 +102,15 @@ pub fn print<T: Debug>(array: &[T], index: usize) {
 // Ex 7, hanoi
 
 // Pdf 5, Slide 37
-// Ex 1, binomial
+pub mod exercises {
+    // Ex 1, binomial
 
-// Ex 2, GCD
-pub fn gcd(x: usize, y: usize) -> usize {
-    if y == 0 {
-        return x;
+    // Ex 2, GCD
+    pub fn gcd(x: usize, y: usize) -> usize {
+        if y == 0 {
+            return x;
+        }
+
+        gcd(y, x % y)
     }
-
-    gcd(y, x % y)
 }
