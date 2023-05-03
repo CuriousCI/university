@@ -1,6 +1,8 @@
 use std::time::Instant;
 
-fn main() {}
+fn main() {
+    let a: [Option<&str>] = [None; 10];
+}
 
 pub fn bench(f: impl Fn()) {
     let now = Instant::now();

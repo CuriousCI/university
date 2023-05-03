@@ -1,5 +1,7 @@
 package algorithms.struct;
 
+import java.util.Optional;
+
 public class Queue<T> {
     Node<T> head, tail;
 
@@ -15,15 +17,17 @@ public class Queue<T> {
         }
     }
 
-    public T dequeue() throws IllegalAccessException {
+    public Optional<T> dequeue() {
         if (head == null)
-            throw new IllegalAccessException();
+            return Optional.empty();
+        // throw new IllegalAccessException();
 
         var result = head.value;
         head = head.next;
         if (head == null)
             tail = null; // Queue is empty
-        return result;
+                         //
+        return Optional.of(result);
     }
 
     @Override

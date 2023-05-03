@@ -102,11 +102,11 @@ If you need explanations on some content, just open an issue, and I'll be happy 
     8. [ ] [Ex 8]()
     9. [ ] [Ex 9]()
     10. [ ] [Ex 10]()
-16. [ ] [Tree](https://twiki.di.uniroma1.it/pub/Intro_algo/AD/Dispense/16_Alberi2023.pdf)
+16. [x] [Tree](https://twiki.di.uniroma1.it/pub/Intro_algo/AD/Dispense/16_Alberi2023.pdf)
     1. [ ] [Graph Theory]()
-    2. [ ] [Struct Impl.]()
-    3. [ ] [Positional Impl.]()
-    4. [ ] [Parents Impl.]()
+    2. [x] [TreeNode](./src/algorithms/tree.rs) _(Tree built with Records)_
+    3. [x] [Positional Binary Tree](./src/algorithms/tree.rs) _(Basically a Heap)_
+    4. [x] [ParentTree](./src/algorithms/tree.rs) _(Tree built with Two Arrays)_
     5. [ ] [Operations]()
     6. [ ] [Ex 1]()
     6. [ ] [Ex 2]()

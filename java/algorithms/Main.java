@@ -3,35 +3,28 @@
 // import java.util.List;
 
 import algorithms.struct.Node;
+import algorithms.struct.Queue;
 import algorithms.struct.LinkedList;
 
 public class Main {
     public static void main(String[] args) {
-        var l = new LinkedList<Integer>();
-        var r = new LinkedList<Integer>();
+        var a = new Queue();
+        a.enqueue(10);
+        a.enqueue(20);
+        a.enqueue(7);
 
-        l.push(40);
-        l.push(30);
-        l.push(20);
-        l.push(12);
-        l.push(5);
+        var b = a;
+        b.enqueue(28);
+        b.enqueue(28);
 
-        r.push(75);
-        r.push(50);
-        r.push(40);
-        r.push(22);
-        r.push(20);
-        r.push(15);
-        r.push(10);
+        a.enqueue(12);
 
-        var n = merge2(l.head, r.head);
+        System.out.println(a);
+        // var n = a.dequeue();
+        // while (n.isPresent()) {
+        // System.out.println(n);
+        // }
 
-        while (n != null) {
-            System.out.printf("%s ", n);
-            n = n.next;
-        }
-
-        System.out.println();
     }
 
     // public static <T extends Comparable<? super T>> Boolean hasDuplicates(List<T>
