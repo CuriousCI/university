@@ -10,7 +10,6 @@ public class Main {
 
             try {
                 var file = new Scanner(new FileReader(fileName));
-
                 var columns_total = new Double[] { 0.0, 0.0 };
                 var rows = 0;
 
@@ -28,7 +27,6 @@ public class Main {
 
                 System.out.println(columns_total[0] / rows);
                 System.out.println(columns_total[1] / rows);
-
             } catch (Exception e) {
                 System.err.println("File not found! Are you sure it exists?" + e);
             }

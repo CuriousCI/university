@@ -21,7 +21,7 @@ impl<T> Queue<T> {
 
     pub fn enqueue(&mut self, value: T) -> Result<(), &'static str> {
         if self.size == self.buffer.len() {
-            return Err("Pirla la coda e' piena");
+            return Err("The Queue is full");
         }
 
         self.buffer[self.end] = value;
@@ -31,7 +31,7 @@ impl<T> Queue<T> {
         Ok(())
     }
 
-    pub fn dequeue(&mut self) -> Option<&T> {
+    pub fn dequeue(&mut self) -> Option<T> {
         if self.size == 0 {
             return None;
         }
