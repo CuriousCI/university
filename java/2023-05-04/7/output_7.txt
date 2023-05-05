@@ -1,0 +1,8 @@
+This program reads variable-length lines of numbers from a file 'data.in'
+and prints the line along with the average.
+Row 1:   10.0 20.0 30.0 average is  20.0
+Row 2:   1.0 2.0 3.0 average is   2.0
+Row 3:   4.0 5.0 6.0 7.0 average is   5.5
+Row 4:   average is 0.0
+Row 5:   8.0 9.0 average is   8.5
+Row 6:   3.0 average is   3.0

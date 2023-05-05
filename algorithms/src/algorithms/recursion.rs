@@ -79,7 +79,7 @@ pub fn min<T: Ord>(array: &[T], index: usize) -> Option<&T> {
 }
 
 // Ex 4, palindrome
-pub fn is_palindrome<T: Eq>(array: &[T], index: usize) -> bool {
+pub fn is_palindrome<T: Eq>(_array: &[T], _index: usize) -> bool {
     false
 }
 

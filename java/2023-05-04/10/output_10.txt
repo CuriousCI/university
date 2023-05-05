@@ -1,0 +1,8 @@
+exception1
+Expected: exception1
+exception2
+Expected: exception2
+exception3
+Expected: exception3
+done
+Expected: done

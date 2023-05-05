@@ -1,0 +1,13 @@
+Value: 5
+Value: -1
+Value: 2
+Value: 
+d
+Input error. Try again.
+Value: 3
+Value: a
+Input error. Try again.
+Value: t
+Input error. Try again.
+Sum: 9.0
+

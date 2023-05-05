@@ -1,18 +1,22 @@
-pub struct Queue<'a, T> {
-    buffer: &'a mut [T],
+pub struct Queue<T> {
+    buffer: Box<[T]>,
     start: usize,
     end: usize,
     size: usize,
 }
 
-impl<'a, T> Queue<'a, T> {
-    pub fn new(buffer: &'a mut [T]) -> Self {
+impl<T> Queue<T> {
+    pub fn from(buffer: Box<[T]>) -> Self {
         Self {
             buffer,
             start: 0,
             end: 0,
             size: 0,
         }
+    }
+
+    pub fn len(&self) -> usize {
+        self.size
     }
 
     pub fn enqueue(&mut self, value: T) -> Result<(), &'static str> {
@@ -41,7 +45,7 @@ impl<'a, T> Queue<'a, T> {
     }
 }
 
-impl<'a, T: Copy> Iterator for Queue<'a, T> {
+impl<T: Copy> Iterator for Queue<T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
