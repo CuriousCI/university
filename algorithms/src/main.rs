@@ -1,8 +1,9 @@
-fn main() {
-    let _codici_fiscali = [0; 2 * 10_usize.pow(18)];
-}
-
 use std::time::Instant;
+
+fn main() {
+    // let _codici_fiscali = [0; 2 * 10_usize.pow(18)];
+    // _codici_fiscali.map(|h| h.)
+}
 
 pub fn bench(f: impl Fn()) {
     let now = Instant::now();

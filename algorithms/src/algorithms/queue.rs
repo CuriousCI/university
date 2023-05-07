@@ -31,7 +31,7 @@ impl<T> Queue<T> {
         Ok(())
     }
 
-    pub fn dequeue(&mut self) -> Option<T> {
+    pub fn dequeue(&mut self) -> Option<&T> {
         if self.size == 0 {
             return None;
         }
