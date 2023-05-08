@@ -41,13 +41,22 @@ impl<K: Ord, V> BinarySearchTree<K, V> {
             .unwrap_or(&self.value)
     }
 
-    pub fn predecessor() {}
+    pub fn predecessor(&self) {
+        match &self.left {
+            Some(l) => (), // Most right in left
+            None => (),    // First left parent
+        }
+    }
 
     pub fn successor() {}
 
     pub fn insert(&self, key: K, value: V) {}
 
-    pub fn delete() {}
+    pub fn delete() {
+        // No child
+        // Only left
+        // Only right
+    }
 }
 
 impl<K, V> Index<K> for BinarySearchTree<K, V> {

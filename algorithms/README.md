@@ -8,6 +8,8 @@ course at Sapienza Universita' di Roma _(Computer Science Bachelor's degree)_ in
 The content in the checked boxes was summarized / implemented / completed.
 If you need explanations on some content, just open an issue, and I'll be happy to help 😄.
 
+_(Completed in Rust 47 out of 149 ~ 31%)_
+
 1. [ ] [Introduction](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/01\_Introduzione\_2023.pdf) 
 2. [ ] [Big O notation](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/02\_Notazione\_asintotica\_2023.pdf)
     1. [ ] [Big O]()
@@ -125,9 +127,9 @@ If you need explanations on some content, just open an issue, and I'll be happy 
     5. [ ] [Hash Table](./src/algorithms/dict/hash\_table.rs)
 19. [x] [Binary Search Tree](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/19\_Dizionari2\_2022.pdf)
     1. [x] [Binary Search Tree](./src/algorithms/dict/binary\_search\_tree.rs)
-    2. [ ] [Minimum]()
-    3. [ ] [Maximum]()
-    4. [ ] [Operations]()
+    2. [x] [Minimum](./src/algorithms/dict/binary\_search\_tree.rs)
+    3. [x] [Maximum](./src/algorithms/dict/binary\_search\_tree.rs)
+    4. [x] [Operations](./src/algorithms/dict/binary\_search\_tree.rs)
     5. [ ] [Ex 1]()
     6. [ ] [Ex 2]()
     7. [ ] [Ex 3]()
@@ -157,4 +159,4 @@ If you need explanations on some content, just open an issue, and I'll be happy 
     1. [ ] [Tim Sort]()
     2. [ ] [Has Duplicates in Merge Sort]()
     3. [ ] [Merge Sort on Linked List]() _(iterative)_
-25. [Pytohn Utils](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/METODI\_UTILI\_IN\_PYTHON.pdf)
+25. [Pytohn Utils](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/METODI\_UTILI\_IN\_PYTHON.pdf
