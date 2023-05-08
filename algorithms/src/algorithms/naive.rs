@@ -48,7 +48,14 @@ pub mod exercises {
     }
 
     // Ex 1, pt. 2, Which are stable?
+    // Insertion Sort - stable
+    // Selection Sort - stable
+    // Bubble Sort - unstable
+
     // Ex 1, pt. 3, Cost if sorted? Cost if all equal?
+    // Insertion Sort - sorted O(n) - equal O(n)
+    // Selection Sort - sorted O(n^2) - equal O(n^2)
+    // Bubble Sort - sorted O(n^2) - equal O(n^2)
 
     // Ex 2, pt. 1, Write an insertion_sort using a separate function for min
     pub fn min_in_range<T: Ord>(vector: &Vec<T>, r: Range<usize>) -> usize {

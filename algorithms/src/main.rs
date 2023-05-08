@@ -1,4 +1,13 @@
-fn main() {}
+// use algorithms::merge::exercises::merge_sort;
+// use algorithms::merge::merge_sort;
+
+use algorithms::quick::quick_sort;
+fn main() {
+    let mut arr = [80, 28091, 289, 48, 281, 201, 802];
+    println!("{:?}", arr);
+    quick_sort(&mut arr);
+    println!("{:?}", arr);
+}
 
 pub fn bench(f: impl Fn()) {
     use std::time::Instant;

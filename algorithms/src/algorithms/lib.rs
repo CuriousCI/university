@@ -6,6 +6,7 @@ pub mod linkedlist;
 pub mod merge;
 pub mod naive;
 pub mod queue;
+pub mod quick;
 pub mod recursion;
 pub mod search;
 pub mod stack;
