@@ -1,4 +1,4 @@
-use super::trees::TreeNode;
+use super::tree_node::TreeNode;
 use std::cmp::{max, Ordering};
 
 // pub enum Tree<T> {

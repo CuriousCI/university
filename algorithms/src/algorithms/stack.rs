@@ -1,35 +1,44 @@
-pub struct Stack<'a, T> {
-    buffer: &'a mut [T],
-    size: usize,
+pub struct Stack<T> {
+    buf: Box<[T]>,
+    len: usize,
 }
 
-impl<'a, T> Stack<'a, T> {
-    pub fn new(buffer: &'a mut [T]) -> Self {
-        Self { buffer, size: 0 }
+impl<T> From<Vec<T>> for Stack<T> {
+    fn from(value: Vec<T>) -> Self {
+        Self {
+            buf: value.into_boxed_slice(),
+            len: 0,
+        }
+    }
+}
+
+impl<T> Stack<T> {
+    pub fn len(&self) -> usize {
+        self.len
     }
 
     pub fn push(&mut self, value: T) -> Result<(), &'static str> {
-        if self.size == self.buffer.len() {
+        if self.len == self.buf.len() {
             return Err("Pirla, non hai piu' spazio per i piatti!");
         }
 
-        self.buffer[self.size] = value;
-        self.size += 1;
+        self.buf[self.len] = value;
+        self.len += 1;
 
         Ok(())
     }
 
     pub fn pop(&mut self) -> Option<&T> {
-        if self.size == 0 {
+        if self.len == 0 {
             return None;
         }
 
-        self.size -= 1;
-        self.buffer.get(self.size)
+        self.len -= 1;
+        self.buf.get(self.len)
     }
 }
 
-impl<'a, T: Copy> Iterator for Stack<'a, T> {
+impl<T: Copy> Iterator for Stack<T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {

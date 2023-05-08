@@ -1,4 +1,5 @@
 pub mod array;
+pub mod dict;
 pub mod heap;
 pub mod linear;
 pub mod linkedlist;

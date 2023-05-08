@@ -104,12 +104,12 @@ If you need explanations on some content, just open an issue, and I'll be happy 
     10. [ ] [Ex 10]()
 16. [x] [Tree](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/16\_Alberi2023.pdf)
     1. [ ] [Graph Theory]()
-    2. [x] [TreeNode](./src/algorithms/tree.rs) _(Tree built with Records)_
-    3. [x] [Positional Binary Tree](./src/algorithms/tree.rs) _(Basically a Heap)_
-    4. [x] [ParentTree](./src/algorithms/tree.rs) _(Tree built with Two Arrays)_
-    5. [ ] [Operations]()
-    6. [x] [Ex 1]()
-    6. [x] [Ex 2]()
+    2. [x] [TreeNode](./src/algorithms/tree/tree\_node.rs) _(Tree built with Records)_
+    3. [x] [Positional Binary Tree](./src/algorithms/tree/binary\_tree.rs) _(Basically a Heap)_
+    4. [x] [ParentTree](./src/algorithms/tree/parent\_tree.rs) _(Tree built with Two Arrays)_
+    5. [ ] [Operations](./src/algorithms/tree/operations.rs)
+    6. [x] [Ex 1](./src/algorithms/tree/binary\_tree.rs)
+    6. [x] [Ex 2](./src/algorithms/tree/parent\_tree.rs)
 17. [ ] [DFS/BFS](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/17\_VisiteAlberi\_2023.pdf)
     1. [ ] [Preorder]()
     2. [ ] [Inorder]()
@@ -121,17 +121,17 @@ If you need explanations on some content, just open an issue, and I'll be happy 
     1. [ ] [Insert]()
     2. [ ] [Search]()
     3. [ ] [Delete]()
-    4. [ ] [Direct Address Table]() _([GeeksForGeeks](https://www.geeksforgeeks.org/direct-address-table/))_
-    5. [ ] [Hash Table]()
-    6. [ ] [BTree Search]()
-19. [ ] [Binary Search Tree](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/19\_Dizionari2\_2022.pdf)
-    1. [ ] [Minimum]()
-    2. [ ] [Maximum]()
-    3. [ ] [Operations]()
-    4. [ ] [Ex 1]()
-    5. [ ] [Ex 2]()
-    6. [ ] [Ex 3]()
-    7. [ ] [Ex 4]()
+    4. [ ] [Direct Address Table](./src/algorithms/dict/direct\_address.rs) _([GeeksForGeeks](https://www.geeksforgeeks.org/direct-address-table/))_
+    5. [ ] [Hash Table](./src/algorithms/dict/hash\_table.rs)
+19. [x] [Binary Search Tree](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/19\_Dizionari2\_2022.pdf)
+    1. [x] [Binary Search Tree](./src/algorithms/dict/binary\_search\_tree.rs)
+    2. [ ] [Minimum]()
+    3. [ ] [Maximum]()
+    4. [ ] [Operations]()
+    5. [ ] [Ex 1]()
+    6. [ ] [Ex 2]()
+    7. [ ] [Ex 3]()
+    8. [ ] [Ex 4]()
 20. [ ] [Black-Red Tree](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/20\_Dizionari3\_2022.pdf)
     1. [ ] [Rotation]()
     2. [ ] [Insertion]()

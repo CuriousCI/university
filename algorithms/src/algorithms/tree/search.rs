@@ -1,4 +1,4 @@
-use super::trees::TreeNode;
+use super::tree_node::TreeNode;
 // use crate::queue::Queue;
 
 pub fn bfs<T: Default + Clone>(tree: &TreeNode<T>) {
