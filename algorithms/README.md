@@ -8,7 +8,7 @@ course at Sapienza Universita' di Roma _(Computer Science Bachelor's degree)_ in
 The content in the checked boxes was summarized / implemented / completed.
 If you need explanations on some content, just open an issue, and I'll be happy to help 😄.
 
-_(Completed in Rust 47 out of 149 ~ 31%)_
+_(Completed in Rust 56 out of 149 ~ 38%)_
 
 1. [ ] [Introduction](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/01\_Introduzione\_2023.pdf) 
 2. [ ] [Big O notation](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/02\_Notazione\_asintotica\_2023.pdf)
@@ -63,8 +63,8 @@ _(Completed in Rust 47 out of 149 ~ 31%)_
     7. [ ] [Ex 5](./src/algorithms/merge.rs)
 10. [x] [Quick Sort](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/10\_Ordinamento3\_2023.pdf)
     1. [x] [Quick Sort](./src/algorithms/quick.rs)
-    2. [ ] [Ex 1]()
-    3. [ ] [Ex 2]()
+    2. [x] [Ex 1](./src/algorithms/quick.rs)
+    3. [x] [Ex 2](./src/algorithms/quick.rs)
 11. [x] [Heap Sort](https://twiki.di.uniroma1.it/pub/Intro\_algo/AD/Dispense/11\_Ordinamento4\_2023.pdf)
     1. [x] [Heap](./src/algorithms/heap.rs)
     2. [x] [Ex 1](./src/algorithms/heap.rs)

@@ -51,7 +51,20 @@ fn sort<T: Ord + Copy>(array: &mut [T], start: usize, end: usize) {
 // Pdf 10, Slide
 pub mod exercises {
     // Ex 1, pt. 1, Sort Array with only 0s and 2s
-    pub fn dual_sort() {}
+    pub fn dual_sort(array: &mut [u8]) {
+        let mut left = 0;
+        let mut right = array.len() - 1;
+
+        while left < right {
+            if array[right] == 2 {
+                right -= 1;
+            } else if array[left] > array[right] {
+                array.swap(left, right);
+            } else {
+                left += 1;
+            }
+        }
+    }
 
     // Ex 1, pt. 2 Worst Case Permutation of [0, 1, 2, 3, 4, 5, 6, 7] for Quick Sort
     // Permutation 1: [0, 1, 2, 3, 4, 5, 6, 7]
@@ -62,5 +75,16 @@ pub mod exercises {
     // Sorted Array: O(n^2)
 
     // Ex 2, Sort rows and columns in Matrix
-    pub fn matrix_sort() {}
+    pub fn matrix_sort<T: Copy + Ord>(matrix: &mut Vec<Vec<T>>) {
+        let mut values: Vec<T> = matrix.iter().flatten().map(|v| *v).collect();
+        values.sort();
+        let mut index: usize = 0;
+
+        for row in matrix.iter_mut() {
+            for col in 0..row.len() {
+                row[col] = values[index];
+                index += 1;
+            }
+        }
+    }
 }
