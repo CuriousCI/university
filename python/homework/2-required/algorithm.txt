@@ -1,0 +1,50 @@
+Legenda:
+- PC: personal computer
+- VM: virtual machine
+- TC: test case (o test) 
+- overhead: serie di operazioni che un algoritmo esegue prima di risolvere un problema  (Es. convertire l'input in una struttura dati adatta per il problema)
+- xkcd: stringa xkcd (Es. '10010010010100511')
+- "# Titolo": indica il titolo di un paragrafo
+
+# Al-Khwarizmi
+
+La parte più corposa dell'algoritmo sta nel convertire il formato xkcd in "pesi", 
+(la somma si risolve facilmente con un `zip` per TC più grandi o un `for` per TC piccoli). 
+Ho trovato tre approcci principali:
+
+Algoritmo 1. Assegno a ogni numero possibile (1000, 100, 10, 1, 500, 50, 5) una lettera ('a', 'b', 'c', ...) e scambio i valori con `.replace()`, 
+successivamente converto ciascuna lettera nel valore intero con un dizionario `{a: 1000, b: 100, ...}` 
+(su TC medio-grandi è la più veloce, suppongo perché `.replace()` è implementato in C e il dizionario è piccolo e gli accessi ci mettono quasi O(1), ma su TC piccoli, come quelli della VM, l'overhead è troppo grande). 
+Uno dei problemi è che non copre casi in cui ho numeri diversi da quelli prestabiliti 
+(Es. '700004', non essendo sicuri della forma dei test segreti, è rischioso applicare questa strategia)
+
+Algoritmo 2. Partendo dalla fine della stringa xkcd, se trovo uno '0', lo memorizzo temporanemante, 
+se trovo una cifra, aggiungo alla lista la cifra + gli zeri che ho memorizzato precedentemente 
+(Es. ho '00', se trovo '5', aggiungo alla lista '500'). 
+Partendo dalla fine della string xkcd non devo fare altre considerazioni. Al termine del procedimento, converto la lista di stringhe in interi.
+
+Algoritmo 3. Ho notato che posso mettere una virgola davanti a ciascun '5' e a ciascun '1' (Es. ',100,100,100,10,100,5,1,1').
+In questo modo, posso usare `.split(',')` per dividere le parti dela xkcd per poi convertirle in interi (è la seconda soluzione più veloce su TC medio-grandi). 
+Lo stesso si può applicare per per tutte le cifre da 1 a 9 (coprendo tutti i casi possibili).
+
+
+# "In-place" decoding?
+
+La funzione `decode_value` si può implementare "in-place" (con la proposta 2), evitando di salvare i "pesi" in una lista e sommandoli man mano che li trovo. 
+Questa è una delle soluzioni più veloci per i TC piccoli della VM, per il semplice motivo che per quasi ogni altra soluzione, l'overhead (convertire la stringa in una lista di numeri e analizzare la lista di numeri) + il tempo di risoluzione è maggiore rispetto al tempo di risoluzione di questa alternativa. 
+La 2. non ha overhead, quindi posso applicarla a TC piccole, ma è una delle più lente, se consideriamo casi di grandi dimensioni.
+
+
+# Osservazioni
+
+Sono riuscito a trovare altri 3/4 approcci, ma non vale la pena discuterli. 
+Un'osservazione utile è che si può eseguire un algoritmo piuttosto che l'altro scegliendo in base alla lunghezza dell'xkcd.
+(Es. con `if len(xkcd) < 20:` posso decidere di usare il secondo, piuttosto che il terzo, essendo che il secondo non ha overhead su TC piccoli).
+
+
+# DP (dynamic programming)
+
+Si può applicare la DP al problema su qualunque algoritmo.
+Una volta trovata una soluzione (Es. '10010010010100511' -> 397), la memorizzo in un dizionario.
+Così facendo, se dovessere ricapitare '10010010010100511', basta che prendo la soluzione dal dizionario senza ricalcolarla (l'operazione viene eseguita in quasi O(1)).
+(In tal modo si risparmia tempo sul TC con un molti valori ricorrenti, sulla VM non cambia il risultato di molto perché i TC sono di dimensioni limitate e i casi sono tutti diversi, ma c'è sempre l'ipotesi di eventuali test segreti di grandi dimensioni).

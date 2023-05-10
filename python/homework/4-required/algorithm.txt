@@ -1,0 +1,150 @@
+# L'arazzo di Bayeux
+
+Il problema si puo' scomporre in tre parti principali, ciascuna con le sue difficolta', tanto che nel corso dello 
+sviluppo dell'algoritmo, si nota che combinando le varie soluzioni ad ogni livello si possono realizzare algoritmi anche molto diversi 
+fra loro. Di seguito approfondiro' lo studio su: 
+
+1. La lettura dei file
+2. Il conteggio delle frequenze
+3. La riduzione delle frequenze alla lettera migliore
+
+Non avendo personalmente usato una sola strategia nel corso della risoluzione del problema, credo che valga la pena analizzarne una buona parte, anche perche' per comprendere la soluzione finale bisogna avere un'idea del percorso per arrivarci. Di seguito, faro' riferimento a 2 algoritmi principali: standard (nel range 1500-1800 sulla VM), e ottimizzato (nel range 950 - 1200) sulla VM, in base all'implementazione.
+
+Dal punto di vista dell'ottimizzazione, c'e' solo una caratteristica particolare delle parole in input che si puo' sfruttare per eliminare
+circa il 30-40% delle operazioni (nel caso specifico dei test s'intenda) che verra' discussa a pieno nell'ultimo paragrafo.
+
+
+## How fast can you read? 
+
+### Do while?
+
+Facendo una profilazione sull'ultimo algoritmo consegnato, risulta che il 70% del tempo e' perso nella lettura e scomposizione dei file in parole (essendo giustamente un'operazione che richiede syscall), quindi e' una parte molto delicata. Si possono ipotizzare 2 approcci: quello ricorsivo (piu' intuitivo per la natura del problema), e, per implicazione, quello iterativo (piu' veloce).
+In questo caso, la mia scelta e' ricadura sull'opzione iterativa (link Q2A funzioni ricorsive) per ogni algoritmo sviluppato, anche se decisamente meno elegante, ha un vantaggio indiscusso in velocita'; Il problema dell'iterativa sta nel fatto che bisogna svolgere almeno una volta l'operazione di lettura, quindi ho deciso di scrivere un qualcosa di simile quello che in altri linguaggi e' conosciuto come 'do-while': controllo la condizione di uscita dal ciclo al termine delle operzioni.
+
+
+### To 'memorize' or not to 'memorize'?
+
+L'altra questione, o strategia, riguarda la scelta di quando analizzare le parole: si puo' decidere di leggere tutte le parole, memorizzarle in una collezione, e analizzarle alla fine; l'altra e' quella di analizzare le parole volta per volta man mano che si leggono (quindi combinare sostanzialmente la parte 1 e la parte 2 del problema). 
+Questa scelta e' quella che va ad impattare piu' di tutte il resto dell'algoritmo, per cui bisogna fare attenzione. Dal punto di vista dell'efficienza, le due strategie dovrebbero essere equivalenti, ma sia nella soluzione standard che nella soluzione ottimizzata la scelta piu' comoda e' quella di raccogliere tutte le parole in una collezione ed analizzarle successivamente. Questo perche' ho la possibilita' di fare assunzioni generali su tutto l'input per trovare 'scorciatoie'. Effettivamente, la soluzione standard si potrebbe implementare anche analizzando le parole man mano che leggo i file, e la performance non dovrebbe cambiare, ma lo stesso non si puo' dire per la soluzione ottimizzata; bisogna fare attenzione: non sto sostenendo che una strategia e' migliore dell'altra, ma che una e' compatibile con un codice piu' veloce rispetto all'altra.
+
+
+## Il conteggio delle frequenze
+
+### Sorting goes brr brr
+
+Per la soluzione standard, il primo metodo che avevo usato era quello di ordinare le parole per lunghezza (dalla piu' lunga alla piu' corta), generando una lista del tipo:
+
+assignement
+homework
+volley
+beach
+tea
+pot
+row
+
+A questo punto, si puo' semplicemente iterare posizione per posizione, e creare un dizionario per ogni posizione, ovvero: scelgo la prima posizione, per ogni parola, prendo la lettera in prima posizione (mentre conto la frequenza con un dizionario); a questo punto, posso trovare la lettera 'migliore' in prima posizione, e salvarla in una stringa con il risultato, e posso passare alla posizione successiva. Ci sono due osservazioni interessanti da fare: prima di tutto, se sto controllando la quarta posizione, per esempio, appena arrivo ad una parola di lunghezza 3, posso decidere di passare alla posizione successiva, perche' tutte le parole successive a quella hanno lunghezza 3 o meno, quindi evito di ricalcolare tutte le parole ogni volta. Dal punto di vista della velocita', equivale alla soluzione successiva con 'enumerate', perche' calcolo l'indice una volta sola, ma compenso con il tempo perso nel 'sorting'.
+
+Questa e' una soluzione piu' 'probabilistica', essendo che il caso peggiore dipende comunque dalla lunghezza delle parole, ma anche dal fatto che sono già ordinate o meno, e dal numero di lunghezze diverse... quindi in alcuni casi e' leggermnete piu' veloci, in altri piu' lento.
+
+
+### D&D (Deterministic & Deterministic)
+
+La souluzione piu' facile da determinare implica la creazione di dizionario per posizione, e, per ogni parola, associare la posizione della lettera al rispettivo dizionario. La cosa interessante e' che ci sono due modi per farlo: la soluzione banale implica di ricavare la posizione di ogni lettera nella parola (con range() o enumerate()) e di usarla per trovare il dizionario associato. Questa e' la soluzione piu' lenta... 
+
+
+### D&D... but better?
+
+Anziche' usare un'indice per associare la lettera al rispettivo dizionario, si puo' usare una strategia decisamente piu' veloce: si calcola la lunghezza della parola masssima, e si crea una lista di dizionari (con quella lunghezza). A questo punto, il gioco e' fatto: posso usare la funzione zip per associare ogni dizionario alla lettera rispettiva nella parola. Per esempio:
+
+Ho la parola 'hello', e so che la lunghezza massima e' 7, quindi mi genero la lista di dizionari [{diz1}, {diz2}, {diz3}, {diz4}, {diz5}, {diz6}, {diz7}]; con la funzione 'zip' posso creare una collezione del tipo [(diz1, 'h'), (diz2, 'e'), (diz3, 'l'), (diz4, 'l'), (diz5, 'o')], che e' decisamente piu' veloce da iterare rispetto ad usare l'indice.
+
+Infatti, la mia scelta per l'algoritmo ricade proprio su questa soluzione per il conteggio delle frequenze delle lettere in ogni posizione (questa strategia e' molto piu' veloce rispetto a quella con il sorting, in cui sono obbligato ad usare l'indice, rallentando l'esecuzione). Se implementata bene, questa soluzione puo' risparmiare il 30% del tempo rispetto ad un D&D semplice.
+
+
+## 'Hunger games' of letters
+
+Facendo un'analisi con snakeviz (link snakeviz), risulta che il 75% del tempo (anche piu') nella mia soluzione e' speso nella lettura dei file e nella creazione della collezione di parole. Il 5% circa per contare le lettere, e il 20% per trovare la lettera migliore nelle varie posizioni. Quindi e' chiaro che l'unica parte in cui si puo' effettivamente andare a lavorare per migliorare l'efficienza (dopo aver scelto la versione migliore del D&D) e' la parte che si occupa di trovare la lettera migliore.
+
+Il problema maggiore in questo caso e' che dobbiamo ordinare le varie coppie (lettera, frequenza) in maniera 'inversa': la frequenza maggiore e il carattere minore. La prima soluzione che viene in mente e' quella di trovare la frequenza maggiore, selezionare tutti i caratteri con quella frequenza e scegliere il piu' piccolo. C'e' una strategia piu' intelligente usando la funzione 'min'. Posso trasformare le varie coppie (lettera, frequenza) in (-frequenza, lettera), in questo modo, prendere la frequenza piu' piccola equivale a prendere quella con valore assoluto maggiore, e, se piu' caratteri hanno la stessa frequenza, viene scelto quello minore. Conviene fare un esempio:
+
+Se si ha un dizionario del tipo:
+
+{
+    'q': 3,
+    'a': 3,
+    'c': 1,
+    'b': 2,
+}
+
+Lo si puo' trasformare in:
+
+[
+    (-3, 'q')
+    (-3, 'a'),
+    (-1, 'c'),
+    (-2, 'b'),
+]
+
+Quindi, ordinando le coppie in ordine crescente:
+
+[
+    (-3, 'a'),
+    (-3, 'q')
+    (-2, 'b'),
+    (-1, 'c'),
+]
+
+Sostanzialmente, 'min' seleziona la prima coppia (quella che e' corretta nel nostro caso)
+
+
+# Parole duplicate
+
+Pensate per un attimo ad un libro qualunque... supponiamo che abbia 100000 parole... qual'e' la probabilita' che siano tutte distinte? Molto bassa in realta': ce ne sono tantissime che si ripetono. Lo stesso vale per i test del nostro problema. Per fare un esempio, il test12 ha 100000 parole, ma solo 60000 di queste sono univoche! Oppure, il test9 ha 21421 parole, ma solo 500 sono univoche. Come si puo' sfruttare quest'informazione a nostro vantaggio? In maniera abbastanza semplice, si puo' creare un dizionario in cui associo ad ogni parola la rispettiva frequenza. In questo modo, quando vado a contare le lettere, anziche scorrermi la stessa parola 10 volte, la analizzo una volta sola e aggiungo 10 alla frequenza della lettera rispettiva.
+
+Ora la domanda che conviene porsi e': quanto tempo si risparmia? Prendiamo il caso del test9. Di norma, per ogni posizione (30 posizione massime) mi devo verificare ogni parola, quindi 30 * 21421, quindi 642630 operazioni. Nel caso in cui conto le frequenze prima, ci metto 21421 operazioni per contare le frequenze (ogni parola la devo leggere almeno una volta), successivamente, per ogni posizione, devo verificare solo 500 parole, quindi 21421 + 500 * 30, circa 36421, quindi devo fare 95% delle operazioni in meno, risparmiando tantissimo tempo. 
+
+
+## Tesi a favore, nel caso peggiore, contando le frequenze
+
+La soluzione che conta le frequenze e' probabilistica (meno sono le parole univoche, piu' veloce e', ma dipende dalla fortuna). Di fatto, non tutte le soluzioni in informatica sono deterministiche, e quando si va a calcolare la complessita' di un algoritmo si considerano il caso migliore, il caso medio e il caso peggiore (per esempio il TimSort che viene usato dalla funzione .sort() di Python https://www.geeksforgeeks.org/timsort/ ha un caso migliore di O(n) e i casi medio e peggiore sono O(n logn)). A questo punto, ho stimato che la complessita' del mio algoritmo sia di O(nm + t) dove n e' il numero di parole univoche, m e' la lunghezza massima di una parola e t e' il numero totale di parole. Supponiamo il caso migliore, in cui ho una sola parola univoca, 200 come lunghezza massima e 200.000 parole. Il mio algoritmo va per 1*200 + 200.000 operazioni. Supponiamo il caso peggiore, in cui tutte sono univoche, le operazioni sono 200.000 * 200 + 200.000 = 40.200.000. Quelle 200.000 operazioni in più non mi vanno ad impattare l'efficienza totale quasi per nulla. Di fatto, un algoritmo che non tiene in considerazione le frequenze, quindi va per O(nm) dove n è il numero di parole e m la lunghezza massima di una parola, nel caso migliore in cui una sola parola è univoca, fa 40.000.000 (rispetto ai miei 200.200), e nel caso peggiore, la differenza è del 0,5%, quasi nulla (dal punto di vista teorico, bisogna tenere in considerazione che Python a differenza di linguaggi come C++ e Rust non e' necessariamente preciso nell'esecuzione di alcune operazioni, come l'accesso al dizionario).
+
+Suppongo che la dimostrazione fatta basti per sostenere che nel caso peggiore la soluzione che conta la frequenza delle parole e quella che non la conta, sono quasi equivalenti. L'unico problema a cui posso pensare e' quello per cui si sostiene che le operazioni di lettura e scrittura del dizionari ci mettano più di O(1), ma non e' così, anche se sono leggermente piu' lente rispetto a fare += 1.
+
+
+# Battle of titans: 'if in' VS 'try except', who will win?
+
+Per contare le frequenze, molti hanno deciso di usare 'try except' per il caso in cui la chiave non e' nel dizionario. Questa e' una scelta discutibile...
+
+Python per implementare il dizionario, usa quella che in tutti gli altri linguaggi (Rust, Java, C++ etc...) si chiama 'hash map' (tavolta 'unordered map'), una struttura dati che impiega O(1) per l'inserimento e la lettura dei valori. Il problema principale dell'hash map è che consuma tantissima memoria per memorizzare gli 'hash'. L'altra opzione è una semplice 'map' (talvolta 'ordered map') in cui gli inserimenti e le letture si fanno in O(logn), perché ordina le chiavi quando le inserisce, e per trovarle ci mette log(n) (Python ha anche una 'ordered map', ovvero un 'OrderedDict' https://www.geeksforgeeks.org/ordereddict-in-python/, ma non è l'opzione di default, sta nel modulo 'collections' insieme a tantissime altre strutture dati più mistiche tipo defaultdict, deque etc...).
+
+Detto cio', il mio punto sarebbe che controllare se una chiave e' presente in un dizionario si fa in O(1), perche' si tratta solo di vedere se l'hash esiste o meno. 
+
+## Benchmarks!
+
+Per confrontare la differenza di velocita' fra 'if in' e 'try except', possiamo fare qualche test:
+
+# Test 1
+292000 # lunghezza parola
+[0.021863100002519786] # try except
+[0.025792200001887977] # if in
+
+# Test 2
+1500 # lunghezza parola, tutte e 1500 le lettere sono distinete
+[0.0005007999716326594] # try except
+[0.00022849999368190765] # if in
+
+# Test 3
+1500000 # lunghezza parola, 1500 lettere distinte, ripetute 1000 volte; è il test più simile al test12
+[0.17142809997312725] # try except
+[0.2058435000362806] # if in
+
+La velocità dipende dall'input: se la maggior parte delle lettere sono distinte (ciascuna compare una sola volta, Test 2), if in e' due volte piu' veloce (ha senso, perche' lanciare un'eccezione ha il suo peso). Saro' onesto, su un caso molto vicino a quello del test12, ma anche in generale, try-except e' del 15% più veloce (perche' le lettere distinte sono poche, e si ripetono tantissime volte, quindi evitare di fare l'if ogni volta aiuta, anche perché l'eccezione salta fuori solo 1.500 volte su 1.500.000 esecuzioni, quindi il 0,1% delle volte, perché con 'if in' calcolo l'hash 2 volte).
+
+Preferisco comunque l' 'if in', essendo piu' pulito ed 'esplicito' ('Explicit is better than implicit', Zen of Python) in questo contesto, quindi consiglio vivamente di usare quello. Questa e' un'analisi che riguarda il mondo delle 'buone pratiche' di programmazione, piu' che della velocita'.
+
+C'e' da dire che nel caso della soluzione che conta le frequenze delle parole usare 'try except' e' piu' lento, perche' ci si ritrova nel caso in cui la maggior parte delle parole sono distinte, per cui l'if in e' circa due volte piu' veloce (dipende anche da caso a caso).
+
+
+# Conclusione
+
+Scrivete codice pulito e semplice, e sara' tutto piu' veloce. Se guardate il codice senza leggere, e vi sembra una monnezza di caratteri senza senso, non e' solo un'impressione.

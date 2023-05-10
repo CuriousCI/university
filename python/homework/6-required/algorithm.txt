@@ -1,0 +1,168 @@
+
+███████╗███╗   ██╗ █████╗ ██╗  ██╗███████╗
+██╔════╝████╗  ██║██╔══██╗██║ ██╔╝██╔════╝
+███████╗██╔██╗ ██║███████║█████╔╝ █████╗  
+╚════██║██║╚██╗██║██╔══██║██╔═██╗ ██╔══╝  
+███████║██║ ╚████║██║  ██║██║  ██╗███████╗
+╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
+                      
+█▓▒▒░░░ E l'avvenutra di "Top G" alla conquista della laurea! ('TERRA PIATTA' edition)
+
+Sarò onesto... a questo giro non c'è molto da discutere... il mio codice è una mappatura 1 a 1 del testo del problema (uso 1 for e 2 if), e le variazioni che si possono fare per migliorare l'efficienza sono poche :( 
+
+Detto ciò, questa è la storia del serpente "Top G", detto "il G", alla conquista della sua laurea, evitando di andare fuoricorso (proverò a condividere i trucchi principali che ho usato per scrivere il codice e alcune soluzioni alternative, con i relativi difetti) ༼ つ ◕_◕ ༽つ
+
+
+███████╗██╗   ██╗ ██████╗██╗     ██╗██████╗ ███████╗██╗
+██╔════╝██║   ██║██╔════╝██║     ██║██╔══██╗██╔════╝██║
+█████╗  ██║   ██║██║     ██║     ██║██║  ██║█████╗  ██║
+██╔══╝  ██║   ██║██║     ██║     ██║██║  ██║██╔══╝  ╚═╝
+███████╗╚██████╔╝╚██████╗███████╗██║██████╔╝███████╗██╗
+╚══════╝ ╚═════╝  ╚═════╝╚══════╝╚═╝╚═════╝ ╚══════╝╚═╝
+
+█▓▒▒░░░ Un'arma particolare! (Ma quanto è veloce?)
+
+Uno dei problemi maggiori che il nostro eroe deve affrontare, essendo un terrapiattista, è quello del leggendario "effetto pac-man": quando esce da un lato della mappa deve teletrasportarsi dal lato opposto! Beh... la soluzione più intuitiva che viene in mente al G è quella di usare degli "if" per controllare, sia per la x sia per la y, se la posizione è fuori dalla mappa... Purtroppo "G" sa che sta usando Python (uno dei linguaggi in cui l'"if" è un'operazione lenta! (⌐■_■)) e ha dei limiti di intricatezza molto bassi (un altro tentativo del suo arcinemico S-Terminator di impedirgli di laurearsi), e vuole trovare una soluzione migliore!
+
+A questo punto si ricorda di aver sbloccato in un'avventura precedente ("alla conquista della Bugatti") un'arma con un nome bizzarro: "Il resto della divisione Euclidea" (le istruzioni sono più lunghe del nome, e, piuttosto che leggerle, ha preferito non usarla fino ad'ora...)
+
+Maneggiando casualmente "Il resto della divisione Euclidea", "il G" scopre che fa proprio a suo caso!
+
+Andando troppo a destra, scopre che calcolando l'arma, usata sulla sua x, lo riporta automagicamente all'inizio della mappa!
+┌───┬───┬───┐
+│ > │   │ x │ x
+├───┼───┼───┤
+│   │   │   │
+├───┼───┼───┤
+│   │   │   │
+└───┴───┴───┘
+
+Ancora più bizzarro, ma figo, se va troppo a sinistra (e la sua x diventa negativa), viene riportato alla fine della mappa!
+┌───┬───┬───┐
+│ x │   │ < │ x
+├───┼───┼───┤
+│   │   │   │
+├───┼───┼───┤
+│   │   │   │
+└───┴───┴───┘
+
+E lo stesso vale per la sua y...
+
+Effettivamente, "Il resto della divisione Euclidea" è un'arma più potente rispetto all'"if", ed è più compatta! Ci sarebbe solo un caso in cui l'"if" è più veloce, ma la differenza è trascurabile (quasi inesistente), ed è necessario che la x sia SEMPRE fuori dalla mappa! (Lo nomino per correttezza, ma nel caso generale è comunque svantaggioso)
+
+
+███████╗██╗    ██╗████████╗██╗ ██████╗██╗  ██╗
+██╔════╝██║    ██║╚══██╔══╝██║██╔════╝██║  ██║
+███████╗██║ █╗ ██║   ██║   ██║██║     ███████║
+╚════██║██║███╗██║   ██║   ██║██║     ██╔══██║
+███████║╚███╔███╔╝   ██║   ██║╚██████╗██║  ██║
+╚══════╝ ╚══╝╚══╝    ╚═╝   ╚═╝ ╚═════╝╚═╝  ╚═╝
+
+█▓▒▒░░░ Il potere dei dizionari... 
+
+"I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it" (Bill Gates)
+
+Come abbiamo capito da prima, "Top G" è pigro! (Forse troppo pigro per un avventuriero...) E non gli va di scrivere 8 condizioni diverse per capire come muoversi sulla mappa! (Beh... chi gli può dare torto?) E pensare a quante ancora per controllare se sta passando sopra se stesso in diagonale!
+
+Il G per fortuna è intelligente (cioè... ricco... sta pagando un suo amico intelligente per fare l'HW) e sa che nell'inventario ha l'arma perfetta per l'occasione!
+
+Può usare un dizionario ("Il dizionario dello spostamento") in cui associa ad ogni direzione lo spostamento della x e della y... per esempio, se va ad est:
+┌───┬───┬───┐
+│   │   │   │
+├───┼───┼───┤
+│   │ x │ x │
+├───┼───┼───┤
+│   │   │   │
+└───┴───┴───┘
+Può scrivere 'E': (1, 0) (La x si sposta di 1, e la y di 0)...
+
+Se va a nord-ovest
+┌───┬───┬───┐
+│ x │   │   │
+├───┼───┼───┤
+│   │ x │   │
+├───┼───┼───┤
+│   │   │   │
+└───┴───┴───┘
+Può scrivere 'NW': (-1, -1) (La x si sposta di -1, e la y di -1)...
+
+A questo punto, il G si sbarazza degli "if"! Sfrutta "Il dizionario dello spostamento" per decidere dove muoversi!
+
+Il G decide di fondere "Il resto della divisione Euclidea" con "Il dizionario dello spostamento" per sbloccare una nuova arma: "Lo spostamento terrapiattista"! (⌐■_■)ノ♪
+
+(Tornerà utile per sconfiggere S-Terminator)
+
+
+██████╗ ██╗ █████╗  ██████╗  ██████╗ ███╗   ██╗ █████╗ ██╗     ██╗
+██╔══██╗██║██╔══██╗██╔════╝ ██╔═══██╗████╗  ██║██╔══██╗██║     ██║
+██║  ██║██║███████║██║  ███╗██║   ██║██╔██╗ ██║███████║██║     ██║
+██║  ██║██║██╔══██║██║   ██║██║   ██║██║╚██╗██║██╔══██║██║     ██║
+██████╔╝██║██║  ██║╚██████╔╝╚██████╔╝██║ ╚████║██║  ██║███████╗██║
+╚═════╝ ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝
+
+█▓▒▒░░░ Improvise. Adapt. Overcome.
+
+Le diagonali sono l'ultimo ostacolo che S-Terminator ha messo fra il "Top G" e la laurea! Per fortuna anche in questo caso "Il dizionario dello spostamento" torna utile!
+
+Analizziamo i vari casi...
+
+Se vado a nord-ovest devo controllare la cella a nord e la cella a ovest...
+┌───┬───┬───┐
+│ - │ # │   │
+├───┼───┼───┤
+│ # │ x │   │
+├───┼───┼───┤
+│   │   │   │
+└───┴───┴───┘
+Quindi 'NW': (-1, -1)
+
+Se vado a nord-est devo controllare la cella a nord e la cella a est...
+┌───┬───┬───┐
+│   │ # │ - │
+├───┼───┼───┤
+│   │ x │ # │
+├───┼───┼───┤
+│   │   │   │
+└───┴───┴───┘
+Quindi 'NE': (+1, -1)
+
+Se vado a sud-ovest devo controllare la cella a ovest e la cella 
+┌───┬───┬───┐
+│   │   │   │
+├───┼───┼───┤
+│ # │ x │   │
+├───┼───┼───┤
+│ - │ # │   │
+└───┴───┴───┘
+Quindi 'NE': (-1, +1)
+
+Se vado a sud-est, avete già capito come fare...
+┌───┬───┬───┐
+│   │   │   │
+├───┼───┼───┤
+│   │ x │ # │
+├───┼───┼───┤
+│   │ # │ - │
+└───┴───┴───┘
+
+A questo punto, basta controllare due posizioni sulla mappa: quella con la stessa x del G, e la y spostata, e quella con la stessa y del G e la x spostata, e il gioco è fatto!
+
+
+█▓▒▒░░░ Un'altra strategia... 
+
+Nel mio caso, ho preferito colorare il serpente ad ogni mossa, quindi, per le diagonali, mi basta controllare se il pixel è verde. Un'altra soluzione è quella di colorare il serpente alla fine... In quel caso, si può comunque usare "Il dizionario dello spostamento" per controllare se quella determinata posizione sta nel serpente con "if in", il problema è che pur riuscendo a colorare alla fine (quindi evitando di disegnare tanti pixel verdi inutili nel corso del gioco), il fatto di dover usare "if in" per controllare se il serpente incrocia se stesso rallenta l'esecuzione! Ancora peggio se si provano a usare le slice per colorare il serpente (caso in cui bisogna creare un for apposito solo per determinare i vari "range" che hanno la stessa y e x diverse, quindi rallentare l'esecuzione)
+
+
+█▓▒▒░░░ Vittoria! 
+
+Il "Top G" è riuscito così a conquistare la laurea e sconfiggere S-Terminator!
+
+
+████████╗██╗  ██╗███████╗    ███████╗███╗   ██╗██████╗ 
+╚══██╔══╝██║  ██║██╔════╝    ██╔════╝████╗  ██║██╔══██╗
+   ██║   ███████║█████╗      █████╗  ██╔██╗ ██║██║  ██║
+   ██║   ██╔══██║██╔══╝      ██╔══╝  ██║╚██╗██║██║  ██║
+   ██║   ██║  ██║███████╗    ███████╗██║ ╚████║██████╔╝
+   ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚══════╝╚═╝  ╚═══╝╚═════╝ 
+
+La "TopG production" vi ringrazia per l'attenzione! Se la storia non vi è piacuta, per favore, non mettete 2 stelle nei voti... pensate all'impegno che ci ho messo ༼ つ ◕_◕ ༽つ... Se pensate che l'algoritmo non è efficiente, sappiate che è nella top 3 nella leaderboard...

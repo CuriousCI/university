@@ -1,0 +1,178 @@
+ 
+ ██████╗ ████████╗██╗  ██╗███████╗██╗     ██╗      ██████╗ 
+██╔═══██╗╚══██╔══╝██║  ██║██╔════╝██║     ██║     ██╔═══██╗
+██║   ██║   ██║   ███████║█████╗  ██║     ██║     ██║   ██║
+██║   ██║   ██║   ██╔══██║██╔══╝  ██║     ██║     ██║   ██║
+╚██████╔╝   ██║   ██║  ██║███████╗███████╗███████╗╚██████╔╝
+ ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝ ╚═════╝ 
+
+Per favore, non lamentatevi se la descrizione dell'algoritmo è troppo lunga. L'HW8 è stato divertente, con tantissime occasioni per ottimizzare e diverse strategie possibili (ciascuna con pro e contro), e meritano tutte di essere trattate con un certo onore! Magari in questa descrizione potreste trovare il trucco per ottimizzare il vostro algoritmo! (Ci tengo a sottolineare che la mia soluzione ha 83 di efficienza, quindi i consigli che do sono abbastanza fondati...)
+
+
+██████╗ ███████╗ █████╗ ██████╗ ██╗   ██╗              ██████╗  ██████╗ ██╗
+██╔══██╗██╔════╝██╔══██╗██╔══██╗╚██╗ ██╔╝             ██╔════╝ ██╔═══██╗██║
+██████╔╝█████╗  ███████║██║  ██║ ╚████╔╝              ██║  ███╗██║   ██║██║
+██╔══██╗██╔══╝  ██╔══██║██║  ██║  ╚██╔╝               ██║   ██║██║   ██║╚═╝
+██║  ██║███████╗██║  ██║██████╔╝   ██║   ██╗██╗██╗    ╚██████╔╝╚██████╔╝██╗
+╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝    ╚═╝   ╚═╝╚═╝╚═╝     ╚═════╝  ╚═════╝ ╚═╝
+
+
+# Loading... 
+
+Il caricamento del file e il calcolo dei risultati sono le parti dell'algoritmo che impattano di meno l'efficienza, quindi non ci perderei molto tempo. 
+
+Per salvare il contenuto del file in una matrice mi è bastato un str.split() su ogni riga del file (file.readlines()). 
+
+
+# Knight c3
+
+La prima cosa che bisogna fare è calcolarsi le coordinate delle posizioni vuote. La soluzione più banale e lenta è quella di calcolarsele ogni volta che si genera una configurazione (ovvero, viene eseguita una mossa). Ci sono ben due ottimizzazioni che si possono fare sotto questo punto di vista.
+
+
+## Knight b5
+
+La prima idea è quella di calcolarsi le coordinate delle posizioni vuote solo la prima volta, salvarle in una lista, e passare quella lista ad ogni configurazione, in questo modo non me le ricalcolo ogni volta, e so già quali sono (il numero di celle vuote non può aumentare può solo diminuire ad ogni mossa). A questo punto mi risparmi il fatto di dover controllare tutta la scacchiera ogni volta, perché so già quali sono le possibili posizione vuote (mi serve comunque un "if" per controllare se ogni posizione è rimasta vuota oppure se è stata occupata da una mossa)
+
+
+## Knight c7, check
+
+La seconda ottimizzazione per le posizioni vuote è molto interessante: ogni volta che faccio una mossa (quindi occupo una x e una y vuota nella scacchiera), mi faccio una copia della lista con le coordinate delle posizioni vuote, e rimuovo la coordinata della mossa che ho appena fatto. In questo modo, ogni volta che scorro la lista delle posizioni vuote, non serve un "if" per controllare se ogni posizione è rimasta effettivamente vuota, perché quelle occupate le rimuovo ad ogni nuova mossa. Potrebbe essere discutibile il fatto che ".remove((x, y))" è un'operazione lenta, ma, a quanto pare, in questo HW usare ".remove()" è più veloce rispetto ad usare un "if" per ogni posizione vuota.
+
+
+# Queen's gambit
+
+Il prossimo step per risolvere il problema consiste nel controllare le posizioni adiacenti ad ogni posizione vuota. Questo ci serve in 2 situazioni: per controllare se una posizione vuota è una mossa valida o meno, e per cambiare il colore delle celle avversarie adiacenti per ogni mossa valida, quindi è un'operazione che sarebbe bne ottimizzare. 
+
+Partirei dalla strategia che ho usato per calcolare le celle adiacenti: mi sono creato una lista del tipo ((-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)) con le coordinate delle celle adiacenti alla posizione (0, 0). La cosa interessante è che se voglio controllare le celle adiacenti di una coordinata arbitraria (Es. (19, 32)), basta sommare questi valori alla coordinata (Es. (19, 32) + (0, -1) -> (19, 31) che sarebbe la cella a nord). A questo punto basta usare un if per controllare se le coordinate che escono fuori da ogni somma sono valide (sono all'interno della scacchiera) e le posso usare. Fare queste operazioni (specialmente l'"if", ma anche le somme) ogni volta è abbastanza costoso... ma si può ottimizzare!
+
+(P.S sono troppo pigro per fare questa cosa con tanti if, oltre al fatto che il codice sarebbe illeggibile)
+
+ 
+## Sicilian Defense
+
+...Possiamo ottimizzare creando un dizionario! Se ci si pensa una attimo, le uniche posizioni "adiacenti" che ci interessano sono quelle adiacenti alle posizioni vuote! Quindi, per ogni posizione vuota, mi calcolo quali sono le coordinate delle celle adiacenti all'inizio, creando un dizionario in cui associo ad ogni posizione vuota le coordinate delle adiacenti. Ad esempio, se ho (0, 0) come posizione vuota, avrò una entry nel dizionario del tipo
+
+{
+    (0, 0): [(0, 1), (1, 1), (1, 0)]
+}
+
+In questo modo, se passo questo dizionario alla funzione ricorsiva, mi evito ogni volta di fare le somme ed i controlli con gli "if", che sono molto costosi (e risparmio molto tempo)
+
+
+## French Defense
+
+Una piccola nota: potrei evitare di controllare le "posizioni adiacenti" due volte nella funzione ricorsiva, e farlo una volta sola, ma il fatto di calcolarlo una volta sola e usare un dizionario d'appoggio mi rallenta l'esecuzione. Se riesco a trovare un modo veloce di controllare se una mossa è valida e cambiare il colore delle celle intorno si tratta di un possibile miglioramento della pulizia del codice (ma non credo che migliori l'efficienza).
+
+
+# White Pawn d4 - Black Pawn d5
+
+Una piccola nota va fatta sulla "copia" della scacchiera. Ogni volta che voglio eseguire una mossa, devo copiarmi la scacchiera (altrimenti non ha senso la ricorsione, perché modifico sempre la "scacchiera originale", e non è quello che voglio). La "copia", specialmente di una struttura come una matrice, è un'operazione lentissima, e, dei vari metodi che ho provato, ce n'è uno che è particolarmente veloce:
+
+board_copy = list(map(list.copy, board))
+
+Altri potrebbero optare per "[row.copy() for row in board]" perché più leggibile, ma è leggermente più lento (e quando fai tantissime operazioni, ha il suo impatto). Il vantaggio di usare "map" in questo caso sta nel fatto che il metodo "list.copy" è una funzione definita da Python, quindi ottimizzabile in C se combinata con "map".
+
+
+# Draw! (ricorsione!)
+
+Volevo perdere 2 parole per spiegare generalmente come ho svolto la ricorsione per completezza: 
+
+1) Itero le posizioni vuote 
+2) Se una posizione vuota è valida, copio la scacchiera e la lista con le posizioni vuote
+3) Dalla lista con le posizioni vuote rimuovo la (x, y) della posizione valida che sto analizzando
+4) Mi copio la scacchiera, coloro la posizione vuota che sto analizzando e le posizioni intorno in cui è necessario
+5) Ripeto fino a quando non ci sono più mosse valide 
+
+Abbastanza semplice...
+
+Il caso base è quando "non ci sono più mosse valide", caso in cui converto la matrice in una stringa (con "''.join(map(''.join, board))"), e uso ".count" per contare il numero di neri e bianchi. A questo punto, ritorno la differenza fra il numero di neri e il numero di bianchi. Chiamiamo tale numero "x". Se x > 0 ha vinto il nero, se è < 0 ha vinto il bianco, se è == 0 è un pareggio (Uso la sottrazione perché per Python è più comodo lavorare su liste di numeri, rispetto ad usare strutture più complesse)
+
+In un caso non base, la funzione ritorna una lista con tutti i risultati dei figli (uso il metodo ".extend" delle liste per espandere ogni volta questa lista, perché più veloce)
+
+
+# Checkmate 
+
+Manca solo un'ottimizzazione da discutere, e, prima che possiate controbbattere, è un'ottimizzazione lecita, il prof. lo ha confermato qui https://q2a.di.uniroma1.it/28471/hw-8-approcci-consentiti?course=hw8/homeworks/fondamenti-di-programmazione-22-23.
+
+Se si osservano attentamente gli output, si nota che combinazioni di mosse diverse possono portare alla stessa configurazione della scacchiera! (Il alcuni test, solo il 70% delle configurazioni generate sono univoche), quindi quello che posso fare è usare un dizionario in cui, per ogni scacchiera che trovo, mi memorizzo i risultati. Quando mi capita che reincontro la stessa scacchiera, basta tirare fuori il valore dal dizionario, senza rifare tutti i calcoli (Solo questa ottimizzazione, mi dimezza i tempi, perché il resto del codice è comunque abbastanza efficiente; in un codice molto più lento, questa cosa può risparmiare molto più tempo). 
+
+Siccome in un dizionario non si possono usare le matrici come chiavi, uso "''.join(map(''.join, board))" per convertire la scacchiera in una stringa che posso usare come chiave (e successivamente per contare il numero di neri e bianchi)
+
+
+# Black - White!
+
+A questo punto non resta che calcolare i risultati alla fine (ricordo che la funzione ricorsiva mi genera una lista con tutti i risultati possibili). Se i risultati non li calcolo dentro alla funzione ricorsiva, è perché questa strategia supera l'intricatezza, ma sarebbe una prova che dovrei comunque fare, perché mi risparmio la creazione di una lista e un po' di operazioni per estendere la lista.
+
+
+███████╗██╗███╗   ██╗
+██╔════╝██║████╗  ██║
+█████╗  ██║██╔██╗ ██║
+██╔══╝  ██║██║╚██╗██║
+██║     ██║██║ ╚████║
+╚═╝     ╚═╝╚═╝  ╚═══╝
+
+Con questo, la descrizione del mio algoritmo è finita (e mi sono limitato, per l'HW4 ho scritto 2200 parole, a questo solo 1500). Spero vi sia stata utile, o, per lo meno, che sia stata piacevole e interessante. Detto questo, vi auguro buona fortuna per l'esame! ༼ つ ◕_◕ ༽つ
+
+
+                                          ....
+                                         W$$$$$u
+                                         $$$$F**+           .oW$$$eu
+                                         ..ueeeWeeo..      e$$$$$$$$$
+                                     .eW$$$$$$$$$$$$$$$b- d$$$$$$$$$$W
+                         ,,,,,,,uee$$$$$$$$$$$$$$$$$$$$$ H$$$$$$$$$$$~
+                      :eoC$$$$$$$$$$$C""?$$$$$$$$$$$$$$$ T$$$$$$$$$$"
+                       $$$*$$$$$$$$$$$$$e "$$$$$$$$$$$$$$i$$$$$$$$F"
+                       ?f"!?$$$$$$$$$$$$$$ud$$$$$$$$$$$$$$$$$$$$*Co
+                       $   o$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+               !!!!m.*eeeW$$$$$$$$$$$f?$$$$$$$$$$$$$$$$$$$$$$$$$$$$$U
+               !!!!!! !$$$$$$$$$$$$$$  T$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                *!!*.o$$$$$$$$$$$$$$$e,d$$$$$$$$$$$$$$$$$$$$$$$$$$$$$:
+               "eee$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$C
+              b ?$$$$$$$$$$$$$$**$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$!
+              Tb "$$$$$$$$$$$$$$*uL"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
+               $$o."?$$$$$$$$F" u$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                $$$$en ```    .e$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
+                 $$$B*  =*"?.e$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$F
+                  $$$W"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+                   "$$$o#$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+                  R: ?$$$W$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" :!i.
+                   !!n.?$???""``.......,``````"""""""""""``   ...+!!!
+                    !* ,+::!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*`
+                    "!?!!!!!!!!!!!!!!!!!!~ !!!!!!!!!!!!!!!!!!!~`
+                    +!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!?!`
+                  .!!!!!!!!!!!!!!!!!!!!!' !!!!!!!!!!!!!!!, !!!!
+                 :!!!!!!!!!!!!!!!!!!!!!!' !!!!!!!!!!!!!!!!! `!!:
+              .+!!!!!!!!!!!!!!!!!!!!!~~!! !!!!!!!!!!!!!!!!!! !!!.
+             :!!!!!!!!!!!!!!!!!!!!!!!!!.`:!!!!!!!!!!!!!!!!!:: `!!+
+             "~!!!!!!!!!!!!!!!!!!!!!!!!!!.~!!!!!!!!!!!!!!!!!!!!.`!!:
+                 ~~!!!!!!!!!!!!!!!!!!!!!!! ;!!!!~` ..eeeeeeo.`+!.!!!!.
+               :..    `+~!!!!!!!!!!!!!!!!! :!;`.e$$$$$$$$$$$$$u .
+               $$$$$$beeeu..  `````~+~~~~~" ` !$$$$$$$$$$$$$$$$ $b
+               $$$$$$$$$$$$$$$$$$$$$UU$U$$$$$ ~$$$$$$$$$$$$$$$$ $$o
+              !$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$. $$$$$$$$$$$$$$$~ $$$u
+              !$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$! $$$$$$$$$$$$$$$ 8$$$$.
+              !$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$X $$$$$$$$$$$$$$`u$$$$$W
+              !$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$! $$$$$$$$$$$$$".$$$$$$$:
+               $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  $$$$$$$$$$$$F.$$$$$$$$$
+               ?$$$$$$$$$$$$$$$$$$$$$$$$$$$$f $$$$$$$$$$$$' $$$$$$$$$$.
+                $$$$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$  $$$$$$$$$$!
+                "$$$$$$$$$$$$$$$$$$$$$$$$$$$ ?$$$$$$$$$$$$  $$$$$$$$$$!
+                 "$$$$$$$$$$$$$$$$$$$$$$$$Fib ?$$$$$$$$$$$b ?$$$$$$$$$
+                   "$$$$$$$$$$$$$$$$$$$$"o$$$b."$$$$$$$$$$$  $$$$$$$$'
+                  e. ?$$$$$$$$$$$$$$$$$ d$$$$$$o."?$$$$$$$$H $$$$$$$'
+                 $$$W.`?$$$$$$$$$$$$$$$ $$$$$$$$$e. "??$$$f .$$$$$$'
+                d$$$$$$o "?$$$$$$$$$$$$ $$$$$$$$$$$$$eeeeee$$$$$$$"
+                $$$$$$$$$bu "?$$$$$$$$$ 3$$$$$$$$$$$$$$$$$$$$*$$"
+               d$$$$$$$$$$$$$e. "?$$$$$:`$$$$$$$$$$$$$$$$$$$$8
+       e$$e.   $$$$$$$$$$$$$$$$$$+  "??f "$$$$$$$$$$$$$$$$$$$$c
+      $$$$$$$o $$$$$$$$$$$$$$$F"          `$$$$$$$$$$$$$$$$$$$$b.
+     M$$$$$$$$U$$$$$$$$$$$$$F"              ?$$$$$$$$$$$$$$$$$$$$$u
+     ?$$$$$$$$$$$$$$$$$$$$F                   "?$$$$$$$$$$$$$$$$$$$$u
+      "$$$$$$$$$$$$$$$$$$"                       ?$$$$$$$$$$$$$$$$$$$$o
+        "?$$$$$$$$$$$$$F                            "?$$$$$$$$$$$$$$$$$$
+           "??$$$$$$$F                                 ""?3$$$$$$$$$$$$F
+                                                     .e$$$$$$$$$$$$$$$$'
+                                                    u$$$$$$$$$$$$$$$$$
+                                                   `$$$$$$$$$$$$$$$$"
+                                                    "$$$$$$$$$$$$F"
+                                                      ""?????""
