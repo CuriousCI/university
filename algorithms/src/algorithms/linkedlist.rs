@@ -4,8 +4,7 @@ pub struct LinkedList<T> {
 }
 
 // impl<T> From<Vec<T>> for LinkedList<T> {
-//     fn from(value: Vec<T>) -> Self {
-//     }
+//     fn from(value: Vec<T>) -> Self {}
 // }
 
 impl<T> LinkedList<T> {

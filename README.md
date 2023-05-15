@@ -5,7 +5,10 @@ Just code & projects for university
 
 1. **First Year**
     1. ***First Semester***
-        1. [Python](./python/) 
+        1. [Python](./python/) _([exercises]())_
+        | ![]() |
+        |:--:|
+        | * * |
         2. [Digital Design](./verilog/) _([exercises](https://github.com/sapienzastudentsnetwork/psd2223))_
         3. Discrete Mathematics _([exercises](https://github.com/sapienzastudentsnetwork/mmi2122))_
         4. Calculus I _(Functions, Derivates, Theorems)_
@@ -14,6 +17,9 @@ Just code & projects for university
         2. [Computer Architecture](./assembly/)
         3. [Algorithms & Data Structures](./algorithms/)
         4. Calculus I _(Series, Integrals, Differential Equations)_ _([exercises](https://github.com/sapienzastudentsnetwork/calcint2223))_
+        | ![]() |
+        |:--:|
+        | * * |
 
 2. **Second Year**
     1. ***First Semester***
