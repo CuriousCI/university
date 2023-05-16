@@ -85,5 +85,30 @@
 18. [ ] [Exercises on Pipeline]()
 19. [ ] [Pipeline & Hazard]()
 20. [ ] [Exercises on Exam]()
-21. [ ] [Cache]()
+21. [ ] [Cache](https://drive.google.com/file/d/13\_z3H6EqCx1dK84NkEVajC\_9NVXKg1Rf/view)
+    1. [ ] [Memory Access]()
+    2. [ ] [Direct Mapping]()
+    3. [ ] [Cache Size]()
+22. [ ] [Multi-Level Cache](https://drive.google.com/file/d/17E5Yzo6kRN9ujz\_nizlzxlOLH6ZZAjnl/view)
+    1. [ ] [Set-Associative Mapping]() 
+    2. [ ] [Replacement Policy]() 
+    3. [ ] [Writing Policy]() 
 
+# Computer Architecture
+
+
+## 21. Cache
+
+### 1. Memory Access
+
+### 2. Direct Mapping
+
+### 3. Cache Size
+
+## 22. Cache
+
+### 1. Set-Associative Mapping
+
+### 2. Replacement Policy
+
+### 3. Writing Policy
