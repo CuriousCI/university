@@ -82,6 +82,9 @@ pub mod exercises {
     // Pdf 16, Slide 32, Ex 1
     impl<T: Copy> From<ParentTree<T>> for BinaryTree<T> {
         fn from(value: ParentTree<T>) -> Self {
+            // get depth
+            // generate positions array from parents with stack
+            // create array with values and associated parents, using nodes number
             let btree_size = 2_usize.pow(value.depth() as u32) - 1;
             let mut tree = BinaryTree::from(vec![None; btree_size]);
 

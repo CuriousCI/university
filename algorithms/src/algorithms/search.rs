@@ -3,32 +3,38 @@ use std::cmp::Ordering::{Equal, Greater, Less};
 // TODO: use boxed array instead of iterable / vec
 // because iter can be collected into Vec, and converted into boxed
 
-pub fn search<T: Eq, L>(iterable: L, value: T) -> Option<usize>
-where
-    for<'a> &'a L: IntoIterator<Item = &'a T>,
-{
-    for (i, v) in iterable.into_iter().enumerate() {
-        if *v == value {
-            return Some(i);
-        }
-    }
-    None
+// where
+//     for<'a> &'a L: IntoIterator<Item = &'a T>,
+// .into_iter()
+// for (i, v) in iterable.into_iter().enumerate() {
+//     if *v == value {
+//         return Some(i);
+//     }
+// }
+// None
+
+pub fn search<'a, T: Eq, L: Iterator<Item = &'a T>>(iterator: L, value: &'a T) -> Option<usize> {
+    iterator
+        .enumerate()
+        .find_map(|(i, v)| if v == value { Some(i) } else { None })
 }
 
-pub fn binary_search<T: Ord>(vector: &Vec<T>, value: T) -> Option<usize> {
-    let mut step = vector.len();
+pub fn binary_search<T: Ord>(array: &[T], value: &T) -> Option<usize> {
+    let mut step = array.len();
     let mut index = 0;
 
     while step > 0 {
-        while index + step < vector.len() {
-            let cmp = match vector.get(index + step) {
-                Some(v) => v.cmp(&value),
+        let next = index + step;
+
+        while next < array.len() {
+            let cmp = match array.get(next) {
+                Some(v) => v.cmp(value),
                 None => break,
             };
 
             match cmp {
-                Equal => return Some(index + step),
-                Less => index += step,
+                Equal => return Some(next),
+                Less => index = next,
                 Greater => break,
             }
         }
@@ -39,17 +45,18 @@ pub fn binary_search<T: Ord>(vector: &Vec<T>, value: T) -> Option<usize> {
     None
 }
 
-pub fn upper_bound<T: Ord>(vector: &Vec<T>, value: T) -> Option<usize> {
-    let mut step = vector.len();
+pub fn upper_bound<T: Ord>(array: &Vec<T>, value: T) -> Option<usize> {
+    let mut step = array.len();
     let mut index = 0;
 
-    if vector.first().unwrap() > &value {
+    if array.first().unwrap() > &value {
         return None;
     }
 
     while step > 0 {
-        while index + step < vector.len() {
-            let cmp = match vector.get(index + step) {
+        let next = index + step;
+        while index + step < array.len() {
+            let cmp = match array.get(index + step) {
                 Some(v) => v.cmp(&value),
                 None => break,
             };
