@@ -1,0 +1,23 @@
+[book]
+title = "Example book"
+authors = ["John Doe"]
+description = "The example book covers examples."
+
+# [rust]
+# edition = "2018"
+
+[build]
+build-dir = ""
+create-missing = false
+
+[preprocessor.index]
+
+[preprocessor.links]
+
+
+# [output.html]
+# additional-css = ["custom.css"]
+
+# [output.html.search]
+# limit-results = 15
+
