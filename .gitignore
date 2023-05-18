@@ -164,3 +164,4 @@ hs_err_pid*
 replay_pid*
 .metadata/
 jdt.ls-java-project/
+.git/

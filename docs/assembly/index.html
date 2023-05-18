@@ -1,0 +1,638 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Computer Architecture - Computer Science @ Sapienza</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Just code &amp; projects for university">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">README</a></li><li class="chapter-item expanded affix "><li class="part-title">I year</li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.</strong> Python</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">1.1.</strong> Exercises</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.2.</strong> Laboratory</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.3.</strong> Homeworks</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> Digital Design</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">2.1.</strong> Numbering Systems</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.2.</strong> IEEE-754</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.3.</strong> Transistors</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.4.</strong> Logic Gates</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.5.</strong> Boolean Algebra</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.6.</strong> Combinatorial Circuits</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.7.</strong> Sequential Circuits</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.8.</strong> Finite State Machines</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.9.</strong> Arithmetic Circuits</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.10.</strong> Memory Arrays</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.11.</strong> Logic Arrays</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.12.</strong> Verilog</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> Discrete Mathematics</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> Calculus I</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> Java</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">5.1.</strong> OOP</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.2.</strong> Laboratory</div></li></ol></li><li class="chapter-item expanded "><a href="../assembly/index.html" class="active"><strong aria-hidden="true">6.</strong> Computer Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">6.1.</strong> 1951 IAS Machine</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.2.</strong> MIPS</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.3.</strong> Assembly</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">6.3.1.</strong> Statements in Assembly</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.3.2.</strong> Vectors & Matrices</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.3.3.</strong> Syscalls & Procedures</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.3.4.</strong> Recursion</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.4.</strong> Single Clock Cycle Architecture</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.5.</strong> Modifying the CPU</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.6.</strong> Pipeline</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.7.</strong> Cache</div></li></ol></li><li class="chapter-item expanded "><a href="../algorithms/index.html"><strong aria-hidden="true">7.</strong> Algorithms & Data Structures</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> Computational Cost</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.1.</strong> Big O</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.2.</strong> Recurrence Equations</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> Searching Algorithms</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.3.</strong> Recursion</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.4.</strong> Naive Sorting</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.5.</strong> Merge Sort</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.6.</strong> Quick Sort</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.7.</strong> Heap Sort</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.8.</strong> Linear Sorting</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.9.</strong> Linked List</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.10.</strong> Queue</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.11.</strong> Stack</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.12.</strong> Trees</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.13.</strong> Dictionaries</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.13.1.</strong> Binary Search Tree</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.13.2.</strong> Red-Black Tree</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> Calculus I</div></li><li class="chapter-item expanded affix "><li class="part-title">II year</li><li class="chapter-item expanded affix "><li class="part-title">III year</li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> Competitive</div></li><li class="spacer"></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Computer Science @ Sapienza</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/CuriousCI/university" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <ol>
+<li><input disabled="" type="checkbox" checked=""/>
+<a href="https://drive.google.com/file/d/1fwoa_kESFA75jYDheYJAeZlso1BqrGC6/view">1951 IAS Machine Architecture</a>
+<ol>
+<li><input disabled="" type="checkbox" checked=""/>
+<a href="">Word</a></li>
+<li><input disabled="" type="checkbox" checked=""/>
+<a href="">CPU</a></li>
+<li><input disabled="" type="checkbox" checked=""/>
+<a href="">Instructions</a></li>
+<li><input disabled="" type="checkbox" checked=""/>
+<a href="">Program</a></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox" checked=""/>
+<a href="https://drive.google.com/file/d/1gXNULU9V-o77Zd-rGHQwvdszKDAbdHT7/view">MIPS pt.1</a>
+<ol>
+<li><input disabled="" type="checkbox" checked=""/>
+<a href="">RISC vs CISC</a></li>
+<li><input disabled="" type="checkbox" checked=""/>
+<a href="">Numerical Systems &amp; Standards</a></li>
+<li><input disabled="" type="checkbox"/>
+[Microprocessor without Interlocked Pipelined Stages]</li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Instructions</a></li>
+<li><input disabled="" type="checkbox" checked=""/>
+<a href="">R-type Instructions</a> <em>(register)</em></li>
+<li><input disabled="" type="checkbox" checked=""/>
+<a href="">I-type Instructions</a> <em>(immediate)</em></li>
+<li><input disabled="" type="checkbox" checked=""/>
+<a href="">J-type Instructions</a> <em>(jump)</em></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/1xzV-vqypdIcDoRf6Yy7QQQ2bDI03AsRi/view">MIPS pt.2</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">Memory Organization</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">ISA</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Registers</a> <em>( + 7.25)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">FR-type Instructions</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">FI-type Instructions</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Data Types</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 1</a> <em>(s. 10)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 2</a> <em>(s. 11)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 3</a> <em>(s. 17)</em></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/1zPNd-j8MB2BGvIXOkZ3wqt7rc55TOhJL/view">MIPS pt.3</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">if else</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">do while</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">while</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">for</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">switch</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Linker &amp; globl</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Pseudo-Instructions</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 1</a> <em>(s. 34)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 2</a> <em>(s. 35)</em></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/15Nt6-bs3Vsw_N2tyTs5JuLPEFW_-iiCL/view">Vectors &amp; Matrices</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">Vectors</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">ASCII</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Endianess</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">3D Matrices</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 1</a> <em>(s. 10)</em></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/1huzOF0cJQH-wdABF-9eoQuNAYMK458LW/view">Syscalls &amp; Procedures</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">Diagonal Sum</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Syscalls Codes</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Hello World</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">jal &amp; jr</a></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/1hv1b9m6XY-kiizGSCo9gJNuHowSvzAJ2/view">Functions &amp; Activation Records</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">lui &amp; ori</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">$sp</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 1</a> <em>(s. 1)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 2</a> <em>(s. 22)</em></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/1lMYGhEwdZYCAzBHU42qv_JnXspFkU5ez/view">Recursion</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">factorial</a></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/1qoy0XIhP64NhaCFfKU4N-XChhOTJGQcV/view">Recursion</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 1</a> <em>(s. 1)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 2</a> <em>(s. 6)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 3</a> <em>(s. 16)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 4</a> <em>(s. 17)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 5</a> <em>(s. 30)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 6</a> <em>(s. 34)</em></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/1t_DDjDgztz62KorWbXyNq1XjTG-5oqYO/view">Exercises on Assembly</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 1</a> <em>(s. 10)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 2</a> <em>(s. 11)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 3</a> <em>(s. 12)</em></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/1v9vOsCyBIfoHtCxLqRW_W-HwVDz3G1Sv/view">Single Clock Cycle Architecture</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">Instruction Detail</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">ALU OP Codes</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">ALU Control</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Control Signals</a> <em>(s. 28)</em></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Execution Time</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 1</a> <em>(s. 31)</em></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/1wCJAPM3tON3mOJGNyEq4eRgVku-ZtwP_/view">New Instructions</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">lw, sw, beq, add, j, jal</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Add New Instr.</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 1</a> <em>(s. 27)</em></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/1zJsLx3XnT-l6ssFlrB0UzIsCNz1wfi33/view">Malfunctions</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">Malfunctions</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 1</a> <em>(s. 11)</em></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Exercises on Architecture</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Pipeline</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">Hazard</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Forwarding</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Bubble</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Ex 1</a> <em>(s. 21)</em></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Pipeline &amp; Hazard</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Pipeline &amp; Hazard</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Exercises on Pipeline</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Pipeline &amp; Hazard</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Exercises on Exam</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/13_z3H6EqCx1dK84NkEVajC_9NVXKg1Rf/view">Cache</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">Memory Access</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Direct Mapping</a></li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Cache Size</a></li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://drive.google.com/file/d/17E5Yzo6kRN9ujz_nizlzxlOLH6ZZAjnl/view">Multi-Level Cache</a>
+<ol>
+<li><input disabled="" type="checkbox"/>
+<a href="">Set-Associative Mapping</a> </li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Replacement Policy</a> </li>
+<li><input disabled="" type="checkbox"/>
+<a href="">Writing Policy</a> </li>
+</ol>
+</li>
+</ol>
+<h1 id="computer-architecture"><a class="header" href="#computer-architecture">Computer Architecture</a></h1>
+<h2 id="1-1951-ias-machine-architecture"><a class="header" href="#1-1951-ias-machine-architecture">1. 1951 IAS Machine Architecture</a></h2>
+<p>The IAS Machine had a <strong>1000 word</strong> memory, with a <strong>40b word</strong> <em>(40000b = 5000B ~ 5kB)</em></p>
+<h3 id="1-word"><a class="header" href="#1-word">1. Word</a></h3>
+<p>Words are <strong>CA2</strong> integers 
+| 0 | 000000000000000000000000000000000000000 |
+|--|--|
+|$\pm 2^{39} \cdot bit$ | $value$ | </p>
+<p>Instruction words contain two instructions
+| 00000000 | 000000000000 | 00000000 | 000000000000 |
+|:--:|:--:|:--:|:--:|
+| $0..7$ | $8..19$ | $20..27$ | $28..39$ |
+| <strong>opcode</strong> | <em>address</em> | <strong>opcode</strong> | <em>address</em> |</p>
+<h3 id="2-cpu"><a class="header" href="#2-cpu">2. CPU</a></h3>
+<p><img src="./IAS.svg" alt="" /></p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"></th><th style="text-align: left">Name</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>MBR</strong></td><td style="text-align: left">Memory Buffer Register</td><td style="text-align: left">receives &amp; sends data to memory and I/O</td></tr>
+<tr><td style="text-align: left"><strong>MAR</strong></td><td style="text-align: left">Memory Address Register</td><td style="text-align: left">current memory address</td></tr>
+<tr><td style="text-align: left"><strong>PC</strong></td><td style="text-align: left">Program Counter</td><td style="text-align: left">address of the instruction to execute</td></tr>
+<tr><td style="text-align: left"><strong>IR</strong></td><td style="text-align: left">Instruction Register</td><td style="text-align: left">contains instruction to execute</td></tr>
+<tr><td style="text-align: left"><strong>IBR</strong></td><td style="text-align: left">Instruction Buffer Register</td><td style="text-align: left">contains the second instruction</td></tr>
+<tr><td style="text-align: left"><strong>AC</strong></td><td style="text-align: left">Accumulator</td><td style="text-align: left">for partial calculation results</td></tr>
+<tr><td style="text-align: left"><strong>MQ</strong></td><td style="text-align: left">Multiplier Quotient</td><td style="text-align: left">for partial calculation results</td></tr>
+</tbody></table>
+</div>
+<h3 id="3-instructions"><a class="header" href="#3-instructions">3. Instructions</a></h3>
+<p>This isn't the full <em>ISA</em> of the <strong>IAS Machine</strong>, check it out <a href="https://www.ecs.csun.edu/~cputnam/Comp546/Stallings/tables/T02-Vertical.pdf">here</a>.</p>
+<h4 id="transfer-instructions"><a class="header" href="#transfer-instructions">Transfer Instructions</a></h4>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"></th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>LOAD</strong></td><td style="text-align: left"><strong>AC</strong> $\leftarrow$ <strong>AC</strong> <code>operation</code> <em><strong>Memory</strong>[Address]</em></td></tr>
+<tr><td style="text-align: left"><strong>LOAD</strong></td><td style="text-align: left"><strong>AC</strong> $\leftarrow$ <code>operation</code> <em><strong>Memory</strong>[Address]</em></td></tr>
+<tr><td style="text-align: left"><strong>LDMQ</strong></td><td style="text-align: left"><strong>MQ</strong> $\leftarrow$ <em><strong>Memory</strong>[Address]</em></td></tr>
+<tr><td style="text-align: left"><strong>ST</strong></td><td style="text-align: left"><em><strong>Memory</strong>[Address]</em> $\leftarrow$ <strong>AC</strong></td></tr>
+<tr><td style="text-align: left"><strong>AMODL</strong></td><td style="text-align: left"><em><strong>Memory</strong>[Address][0..11]</em> $\leftarrow$ <strong>AC[0..11]</strong> <em>(low)</em></td></tr>
+<tr><td style="text-align: left"><strong>AMODH</strong></td><td style="text-align: left"><em><strong>Memory</strong>[Address][20..31]</em> $\leftarrow$ <strong>AC[0..11]</strong> <em>(high)</em></td></tr>
+</tbody></table>
+</div>
+<h4 id="jumps"><a class="header" href="#jumps">Jumps</a></h4>
+<p>Like in modern assembly, jumps can be <strong>unconditional</strong>, <strong>conditional</strong>; for the <em>IAS machine</em> you had to specify either a <strong>low</strong> or <strong>high</strong> address.</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"></th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>UBL</strong></td><td style="text-align: left"><strong>PC</strong> $\leftarrow$ <em>[Address]</em></td></tr>
+<tr><td style="text-align: left"><strong>UBH</strong></td><td style="text-align: left"><strong>PC</strong> $\leftarrow$ <em>[Address]</em> + 1</td></tr>
+<tr><td style="text-align: left"><strong>CBL</strong></td><td style="text-align: left">if <strong>AC</strong> $\ge$ 0 { <strong>PC</strong> $\leftarrow$ <em>[Address]</em> }</td></tr>
+<tr><td style="text-align: left"><strong>CBH</strong></td><td style="text-align: left">if <strong>AC</strong> $\ge$ 0 { <strong>PC</strong> $\leftarrow$ <em>[Address]</em> + 1 }</td></tr>
+</tbody></table>
+</div>
+<h4 id="operations"><a class="header" href="#operations">Operations</a></h4>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"></th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>MUL</strong></td><td style="text-align: left"><strong>AC</strong>, <strong>MQ</strong> $\leftarrow$ <strong>AC</strong> $\cdot$ <em><strong>Memory</strong>[Address]</em></td></tr>
+<tr><td style="text-align: left"><strong>DIV</strong></td><td style="text-align: left"><strong>AC</strong> $\leftarrow$ <strong>AC</strong> / <em><strong>Memory</strong>[Address]</em></td></tr>
+<tr><td style="text-align: left"><strong>DIV</strong></td><td style="text-align: left"><strong>MQ</strong> $\leftarrow$ <strong>AC</strong> % <em><strong>Memory</strong>[Address]</em></td></tr>
+<tr><td style="text-align: left"><strong>LSHIFT</strong></td><td style="text-align: left"><strong>AC</strong>, <strong>MQ</strong> $\leftarrow$ <strong>AC</strong>, <strong>MQ</strong> &lt;&lt; <em><strong>X</strong></em></td></tr>
+<tr><td style="text-align: left"><strong>RSHIFT</strong></td><td style="text-align: left"><strong>AC</strong>, <strong>MQ</strong> $\leftarrow$ <strong>AC</strong>, <strong>MQ</strong> &gt;&gt; <em><strong>X</strong></em></td></tr>
+<tr><td style="text-align: left"><strong>MOVE</strong></td><td style="text-align: left"><strong>AC</strong> $\leftarrow$ <strong>AC</strong> <code>operation</code> <strong>MQ</strong></td></tr>
+<tr><td style="text-align: left"><strong>IO</strong></td><td style="text-align: left">Transfer from and to I/O devices</td></tr>
+</tbody></table>
+</div>
+<h3 id="4-example-program"><a class="header" href="#4-example-program">4. Example Program</a></h3>
+<pre><code class="language-assembly">LOAD 101
+ADD 102
+ST 103
+</code></pre>
+<h4 id="how-does-it-work"><a class="header" href="#how-does-it-work">How does it work?</a></h4>
+<ol>
+<li><strong>Fetch</strong>
+<ul>
+<li>MAR $\leftarrow$ PC </li>
+<li>IR, IBR $\leftarrow$ MBR $\leftarrow$ Memory[MAR]</li>
+</ul>
+</li>
+<li><strong>Decode</strong>
+<ul>
+<li>MAR $\leftarrow$ IR[8..19] ; <em>address</em></li>
+<li>CU $\leftarrow$ IR[0..8] ; <em>opcode</em></li>
+</ul>
+</li>
+<li><strong>Exec</strong>
+<ul>
+<li>AC $\leftarrow$ MBR $\leftarrow$ Memory[101]</li>
+</ul>
+</li>
+<li><strong>Decode</strong>
+<ul>
+<li>MAR $\leftarrow$ IBR[8..19] ; <em>address</em></li>
+<li>CU $\leftarrow$ IBR[0..8] ; <em>opcode</em></li>
+</ul>
+</li>
+<li><strong>Exec</strong>
+<ul>
+<li>AC $\leftarrow$ AC + MBR $\leftarrow$ Memory[102]</li>
+</ul>
+</li>
+<li><strong>PC</strong>
+<ul>
+<li>PC $\leftarrow$ PC + 1</li>
+</ul>
+</li>
+<li><strong>Fetch</strong>
+<ul>
+<li>MAR $\leftarrow$ PC </li>
+<li>IR, IBR $\leftarrow$ MBR $\leftarrow$ Memory[MAR]</li>
+</ul>
+</li>
+<li><strong>Decode</strong>
+<ul>
+<li>MAR $\leftarrow$ IR[8..19] ; <em>address</em></li>
+<li>CU $\leftarrow$ IR[0..8] ; <em>opcode</em></li>
+</ul>
+</li>
+<li><strong>Exec</strong>
+<ul>
+<li>Memory[103] $\leftarrow$ MBR $\leftarrow$ AC</li>
+</ul>
+</li>
+</ol>
+<h2 id="mips-pt1"><a class="header" href="#mips-pt1">MIPS pt.1</a></h2>
+<h3 id="1-numerical-systems--standards"><a class="header" href="#1-numerical-systems--standards">1. Numerical Systems &amp; Standards</a></h3>
+<p>I don't care enough to study this part for the umpteenth time</p>
+<h3 id="2-risc-vs-cisc"><a class="header" href="#2-risc-vs-cisc">2. RISC vs CISC</a></h3>
+<p><strong>Reduced Instruction Set Computer</strong> vs <strong>Complex Instruction Set Computer</strong></p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">RISC</th><th style="text-align: left">CISC</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>fixed size</strong> instructions</td><td style="text-align: left"><strong>variable size</strong> instructions <em>(requires decode before fetch)</em></td></tr>
+<tr><td style="text-align: left"><strong>fixed format</strong></td><td style="text-align: left"><strong>variable format</strong>  <em>(complex decode)</em></td></tr>
+<tr><td style="text-align: left">operations <strong>only with registers</strong></td><td style="text-align: left"><strong>in-memory operands</strong></td></tr>
+<tr><td style="text-align: left"><strong>many registers</strong></td><td style="text-align: left"><strong>few of registers</strong></td></tr>
+<tr><td style="text-align: left"><strong>single access</strong> to memory</td><td style="text-align: left"><strong>multiple accesses</strong> to memory</td></tr>
+<tr><td style="text-align: left"><strong>fixed</strong> instruction <strong>duration</strong></td><td style="text-align: left"><strong>variable</strong> instruction <strong>duration</strong></td></tr>
+<tr><td style="text-align: left">simple <strong>conflicts</strong></td><td style="text-align: left">complex <strong>conflicts</strong></td></tr>
+<tr><td style="text-align: left">faster <strong>pipeline</strong></td><td style="text-align: left">complex <strong>pipeline</strong></td></tr>
+</tbody></table>
+</div>
+<h3 id="3-registers"><a class="header" href="#3-registers">3. Registers</a></h3>
+<h3 id="4-instructions"><a class="header" href="#4-instructions">4. Instructions</a></h3>
+<h3 id="5-r-type-instructions"><a class="header" href="#5-r-type-instructions">5. R-type Instructions</a></h3>
+<p>Arithmetic Instruction Format <em>(type to a register)</em></p>
+<pre><code class="language-assembly">add $t0, $s1, $s2
+</code></pre>
+<ul>
+<li><strong>opcode</strong> add, code <em>000000</em></li>
+<li>$t0 in <strong>rd</strong>, reg. number <em>01000</em></li>
+<li>$s1 in <strong>rs</strong>, reg. number <em>10001</em></li>
+<li>$s2 in <strong>rt</strong>, reg. number <em>10010</em></li>
+<li><strong>funct</strong> add, code <em>100000</em></li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">000000</th><th style="text-align: center">10001</th><th style="text-align: center">10010</th><th style="text-align: center">01000</th><th style="text-align: center">00000</th><th style="text-align: center">100000</th></tr></thead><tbody>
+<tr><td style="text-align: center">$0..5$</td><td style="text-align: center">$6..10$</td><td style="text-align: center">$11..15$</td><td style="text-align: center">$16..20$</td><td style="text-align: center">$21..25$</td><td style="text-align: center">$26..31$</td></tr>
+<tr><td style="text-align: center">6b</td><td style="text-align: center">5b</td><td style="text-align: center">5b</td><td style="text-align: center">5b</td><td style="text-align: center">5b</td><td style="text-align: center">6b</td></tr>
+<tr><td style="text-align: center"><strong>op</strong></td><td style="text-align: center"><strong>rs</strong></td><td style="text-align: center"><strong>rt</strong></td><td style="text-align: center"><strong>rd</strong></td><td style="text-align: center"><strong>shamt</strong></td><td style="text-align: center"><strong>funct</strong></td></tr>
+<tr><td style="text-align: center">opcode</td><td style="text-align: center">first <br/> register <br/> source</td><td style="text-align: center">second <br/> register <br/> source</td><td style="text-align: center">register <br/> destination <br/> operand</td><td style="text-align: center">shift <br/> amount</td><td style="text-align: center">function <br/> code</td></tr>
+</tbody></table>
+</div>
+<h3 id="6-i-type-instructions"><a class="header" href="#6-i-type-instructions">6. I-type Instructions</a></h3>
+<p>Data Transfer Format <em>(conditional jumps)</em></p>
+<pre><code class="language-assembly">addi $t2, $s2, 4 
+</code></pre>
+<ul>
+<li><strong>opcode</strong> addi, code <em>001000</em></li>
+<li>$t2 in <strong>rt</strong>, reg. number <em>01010</em></li>
+<li>$s2 in <strong>rs</strong>, reg. number <em>10010</em></li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">001000</th><th style="text-align: center">10010</th><th style="text-align: center">01010</th><th style="text-align: center">0000000000000100</th></tr></thead><tbody>
+<tr><td style="text-align: center">$0..5$</td><td style="text-align: center">$6..10$</td><td style="text-align: center">$11..15$</td><td style="text-align: center">$16..31$</td></tr>
+<tr><td style="text-align: center">6b</td><td style="text-align: center">5b</td><td style="text-align: center">5b</td><td style="text-align: center">16b</td></tr>
+<tr><td style="text-align: center"><strong>op</strong></td><td style="text-align: center"><strong>rs</strong></td><td style="text-align: center"><strong>rt</strong></td><td style="text-align: center"><strong>constant</strong></td></tr>
+<tr><td style="text-align: center">opcode</td><td style="text-align: center">first <br/> register</td><td style="text-align: center">target <br/> register</td><td style="text-align: center">constant value or <br/> address</td></tr>
+</tbody></table>
+</div>
+<h3 id="7-j-type-instructions"><a class="header" href="#7-j-type-instructions">7. J-type Instructions</a></h3>
+<p>Unconditional Jumps</p>
+<pre><code class="language-assembly">j label
+</code></pre>
+<ul>
+<li>PC $\leftarrow$ label $\cdot$ 4</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">001000</th><th style="text-align: left">10010010100000000000000100</th></tr></thead><tbody>
+<tr><td style="text-align: center">$0..5$</td><td style="text-align: left">$6..31$</td></tr>
+<tr><td style="text-align: center">6b</td><td style="text-align: left">26b</td></tr>
+<tr><td style="text-align: center"><strong>op</strong></td><td style="text-align: left"><strong>address</strong></td></tr>
+</tbody></table>
+</div>
+<h2 id="3-mips-pt2"><a class="header" href="#3-mips-pt2">3. MIPS pt.2</a></h2>
+<h3 id="1-memory-organization"><a class="header" href="#1-memory-organization">1. Memory Organization</a></h3>
+<h3 id="2-isa"><a class="header" href="#2-isa">2. ISA</a></h3>
+<h3 id="3-registers-1"><a class="header" href="#3-registers-1">3. Registers</a></h3>
+<h3 id="4-fr-type-instructions"><a class="header" href="#4-fr-type-instructions">4. FR-type Instructions</a></h3>
+<h3 id="5-fi-type-instructions"><a class="header" href="#5-fi-type-instructions">5. FI-type Instructions</a></h3>
+<h3 id="6-data-types"><a class="header" href="#6-data-types">6. Data Types</a></h3>
+<h2 id="21-cache"><a class="header" href="#21-cache">21. Cache</a></h2>
+<h3 id="1-memory-access"><a class="header" href="#1-memory-access">1. Memory Access</a></h3>
+<h3 id="2-direct-mapping"><a class="header" href="#2-direct-mapping">2. Direct Mapping</a></h3>
+<h3 id="3-cache-size"><a class="header" href="#3-cache-size">3. Cache Size</a></h3>
+<h2 id="22-cache"><a class="header" href="#22-cache">22. Cache</a></h2>
+<h3 id="1-set-associative-mapping"><a class="header" href="#1-set-associative-mapping">1. Set-Associative Mapping</a></h3>
+<h3 id="2-replacement-policy"><a class="header" href="#2-replacement-policy">2. Replacement Policy</a></h3>
+<h3 id="3-writing-policy"><a class="header" href="#3-writing-policy">3. Writing Policy</a></h3>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../algorithms/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../algorithms/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

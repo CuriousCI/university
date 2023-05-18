@@ -1,30 +1,31 @@
-# University
-Just code & projects for university
+# Computer Science 
 
-## Table of contents
+Just `code` and **projects** for university. All the study-related contents are just a **summary** of the actual material.
 
-1. **First Year**
-    1. ***First Semester***
-        1. [Python](./python/) _([exercises]())_
-        | ![]() |
-        |:--:|
-        | * * |
-        2. [Digital Design](./verilog/) _([exercises](https://github.com/sapienzastudentsnetwork/psd2223))_
-        3. Discrete Mathematics _([exercises](https://github.com/sapienzastudentsnetwork/mmi2122))_
-        4. Calculus I _(Functions, Derivates, Theorems)_
-    2. ***Second Semester***
-        1. [Java](./java/)
-        2. [Computer Architecture](./assembly/)
-        3. [Algorithms & Data Structures](./algorithms/)
-        4. Calculus I _(Series, Integrals, Differential Equations)_ _([exercises](https://github.com/sapienzastudentsnetwork/calcint2223))_
-        | ![]() |
-        |:--:|
-        | * * |
-
-2. **Second Year**
-    1. ***First Semester***
-    2. ***Second Semester***
-
-3. **Third Year**
-
-4. [Competitive Programming](./competitive-programming/)
+<!-- ## Table of contents -->
+<!---->
+<!-- 1. **First Year** -->
+<!--     1. ***First Semester*** 
+<!--         1. [Python](./python/) _([exercises]())_ -->
+<!--         | ![]() | -->
+<!--         |:--:| -->
+<!--         | * * | -->
+<!--         2. [Digital Design](./verilog/) _([exercises](https://github.com/sapienzastudentsnetwork/psd2223))_ -->
+<!--         3. Discrete Mathematics _([exercises](https://github.com/sapienzastudentsnetwork/mmi2122))_ -->
+<!--         4. Calculus I _(Functions, Derivates, Theorems)_ -->
+<!--     2. ***Second Semester*** -->
+<!--         1. [Java](./java/) -->
+<!--         2. [Computer Architecture](./assembly/) -->
+<!--         3. [Algorithms & Data Structures](./algorithms/) -->
+<!--         4. Calculus I _(Series, Integrals, Differential Equations)_ _([exercises](https://github.com/sapienzastudentsnetwork/calcint2223))_ -->
+<!--         | ![]() | -->
+<!--         |:--:| -->
+<!--         | * * | -->
+<!---->
+<!-- 2. **Second Year** -->
+<!--     1. ***First Semester*** -->
+<!--     2. ***Second Semester*** -->
+<!---->
+<!-- 3. **Third Year** -->
+<!---->
+<!-- 4. [Competitive Programming](./competitive-programming/) -->

@@ -1,13 +1,15 @@
 [book]
-title = "Example book"
-authors = ["John Doe"]
-description = "The example book covers examples."
+title = "Computer Science @ Sapienza"
+authors = ["Ionut Cicio"]
+description = "Just code & projects for university"
+language = "en"
+src = "book"
 
 # [rust]
 # edition = "2018"
 
 [build]
-build-dir = ""
+build-dir = "docs"
 create-missing = false
 
 [preprocessor.index]
@@ -15,8 +17,15 @@ create-missing = false
 [preprocessor.links]
 
 
-# [output.html]
+[output.html]
+mathjax-support = true
+site-url = "/university/"
+git-repository-url = "https://github.com/CuriousCI/university"
 # additional-css = ["custom.css"]
+
+[output.html.playground]
+editable = false 
+line-numbers = true
 
 # [output.html.search]
 # limit-results = 15

@@ -60,5 +60,4 @@ def ex1(int_seq: str, subtotal: int) -> int:
 
 
 if __name__ == '__main__':
-    # Inserisci qui i tuoi test personali
-    print(ex1('3,0,3', 3))
+    pass
