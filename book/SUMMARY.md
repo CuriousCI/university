@@ -26,13 +26,13 @@
     - [Verilog]()
 - [Discrete Mathematics]()
 - [Calculus I]()
-- [Java]()
+- [Java](./java/java.md)
     - [OOP]()
     - [Laboratory]()
-- [Computer Architecture](./assembly/README.md)
-    - [1951 IAS Machine]()
-    - [MIPS]()
-    - [Assembly]()
+- [Computer Architecture](./assembly/computer-architecture.md)
+    - [1951 IAS Machine](./assembly/ias-machine.md)
+    - [MIPS](./assembly/mips.md)
+    - [Assembly](./assembly/assembly.md)
         - [Statements in Assembly]()
         - [Vectors & Matrices]()
         - [Syscalls & Procedures]()
@@ -65,9 +65,7 @@
 
 # II year 
 # III year
-- [Competitive]()
 
 ---
 
-<!-- [Other Sources](https://github.com/Exyss/university-notes) -->
- 
+- [Competitive]()
