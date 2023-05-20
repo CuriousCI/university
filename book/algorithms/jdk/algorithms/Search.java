@@ -1,34 +1,37 @@
 package algorithms;
 
 import java.util.List;
+import java.util.Optional;
 
-public abstract class Search {
+public abstract final class Search {
+    public static <T> Optional<Integer> search(T[] array, T toFind) {
+        for (var index = 0; index < array.length; index++)
+            if (array[index] == toFind)
+                return Optional.of(index);
 
-    public static <T extends Comparable<? super T>> Boolean binarySearch(List<T> list, T toFind) {
-        int jump = list.size() - 1, index = 0;
+        return Optional.empty();
+    }
+
+    public static <T extends Comparable<? super T>> Optional<Integer> binarySearch(T[] array, T toFind) {
+        int jump = array.length - 1, index = 0;
 
         while (jump > 0) {
-            while (index + jump < list.size() && list.get(index + jump).compareTo(toFind) <= 0) {
-                var comparison = list.get(index + jump).compareTo(toFind);
+            while (index + jump < array.length) {
+                var comparison = array[index + jump].compareTo(toFind);
 
-                if (comparison < 0)
-                    index += jump;
+                if (comparison > 0)
+                    break;
+
+                index += jump;
+
                 if (comparison == 0)
-                    return true;
+                    return Optional.of(index);
             }
 
             jump /= 2;
         }
 
-        return false;
-    }
-
-    public static <T extends Comparable<? super T>> Boolean search(List<T> list, T toFind) {
-        for (var item : list)
-            if (item.compareTo(toFind) == 0)
-                return true;
-
-        return false;
+        return Optional.empty();
     }
 
     public static <T extends Comparable<? super T>> Integer upperBound(List<T> list, T toFind) {

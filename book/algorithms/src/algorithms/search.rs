@@ -1,25 +1,13 @@
 use std::cmp::Ordering::{Equal, Greater, Less};
 
-// TODO: use boxed array instead of iterable / vec
-// because iter can be collected into Vec, and converted into boxed
-
-// where
-//     for<'a> &'a L: IntoIterator<Item = &'a T>,
-// .into_iter()
-// for (i, v) in iterable.into_iter().enumerate() {
-//     if *v == value {
-//         return Some(i);
-//     }
-// }
-// None
-
-pub fn search<'a, T: Eq, L: Iterator<Item = &'a T>>(iterator: L, value: &'a T) -> Option<usize> {
-    iterator
+pub fn linear_search<T: Eq>(array: &[T], value: T) -> Option<usize> {
+    array
+        .iter()
         .enumerate()
-        .find_map(|(i, v)| if v == value { Some(i) } else { None })
+        .find_map(|(i, v)| if *v == value { Some(i) } else { None })
 }
 
-pub fn binary_search<T: Ord>(array: &[T], value: &T) -> Option<usize> {
+pub fn binary_search<T: Ord>(array: &[T], value: T) -> Option<usize> {
     let mut step = array.len();
     let mut index = 0;
 
@@ -28,7 +16,7 @@ pub fn binary_search<T: Ord>(array: &[T], value: &T) -> Option<usize> {
 
         while next < array.len() {
             let cmp = match array.get(next) {
-                Some(v) => v.cmp(value),
+                Some(v) => v.cmp(&value),
                 None => break,
             };
 
@@ -55,15 +43,16 @@ pub fn upper_bound<T: Ord>(array: &Vec<T>, value: T) -> Option<usize> {
 
     while step > 0 {
         let next = index + step;
-        while index + step < array.len() {
-            let cmp = match array.get(index + step) {
+
+        while next < array.len() {
+            let cmp = match array.get(next) {
                 Some(v) => v.cmp(&value),
                 None => break,
             };
 
             match cmp {
                 Greater => break,
-                _ => index += step,
+                _ => index = next,
             }
         }
 

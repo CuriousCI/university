@@ -2,7 +2,7 @@ package algorithms.sort;
 
 import java.util.List;
 
-public abstract class Naive {
+public abstract final class Naive {
     public static <T extends Comparable<? super T>> void insertionSort(List<T> list) {
         insertionSort(list, 0, list.size());
     }

@@ -1,8 +1,8 @@
 # Computational Cost
 
-[sommatorie notevoli](https://it.wikipedia.org/wiki/Lista_delle_serie_matematiche)
+[Mathematical Series](https://it.wikipedia.org/wiki/Lista_delle_serie_matematiche)
 
-## Sommatorie Notevoli
+## Sums 
 
 - \\(\sum_{i=0}^{n} i = \theta({n^2})\\)
 - \\(\sum_{i=0}^{n} 2^i = \theta(2^n)\\)
