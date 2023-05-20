@@ -1,5 +1,7 @@
 package algorithms.struct;
 
+import java.util.Optional;
+
 public class Stack<T> {
     Node<T> top;
 
@@ -8,25 +10,25 @@ public class Stack<T> {
     }
 
     // Use Optional?
-    public T pop() throws IllegalAccessException {
+    public Optional<T> pop() {
         if (top == null)
-            throw new IllegalAccessException();
+            return Optional.empty();
 
         var result = top.value;
         top = top.next;
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        var stackPointer = top;
-        var result = "";
-
-        while (stackPointer != null) {
-            result += stackPointer + " ";
-            stackPointer = stackPointer.next;
-        }
-
-        return result;
+        return Optional.of(result);
     }
 }
+
+// @Override
+// public String toString() {
+// var stackPointer = top;
+// var result = "";
+//
+// while (stackPointer != null) {
+// result += stackPointer + " ";
+// stackPointer = stackPointer.next;
+// }
+//
+// return result;
+// }
