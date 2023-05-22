@@ -162,7 +162,9 @@ The comparison must be polynomial, by an order of \\(n^\epsilon\\).
 
 ### Where not to apply it? 
 
-In the following example, the main method cannot be applied.
+In the following examples, the main method cannot be applied.
+
+#### Ex 1
 
 \\[
 \begin{equation}
@@ -178,3 +180,20 @@ In the following example, the main method cannot be applied.
 - \\(n^{\log_{b}{a}} = n^{\log_{2}{2}} = n\\)
 
 In this case, \\(f(n)\\) is asintotically bigger than n, but not plynomially bigger. In fact \\(\log{n} < n^\epsilon, \epsilon > 0\\)
+
+#### Ex 2
+
+\\[
+\begin{equation}
+    \begin{cases}
+        T(n) = 2T(\frac{n}{2}) + \theta(\frac{n}{\log{n}})\\\\
+        T(1) = \theta(1)
+    \end{cases}
+\end{equation}
+\\]
+
+- \\(a=2, b=2\\)
+- \\(f(n)=\theta(\frac{n}{\log{n}})\\)
+- \\(n^{\log_{b}{a}} = n^{\log_{2}{2}} = n\\)
+
+In this case, \\(f(n)\\) is asintotically smaller than n, but not plynomially smaller. In fact \\(\log{n} < n^\epsilon, \epsilon > 0\\)

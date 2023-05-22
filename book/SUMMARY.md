@@ -25,7 +25,17 @@
     - [Logic Arrays]()
     - [Verilog]()
 - [Discrete Mathematics]()
+    - [Combinatorics]()
+    - [Functions]()
+    - [Relations]()
+    - [Orders]()
+    - [Induction]()
+    - [Propositional Logic]()
 - [Calculus I]()
+    - [Numbers]()
+    - [Functions]()
+    - [Limits]()
+    - [Derivatives]()
 - [Java](./java/java.md)
     - [OOP]()
     - [Laboratory]()
@@ -59,8 +69,10 @@
         - [Binary Search Tree]()
         - [Red-Black Tree]()
 
-    
-- [Calculus I]()
+- [Calculus I +]()
+    - [Series]()
+    - [Integrals]()
+    - [Differential Equations]()
 
 # II year 
 # III year
