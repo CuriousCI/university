@@ -75,7 +75,7 @@ Like in modern assembly, jumps can be **unconditional**, **conditional**; for th
 
 ## Example Program
 
-```assembly
+```armasm
 LOAD 101
 ADD 102
 ST 103

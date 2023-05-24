@@ -1,10 +1,12 @@
 .data
-    
+
 .text
-    blez $t0, else # Test x <= 0
-        addi $t0, $s1, 5 # Add 5 to x if x > 0
-        j endIf # Don't execute else part
+    li $t0, 0 # x = 0
+
+    blez $t0, else # if x <= 0, goto else
+        addi $t0, $t0, 5 # add 5 to x if x > 0
+        j endIf # don't execute else part
     else: 
-        addi $t0, $s1, 10 # Add 10 to x if x <= 0
+        addi $t0, $s1, 10 # add 10 to x if x <= 0
     endIf:
 

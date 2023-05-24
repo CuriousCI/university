@@ -18,31 +18,31 @@
     5. [x] [R-type Instructions]() _(register)_
     6. [x] [I-type Instructions]() _(immediate)_
     7. [x] [J-type Instructions]() _(jump)_
-3. [ ] [MIPS pt.2](https://drive.google.com/file/d/1xzV-vqypdIcDoRf6Yy7QQQ2bDI03AsRi/view)
+3. [x] [MIPS pt.2](https://drive.google.com/file/d/1xzV-vqypdIcDoRf6Yy7QQQ2bDI03AsRi/view)
     1. [x] [Memory Layout]()
     2. [ ] [ISA]()
     3. [x] [Registers]() _( + 7.25)_
     4. [x] [FR-type Instructions]()
     5. [x] [FI-type Instructions]()
     6. [ ] [Data Types]()
-    7. [ ] [Ex 1]() _(s. 10)_
-    8. [ ] [Ex 2]() _(s. 11)_
-    9. [ ] [Ex 3]() _(s. 17)_
-4. [ ] [MIPS pt.3](https://drive.google.com/file/d/1zPNd-j8MB2BGvIXOkZ3wqt7rc55TOhJL/view)
-    1. [ ] [if else]()
-    2. [ ] [do while]()
-    3. [ ] [while]()
-    4. [ ] [for]()
-    5. [ ] [switch]()
-    6. [ ] [Linker & globl]()
-    7. [ ] [Pseudo-Instructions]()
-    8. [ ] [Ex 1]() _(s. 34)_
-    9. [ ] [Ex 2]() _(s. 35)_
-5. [ ] [Vectors & Matrices](https://drive.google.com/file/d/15Nt6-bs3Vsw\_N2tyTs5JuLPEFW_-iiCL/view)
-    1. [ ] [Vectors]()
+    7. [x] [Ex 1]() _(s. 10)_
+    8. [x] [Ex 2]() _(s. 11)_
+    9. [x] [Ex 3]() _(s. 17)_
+4. [x] [MIPS pt.3](https://drive.google.com/file/d/1zPNd-j8MB2BGvIXOkZ3wqt7rc55TOhJL/view)
+    1. [x] [if else]()
+    2. [x] [do while]()
+    3. [x] [while]()
+    4. [x] [for]()
+    5. [x] [switch]()
+    6. [x] [Linker & globl]()
+    7. [x] [Pseudo-Instructions]()
+    8. [x] [Ex 1]() _(s. 34)_
+    9. [x] [Ex 2]() _(s. 35)_
+5. [x] [Vectors & Matrices](https://drive.google.com/file/d/15Nt6-bs3Vsw\_N2tyTs5JuLPEFW_-iiCL/view)
+    1. [x] [Vectors]()
     2. [ ] [ASCII]()
-    3. [ ] [Endianess]()
-    4. [ ] [3D Matrices]()
+    3. [x] [Endianess]()
+    4. [x] [3D Matrices]()
     5. [ ] [Ex 1]() _(s. 10)_
 6. [ ] [Syscalls & Procedures](https://drive.google.com/file/d/1huzOF0cJQH-wdABF-9eoQuNAYMK458LW/view)
     1. [ ] [Diagonal Sum]()
@@ -100,110 +100,4 @@
     1. [ ] [Set-Associative Mapping]() 
     2. [ ] [Replacement Policy]() 
     3. [ ] [Writing Policy]() 
-
-# Computer Architecture
-
-## MIPS pt.1
-
-### 1. Numerical Systems & Standards
-
-I don't care enough to study this part for the umpteenth time
-
-
-### 2. RISC vs CISC
-
-**Reduced Instruction Set Computer** vs **Complex Instruction Set Computer**
-
-| RISC | CISC |
-|:--|:--|
-| **fixed size** instructions | **variable size** instructions _(requires decode before fetch)_ |
-| **fixed format** | **variable format**  _(complex decode)_ |
-| operations **only with registers** | **in-memory operands** |
-| **many registers** | **few of registers** |
-| **single access** to memory | **multiple accesses** to memory  | 
-| **fixed** instruction **duration** | **variable** instruction **duration** |
-| simple **conflicts** | complex **conflicts** |
-| faster **pipeline** | complex **pipeline** |
-
-### 3. Registers
-### 4. Instructions
-
-### 5. R-type Instructions
-
-Arithmetic Instruction Format _(type to a register)_
-
-```assembly
-add $t0, $s1, $s2
-```
-
-- **opcode** add, code _000000_
-- $t0 in **rd**, reg. number _01000_
-- $s1 in **rs**, reg. number _10001_
-- $s2 in **rt**, reg. number _10010_
-- **funct** add, code *100000*
-
-| 000000 | 10001 | 10010 | 01000 | 00000 | 100000 |
-|:--:|:--:|:--:|:--:|:--:|:--:|
-| $0..5$ | $6..10$ | $11..15$ | $16..20$ | $21..25$ | $26..31$ |
-| 6b | 5b | 5b | 5b | 5b | 6b |
-| **op** | **rs** | **rt** | **rd** | **shamt** | **funct** |
-| opcode | first <br/> register <br/> source | second <br/> register <br/> source | register <br/> destination <br/> operand | shift <br/> amount | function <br/> code | 
-
-
-### 6. I-type Instructions
-
-Data Transfer Format _(conditional jumps)_
-
-```assembly
-addi $t2, $s2, 4 
-```
-
-- **opcode** addi, code _001000_
-- $t2 in **rt**, reg. number _01010_
-- $s2 in **rs**, reg. number _10010_
-
-| 001000 | 10010 | 01010 | 0000000000000100 |
-|:--:|:--:|:--:|:--:|
-| $0..5$ | $6..10$ | $11..15$ | $16..31$ |
-| 6b | 5b | 5b | 16b |
-| **op** | **rs** | **rt** | **constant** |
-| opcode | first <br/> register | target <br/> register | constant value or <br/> address | 
-
-### 7. J-type Instructions
-
-Unconditional Jumps
-
-```assembly
-j label
-``` 
-- PC $\leftarrow$ label $\cdot$ 4
-
-| 001000 | 10010010100000000000000100 |
-|:--:|:--|
-| $0..5$ | $6..31$ |
-| 6b | 26b |
-| **op** | **address** |
-
-## 3. MIPS pt.2
-### 1. Memory Organization
-### 2. ISA
-### 3. Registers
-### 4. FR-type Instructions
-### 5. FI-type Instructions
-### 6. Data Types
-
-## 21. Cache
-
-### 1. Memory Access
-
-### 2. Direct Mapping
-
-### 3. Cache Size
-
-## 22. Cache
-
-### 1. Set-Associative Mapping
-
-### 2. Replacement Policy
-
-### 3. Writing Policy
+23. [ ] [Cache on Multi-Core Systems]()

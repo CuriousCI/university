@@ -47,7 +47,7 @@
 
 Arithmetic Instruction Format _(type to a register)_
 
-```assembly
+```armasm
 add $t0, $s1, $s2
 ```
 
@@ -69,7 +69,7 @@ add $t0, $s1, $s2
 
 Data Transfer Format _(conditional jumps)_
 
-```assembly
+```armasm
 addi $t2, $s2, 4 
 ```
 
@@ -89,7 +89,7 @@ addi $t2, $s2, 4
 
 Unconditional Jumps
 
-```assembly
+```armasm
 j label
 ``` 
 - PC \\(\leftarrow\\) label \\(\cdot\\) 4
@@ -104,7 +104,7 @@ j label
 
 MIPS handles floating point instructions like regular 32b instructions. FR-type don't access the memory, and are executed by the **FPU**.
 
-```assembly
+```armasm
 add.s $f0, $f1, $f2 ; single precision
 div.d $f0, $f2, $f4 ; double precision
 ```
@@ -122,7 +122,7 @@ FI-type are used for:
 - load / store
 - conditional jumps
 
-```assembly
+```armasm
 lwc1 $f1, indirizzo
 bc1f cc, offset
 ```
@@ -135,3 +135,5 @@ bc1f cc, offset
 
 
 ## Interrupts
+
+> TODO: Interrupts
