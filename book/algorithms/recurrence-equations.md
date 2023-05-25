@@ -156,7 +156,7 @@ There are three cases that can generate by comparing \\(f(n)\\) with \\(n^{\log_
 
 1. \\(f(n) = O(n^{\log_{b}{a}-\epsilon}), \epsilon>0 \implies T(n) = \theta(n^{\log_{b}{a}})\\)
 2. \\(f(n) = \theta(n^{\log_{b}{a}}), \implies T(n) = \theta(n^{\log_{b}{a}}\log{n})\\)
-3. \\(f(n) = \omega(n^{\log_{b}{a}+\epsilon}), \epsilon>0 \land f(\frac{n}{b}) \le cf(n), c<1, n>>1 \implies\\\\ T(n) = \theta(f(n))\\)
+3. \\(f(n) = \omega(n^{\log_{b}{a}+\epsilon}), \epsilon>0 \land a\cdot f(\frac{n}{b}) \le cf(n), c<1, n>>1 \implies\\\\ T(n) = \theta(f(n))\\)
 
 The comparison must be polynomial, by an order of \\(n^\epsilon\\). 
 

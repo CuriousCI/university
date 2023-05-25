@@ -29,19 +29,77 @@ Note that `.asciiz` stands for _"zero terminated string"_, which means it has a 
 
 ## Vector Iterations 
 
-> TODO: add minimal example code
 
 You can iterate vectors and matrices in two ways:
-- **by index**:
-    - useful if you need the **index** of each element
-    - the increment of the index doesn't depend on the size of the elements
-    - you have to convert the index each time, according to the size of the elements
-- **by pointer**:
-    - you work directly with the address
-    - less calculations to do in the cycle
-    - you don't have the index of the element
-    - the increment depends on the size of the elements
-    - you must calculate the index after the last element
+
+### Index
+
+- useful if you need the **index** of each element
+- the increment of the index doesn't depend on the size of the elements
+- you have to convert the index each time, according to the size of the elements
+
+```armasm
+.data
+    vector: .word 10, 2, 980, 29, 1992, -2, 59, 280, 99
+    size: .word 9
+.text
+    la $s0, vector #; s0 = vector address
+    la $t1, size #; t1 = address of size
+    lw $t1, ($t1) #; t1 = size
+
+    li $t0, 0 #; t0 is the index i
+
+    for:
+        bge $t0, $t1, end #; if i == size, end loop
+
+        sll $t2, $t0, 2 #; offset = i * 4 (shift logic left by 2)
+        addi $t2, $t2, $s0 #; t2 = current address = offset + address
+
+        lw $t7, ($t2) #; load value from current address, and maybe use it
+
+        #; rest of the code ...
+
+        addi $t0, $t0, 1 #; i = i + 1
+        j for #; loop again
+    end:
+```
+
+> TODO: check if it works 
+
+
+### Pointer
+
+- you work directly with the address
+- less calculations to do in the cycle
+- you don't have the index of the element
+- the increment depends on the size of the elements
+- you must calculate the index after the last element
+
+```armasm
+.data
+    vector: .word 10, 2, 980, 29, 1992, -2, 59, 280, 99
+    size: .word 9
+.text
+    la $t0, vector #; t0 = vector address
+
+    la $t1, size #; t1 = address of size
+    lw $t1, ($t1) #; t1 = size
+    sll $t1, $t1, 2 #; size = size * 4 (we are handling words)
+    add $t1, $t0, $t1 #; t1 = end address = vector address + size * 4 (this is the address after the last one in the vector)
+
+    for:
+        bge $t0, $t1, end #; if current address == vector end address, end loop
+
+        lw $t7, ($t0) #; load value from current address, and maybe use it
+
+        #; rest of the code ...
+
+        addi $t0, $t0, 4 #; current address = current address + 4 (we move by 4 bytes, because we are using words) 
+        j for #; loop again
+    end:
+```
+
+> TODO: check if it works
 
 ## Matrices
 

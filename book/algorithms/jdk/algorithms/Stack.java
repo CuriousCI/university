@@ -9,7 +9,6 @@ public class Stack<T> {
         top = new Node<T>(value, top);
     }
 
-    // Use Optional?
     public Optional<T> pop() {
         if (top == null)
             return Optional.empty();

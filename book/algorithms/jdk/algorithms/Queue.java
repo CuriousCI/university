@@ -20,26 +20,25 @@ public class Queue<T> {
     public Optional<T> dequeue() {
         if (head == null)
             return Optional.empty();
-        // throw new IllegalAccessException();
 
         var result = head.value;
         head = head.next;
         if (head == null)
             tail = null; // Queue is empty
-                         //
+
         return Optional.of(result);
     }
-
-    @Override
-    public String toString() {
-        var stackPointer = head;
-        var result = "";
-
-        while (stackPointer != null) {
-            result += stackPointer + " ";
-            stackPointer = stackPointer.next;
-        }
-
-        return result;
-    }
 }
+
+// @Override
+// public String toString() {
+// var stackPointer = head;
+// var result = "";
+//
+// while (stackPointer != null) {
+// result += stackPointer + " ";
+// stackPointer = stackPointer.next;
+// }
+//
+// return result;
+// }

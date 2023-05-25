@@ -5,23 +5,28 @@ pub struct Heap<T> {
     size: usize,
 }
 
-impl<T: Ord + Default + Copy> Heap<T> {
+impl<T: Copy + Ord> From<Box<[T]>> for Heap<T> {
+    fn from(value: Box<[T]>) -> Self {
+        let mut heap = Self {
+            size: value.len(),
+            buffer: value,
+        };
+
+        heap.build();
+        heap
+    }
+}
+
+impl<T: Default + Copy> Heap<T> {
     pub fn new<const SIZE: usize>() -> Self {
         Self {
             buffer: Box::new([Default::default(); SIZE]),
             size: 0,
         }
     }
+}
 
-    pub fn from(buffer: Box<[T]>) -> Self {
-        let mut heap = Self {
-            size: buffer.len(),
-            buffer,
-        };
-        heap.build();
-        heap
-    }
-
+impl<T: Ord + Copy> Heap<T> {
     fn build(&mut self) {
         (0..self.size / 2).rev().for_each(|n| self.heapify(n));
     }
@@ -48,7 +53,7 @@ impl<T: Ord + Default + Copy> Heap<T> {
     }
 }
 
-impl<T: Ord + Default + Copy> Iterator for Heap<T> {
+impl<T: Ord + Copy> Iterator for Heap<T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {

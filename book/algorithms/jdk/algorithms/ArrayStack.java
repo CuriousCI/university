@@ -1,5 +1,7 @@
 package algorithms.struct;
 
+import java.util.Optional;
+
 public class ArrayStack<T> {
     Object[] stack;
     Integer top;
@@ -21,22 +23,22 @@ public class ArrayStack<T> {
         top++;
     }
 
-    public Object pop() throws IllegalAccessException {
+    public Optional<Object> pop() {
         if (top == 0)
-            throw new IllegalAccessException();
+            return Optional.empty();
 
         var result = stack[top];
         top--;
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        var result = "";
-
-        for (var value : stack)
-            result += value + " ";
-
-        return result;
+        return Optional.of(result);
     }
 }
+//
+// @Override
+// public String toString() {
+// var result = "";
+//
+// for (var value : stack)
+// result += value + " ";
+//
+// return result;
+// }

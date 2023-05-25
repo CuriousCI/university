@@ -35,5 +35,4 @@ These are the implementations of the exercises presentend in course's slides and
 ```armasm
 ; pdf 5 slide 10 
 
-{{#include ./exercises/pdf-5-slide-10.asm }}
 ```
