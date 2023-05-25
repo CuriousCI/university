@@ -4,6 +4,10 @@
 
 The MIPS architecture allows both **big-endian** and **little-endian** byte ordering, but the **little-endian** one is most commonly used. Endianness has to do on how **bytes** are **addressed** in memory, and it's related to how the access of each individual byte is made.
 
+## ASCII
+
+> TODO ASCII
+
 ## Vectors 
 
 There are many types of vectors you can handle in MIPS:

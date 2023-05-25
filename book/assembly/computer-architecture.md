@@ -43,11 +43,11 @@
     2. [ ] [ASCII]()
     3. [x] [Endianess]()
     4. [x] [3D Matrices]()
-    5. [ ] [Ex 1]() _(s. 10)_
-6. [ ] [Syscalls & Procedures](https://drive.google.com/file/d/1huzOF0cJQH-wdABF-9eoQuNAYMK458LW/view)
+    5. [x] [Ex 1]() _(s. 10)_
+6. [x] [Syscalls & Procedures](https://drive.google.com/file/d/1huzOF0cJQH-wdABF-9eoQuNAYMK458LW/view)
     1. [ ] [Diagonal Sum]()
-    2. [ ] [Syscalls Codes]()
-    3. [ ] [Hello World]()
+    2. [x] [Syscalls Codes]()
+    3. [x] [Hello World]()
     4. [ ] [jal & jr]()
 7. [ ] [Functions & Activation Records](https://drive.google.com/file/d/1hv1b9m6XY-kiizGSCo9gJNuHowSvzAJ2/view)
     1. [ ] [lui & ori]()
