@@ -93,3 +93,17 @@ beq $1, $0, 0x00000001
 ```
 
 Now, `slt` _(set less than)_ sets the value in `rs` to **1** if `rt` is less than `rd` [_(if you don't know what rs, rt and rd are, check R-Type Instructions)_](./mips.md#r-type-instructions)
+
+## Absolute Jump
+
+MIPS instructions have a fixed 32 bit size... what happens when you need to **jump** to an address which is a **32 bit constant**? Neither [I-type](./mips.md#i-type-instructions) or [J-type](./mips.md#j-type-instructions) support 32 bit constants. We need to use `lui` and `ori`.
+
+Let's suppose we have to jump at the address `0000_0000_1111_1111_0000_1001_0000_0000`, which corresponds to `0x00ff0900`.
+
+```armasm
+lui $t0, 0x000000ff
+ori $t0, 0x00000900
+jr $t0
+```
+
+What `lui` does is moving the lower 16 bits `0x00ff` into the upper part of register `$t0`, that way we have `0x00ff0000` in `$t0`. Now, we use `ori` _(which does a **bitwise or**, basically compares with an or for each bit in `$t0` with the value `0x00000900` for the lower half of the byte)_ so we have the full address. Now we can just use `jr` to jump to the address in the register.

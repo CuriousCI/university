@@ -46,10 +46,10 @@
         - [Statements in Assembly](./assembly/statements.md)
         - [Vectors & Matrices](./assembly/vectors.md)
         - [Syscalls & Procedures](./assembly/procedures.md)
-            <!-- - [Recursion]() -->
         - [Exercises](./assembly/exercises.md)
         - [Exams]()
-    - [Single Clock Cycle Architecture]()
+        - [Tim Sort]()
+    - [Single Clock Cycle Architecture](./assembly/architecture.md)
     - [MIPS CPU]()
     - [Pipeline]()
     - [Cache](./assembly/cache.md)

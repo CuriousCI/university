@@ -1,7 +1,6 @@
 # Computer Architecture
 
 <img alt="xkcd old days meme" src="https://imgs.xkcd.com/comics/old_days.png" width="100%" />
-<!-- ![xkcd old days meme](https://imgs.xkcd.com/comics/old_days.png) -->
 
 ## TODO
 
@@ -45,36 +44,36 @@
     4. [x] [3D Matrices]()
     5. [x] [Ex 1]() _(s. 10)_
 6. [x] [Syscalls & Procedures](https://drive.google.com/file/d/1huzOF0cJQH-wdABF-9eoQuNAYMK458LW/view)
-    1. [ ] [Diagonal Sum]()
+    1. [x] [Diagonal Sum]()
     2. [x] [Syscalls Codes]()
     3. [x] [Hello World]()
-    4. [ ] [jal & jr]()
-7. [ ] [Functions & Activation Records](https://drive.google.com/file/d/1hv1b9m6XY-kiizGSCo9gJNuHowSvzAJ2/view)
-    1. [ ] [lui & ori]()
-    2. [ ] [$sp]()
+    4. [x] [jal & jr]()
+7. [x] [Functions & Activation Records](https://drive.google.com/file/d/1hv1b9m6XY-kiizGSCo9gJNuHowSvzAJ2/view)
+    1. [x] [lui & ori]()
+    2. [x] [$sp]()
     3. [ ] [Ex 1]() _(s. 1)_
-    4. [ ] [Ex 2]() _(s. 22)_
-8. [ ] [Recursion](https://drive.google.com/file/d/1lMYGhEwdZYCAzBHU42qv\_JnXspFkU5ez/view)
-    1. [ ] [factorial]()
-9. [ ] [Recursion](https://drive.google.com/file/d/1qoy0XIhP64NhaCFfKU4N-XChhOTJGQcV/view)
+    4. [x] [Ex 2]() _(s. 22)_
+8. [x] [Recursion](https://drive.google.com/file/d/1lMYGhEwdZYCAzBHU42qv\_JnXspFkU5ez/view)
+    1. [x] [factorial]()
+9. [x] [Recursion](https://drive.google.com/file/d/1qoy0XIhP64NhaCFfKU4N-XChhOTJGQcV/view)
     1. [ ] [Ex 1]() _(s. 1)_
     2. [ ] [Ex 2]() _(s. 6)_
     3. [ ] [Ex 3]() _(s. 16)_
     4. [ ] [Ex 4]() _(s. 17)_
     5. [ ] [Ex 5]() _(s. 30)_
     6. [ ] [Ex 6]() _(s. 34)_
-10. [ ] [Exercises on Assembly](https://drive.google.com/file/d/1t\_DDjDgztz62KorWbXyNq1XjTG-5oqYO/view)
+10. [x] [Exercises on Assembly](https://drive.google.com/file/d/1t\_DDjDgztz62KorWbXyNq1XjTG-5oqYO/view)
     1. [ ] [Ex 1]() _(s. 10)_
     2. [ ] [Ex 2]() _(s. 11)_
     3. [ ] [Ex 3]() _(s. 12)_
-11. [ ] [Single Clock Cycle Architecture](https://drive.google.com/file/d/1v9vOsCyBIfoHtCxLqRW\_W-HwVDz3G1Sv/view)
-    1. [ ] [Instruction Detail]()
-    2. [ ] [ALU OP Codes]()
-    3. [ ] [ALU Control]()
-    4. [ ] [Control Signals]() _(s. 28)_
-    5. [ ] [Execution Time]()
-    6. [ ] [Ex 1]() _(s. 31)_
-12. [ ] [New Instructions](https://drive.google.com/file/d/1wCJAPM3tON3mOJGNyEq4eRgVku-ZtwP\_/view)
+11. [x] [Single Clock Cycle Architecture](https://drive.google.com/file/d/1v9vOsCyBIfoHtCxLqRW\_W-HwVDz3G1Sv/view)
+    1. [x] [Instruction Detail]()
+    2. [x] [ALU OP Codes]()
+    3. [x] [ALU Control]()
+    4. [x] [Control Signals]() _(s. 28)_
+    5. [x] [Execution Time]()
+    6. [x] [Ex 1]() _(s. 31)_
+12. [x] [New Instructions](https://drive.google.com/file/d/1wCJAPM3tON3mOJGNyEq4eRgVku-ZtwP\_/view)
     1. [ ] [lw, sw, beq, add, j, jal]()
     2. [ ] [Add New Instr.]()
     3. [ ] [Ex 1]() _(s. 27)_

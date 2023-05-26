@@ -37,3 +37,39 @@ These are the implementations of the exercises presentend in course's slides and
 
 {{#include ./exercises/pdf-5-slide-10.asm }}
 ```
+
+```armasm
+; pdf 6 slide 7 
+
+{{#include ./exercises/pdf-6-slide-7.asm }}
+```
+
+```armasm
+; pdf 7 slide 3
+
+{{#include ./exercises/pdf-7-slide-3.asm }}
+```
+
+```armasm
+; pdf 7 slide 22
+
+{{#include ./exercises/pdf-7-slide-22.asm }}
+```
+
+```armasm
+; pdf 10 slide 10
+
+{{#include ./exercises/pdf-10-slide-10.asm }}
+```
+
+```armasm
+; pdf 10 slide 11
+
+{{#include ./exercises/pdf-10-slide-11.asm }}
+```
+
+```armasm
+; pdf 10 slide 12
+
+{{#include ./exercises/pdf-10-slide-12.asm }}
+```
