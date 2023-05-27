@@ -74,14 +74,15 @@
     5. [x] [Execution Time]()
     6. [x] [Ex 1]() _(s. 31)_
 12. [x] [New Instructions](https://drive.google.com/file/d/1wCJAPM3tON3mOJGNyEq4eRgVku-ZtwP\_/view)
-    1. [ ] [lw, sw, beq, add, j, jal]()
-    2. [ ] [Add New Instr.]()
-    3. [ ] [Ex 1]() _(s. 27)_
-13. [ ] [Malfunctions](https://drive.google.com/file/d/1zJsLx3XnT-l6ssFlrB0UzIsCNz1wfi33/view)
+    1. [x] [lw, sw, beq, add, j, jal, jr]()
+    2. [x] [Add New Instr.]()
+    3. [x] [Ex 1]() _(s. 27)_
+13. [x] [Malfunctions](https://drive.google.com/file/d/1zJsLx3XnT-l6ssFlrB0UzIsCNz1wfi33/view)
     1. [ ] [Malfunctions]()
-    2. [ ] [Ex 1]() _(s. 11)_
+    2. [ ] [Ex 1]() _(s. 8)_
+    3. [ ] [Ex 2]() _(s. 11)_
 14. [ ] [Exercises on Architecture]()
-15. [ ] [Pipeline]()
+15. [x] [Pipeline]()
     1. [ ] [Hazard]()
     2. [ ] [Forwarding]()
     3. [ ] [Bubble]()
