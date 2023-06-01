@@ -83,10 +83,10 @@
     3. [ ] [Ex 2]() _(s. 11)_
 14. [ ] [Exercises on Architecture]()
 15. [x] [Pipeline]()
-    1. [ ] [Hazard]()
-    2. [ ] [Forwarding]()
-    3. [ ] [Bubble]()
-    4. [ ] [Ex 1]() _(s. 21)_
+    1. [x] [Hazard]()
+    2. [x] [Forwarding]()
+    3. [x] [Bubble]()
+    4. [x] [Ex 1]() _(s. 21)_
 16. [ ] [Pipeline & Hazard]()
 17. [ ] [Pipeline & Hazard]()
 18. [ ] [Exercises on Pipeline]()
