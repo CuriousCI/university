@@ -1,8 +1,5 @@
 # Pipeline
 
-> TODO Pipelined architecture drawing
-> TODO Pipelined architecture drawing with branching
-
 We can divide the execution of an instruction into phases:
 
 - **Fetch**: load instruction from memory
@@ -18,6 +15,23 @@ In each moment in time, in a **single clock cycle** architecture, **80%** of the
 The read and write of the **register file** happen during the same clock cycle. It's basically a latch that writes _(the previous instruction)_ when the clock is 1, and reads the values in the register is 0.
 
 ![Register File Clock](./register-file-clock.svg)
+
+### Pipelined Architecture
+
+![Pipelined MIPS architecture](./pipeline.svg)
+
+### Pipelined Architecture with Branches
+
+![Pipelined MIPS architecture](./pipeline-branch.svg)
+
+We can group the control signals we've used up until now based on the section they're used in: `EXE`, `MEM`, `WB`.
+
+| opcode | ALUSrc | RegDest | ALUOp1 | ALUOp2 | Branch | MemRead | MemWrite | MemToReg | RegWrite |
+|--|--|--|--|--|--|--|--|--|--|
+| R-Type | 0 | 1 | 1 | 0 | 0 | X | 0 | 0 | 1 |
+| lw | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 1 |
+| sw | 1 | X | 0 | 0 | 0 | X | 1 | X | 0 |
+| beq | 0 | X | 0 | 1 | 1 | X | 0 | X | 0 | 
 
 ## Hazard
 
@@ -135,13 +149,32 @@ If we can predict the jump in the `ID` phase, we need just 1 `nop`. It doesn't a
 That's why the **CPU** tries to **predict the branch**, and tries to load the next instruction or the `nop` depending on which is executed most often.
 
 
-### Data Hazard
-
-### Forwarding Unit 
+### Data Hazards & Forwarding Unit 
 
 #### EXE
 
+![Hazards in EXE](./exe-hazard.svg)
+
+```rust
+if EX/MM.RegWrite == 1 && EX/MM.MemRead == 0 {
+    ID/EX.rs == EX/MM.rd || ID/EX.rt == EX/MM.rd
+}
+
+if MM/WB.RegWrite == 1 && MM/WB.MemRead == 0 {
+    ID/EX.rs == MM/WB.rd || ID/EX.rt == MM/WB.rd
+}
+```
+
+MemRead has to be 0, because when MemRead is 1, it's an I-Type instruction, and the rd value doesn't have the wanted meaning _(could be detected as an hazard, when it's clearly not)_
+
 #### MEM 
+
+It happens only in one case:
+
+```armasm
+lw $t0, offset($t1)
+sw $t0, offset($t2)
+```
 
 > TODO: CPU with forwarding
 
