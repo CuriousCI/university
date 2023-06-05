@@ -90,7 +90,7 @@
 16. [x] [Pipeline & Hazard]()
 17. [x] [Pipeline & Hazard]()
 18. [ ] [Exercises on Pipeline]()
-19. [ ] [Pipeline & Hazard]()
+19. [x] [Pipeline & Hazard]()
 20. [ ] [Exercises on Exam]()
 21. [x] [Cache](https://drive.google.com/file/d/13\_z3H6EqCx1dK84NkEVajC\_9NVXKg1Rf/view)
     1. [x] [Memory Access]()

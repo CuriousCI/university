@@ -104,6 +104,73 @@ sw $t5, 16($t0)
 
 > TODO: complete example
 
+### Data Hazards & Forwarding Unit 
+
+#### EXE
+
+![Hazards in EXE](./exe-hazard.svg)
+
+```rust
+if EX/MM.RegWrite == 1 && EX/MM.MemRead == 0 {
+    ID/EX.rs == EX/MM.rd || ID/EX.rt == EX/MM.rd
+}
+
+if MM/WB.RegWrite == 1 && MM/WB.MemRead == 0 {
+    ID/EX.rs == MM/WB.rd || ID/EX.rt == MM/WB.rd
+}
+```
+
+MemRead has to be 0, because when MemRead is 1, it's an I-Type instruction, and the rd value doesn't have the wanted meaning _(could be detected as an hazard, when it's clearly not)._ RegWrite has to be 1, or this means the instruction before doesn't modify the data.
+
+Then it's just a metter of checking if one register _(rs or rt)_ of the current instruction  `ID/EX` matches with the destination register of the previous one, or the previous two.
+
+Now we have to determine the **precedence** of the data hazards in EXE.
+
+<!-- MM/WB.rd != 0 &&  -->
+<!-- && EX/MM.rd != 0 -->
+
+```rust
+if 
+    MM/WB.RegWrite == 1 && 
+    !(EX/MM.RegWrite == 1) &&
+    EX/MM.rd != ID/EX.rt && 
+    MM/WB.rd == ID/EX.rt {
+        forwardB = 01
+}
+```
+
+If the value in `MM/WB` _(instruction 2)_ is valid and needed, and I'm not forwarding the value in `EX/MM` _(instruction 1)_, then I can forward _instruction 2_.
+
+Here's a table describing the behaviour of the **Forwarding Unit**, which handles the forwarding.
+
+| control | source |
+|--|--|
+| forwardA = 00 | ID/EX (current) 
+| forwardA = 01 | EX/MM (previous)
+| forwardA = 10 | MM/WB (before previous)
+|||
+| forwardB = 00 | ID/EX (current)
+| forwardB = 01 | EX/MM (previous)
+| forwardB = 10 | MM/WB (before previous)
+
+![](./forwarding-unit.svg)
+
+#### MEM 
+
+It happens only in one case:
+
+```armasm
+lw $t0, offset($t1)
+sw $t0, offset($t2)
+```
+
+To detect it it's simple enough: you just have to determine if the previous instruction has `MemRead` and `RegWrite` set to 1, and the current one has `MemWrite` set to 1, and in both the instructions the address of `rt` is the same.
+
+#### ID
+
+Required only if `beq` is calculated in `ID`.
+
+
 ### Control Hazard
 
 ```armasm
@@ -148,41 +215,24 @@ If we can predict the jump in the `ID` phase, we need just 1 `nop`. It doesn't a
 
 That's why the **CPU** tries to **predict the branch**, and tries to load the next instruction or the `nop` depending on which is executed most often.
 
+We can move the jump decision in `ID` instead of `EXE`; in this case: 
+- we have to put just 1 `nop` after _(in `EXE` we need 2)_
+- if we have a `lw` before, we need 2 `nop` before _(instead of 1)_
+- if we have a **R-Type data hazard**, we need 1 `nop` before _(instead of none)_
 
-### Data Hazards & Forwarding Unit 
+#### Anticipating `jump`
 
-#### EXE
+The `j` instruction has OPCode `000010`, this means that once we fetch the instruction from memory, we can already jump to the address, just by comparing the OPCode.
 
-![Hazards in EXE](./exe-hazard.svg)
+#### Branch Prediction
 
-```rust
-if EX/MM.RegWrite == 1 && EX/MM.MemRead == 0 {
-    ID/EX.rs == EX/MM.rd || ID/EX.rt == EX/MM.rd
-}
+We can count with a hardware solution how many **jumps have been done** to decide wether it's more likely the jump will be taken or not. To predict a jump, we need a simple FSM with 4 states, which changes prediction after 2 fasle positives _(this way, inside loops with a prevalent choice, we always do the most efficient one)._
 
-if MM/WB.RegWrite == 1 && MM/WB.MemRead == 0 {
-    ID/EX.rs == MM/WB.rd || ID/EX.rt == MM/WB.rd
-}
-```
+<div style="max-width: 400px">
 
-MemRead has to be 0, because when MemRead is 1, it's an I-Type instruction, and the rd value doesn't have the wanted meaning _(could be detected as an hazard, when it's clearly not)_
+![](./branch-prediction.svg)
 
-#### MEM 
-
-It happens only in one case:
-
-```armasm
-lw $t0, offset($t1)
-sw $t0, offset($t2)
-```
-
-> TODO: CPU with forwarding
-
-### Branch Prediction
-
-## Control Signals Propagation
-
-## Speed Increment
+</div>
 
 ## Exercise
 
