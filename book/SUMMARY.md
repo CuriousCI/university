@@ -52,6 +52,7 @@
     - [Single Clock Cycle Architecture](./assembly/architecture.md)
     - [Pipeline](./assembly/pipeline.md)
     - [Cache](./assembly/cache.md)
+    - [Interrupt]()
 - [Algorithms & Data Structures](./algorithms/README.md)
     - [Computational Cost](./algorithms/computational-cost.md)
     - [Recurrence Equations](./algorithms/recurrence-equations.md)
