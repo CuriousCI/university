@@ -11,7 +11,7 @@ Un'interfaccia è uno strumento fondamentale del Polimorfismo e della "Compositi
 
 Un esempio potrebbe essere:
 
-```
+```java
 public interface Serializable {
     public String toJson();
     public Object fromJson(String);
