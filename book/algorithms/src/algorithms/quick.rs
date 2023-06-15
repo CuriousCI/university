@@ -1,17 +1,17 @@
-pub fn partition<T: Ord + Copy>(array: &mut [T], start: usize, end: usize) -> usize {
+pub fn partition<T: Ord>(array: &mut [T], start: usize, end: usize) -> usize {
     // pick a pivot
     let mut pivot = start;
-    let mut to_left = false;
+    let mut direction_to_left = false;
 
     let mut left = start;
     let mut right = end - 1;
 
     while left < right {
-        if to_left {
+        if direction_to_left {
             if array[left] > array[pivot] {
                 array.swap(left, pivot);
                 pivot = left;
-                to_left = !to_left;
+                direction_to_left = !direction_to_left;
             }
 
             left += 1;
@@ -19,7 +19,7 @@ pub fn partition<T: Ord + Copy>(array: &mut [T], start: usize, end: usize) -> us
             if array[pivot] > array[right] {
                 array.swap(right, pivot);
                 pivot = right;
-                to_left = !to_left;
+                direction_to_left = !direction_to_left;
             }
 
             right -= 1;
@@ -30,11 +30,11 @@ pub fn partition<T: Ord + Copy>(array: &mut [T], start: usize, end: usize) -> us
     pivot
 }
 
-pub fn quick_sort<T: Ord + Copy>(array: &mut [T]) {
+pub fn quick_sort<T: Ord>(array: &mut [T]) {
     sort(array, 0, array.len());
 }
 
-fn sort<T: Ord + Copy>(array: &mut [T], start: usize, end: usize) {
+fn sort<T: Ord>(array: &mut [T], start: usize, end: usize) {
     if end <= start + 1 {
         return;
     }

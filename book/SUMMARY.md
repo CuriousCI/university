@@ -71,7 +71,7 @@
         - [Trees]()
         - [Dictionaries]()
         - [Binary Search Tree]()
-        - [Red-Black Tree]()
+        - [Red-Black Tree](./algorithms/rbtree.md)
 
 - [Calculus I +]()
     - [Series]()
