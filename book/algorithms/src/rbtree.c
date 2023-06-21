@@ -25,12 +25,11 @@ void rotate_left(RBTree *x) {
   y->parent = parent;
 
   y->left = x;
-  y->left->parent = y;
-
+  x->parent = y;
   x->left = alpha;
   x->right = beta;
-  x->left->parent = x;
-  x->right->parent = x;
+  alpha->parent = x;
+  beta->parent = x;
 }
 
 void rotate_right(RBTree *x) {
@@ -47,52 +46,42 @@ void rotate_right(RBTree *x) {
 
   y->left = alpha;
   y->right = x;
-  y->left->parent = y;
-  y->right->parent = y;
-
+  alpha->parent = y;
+  x->parent = y;
   x->left = beta;
   x->left->parent = y;
 }
 
 void fix(RBTree *tree) {
-  // Case 0, make root black
   if (tree->parent == NULL) {
     tree->color = Black;
     return;
   }
 
-  // Tree is good
-  if (tree->parent->parent == NULL)
+  if (tree->parent->parent == NULL || tree->parent->color == Black)
     return;
 
-  // Needed to determine the other cases
-  RBTree *grandpa = tree->parent->parent;
-  RBTree *father = tree->parent;
+  RBTree *grandpa = tree->parent->parent, *father = tree->parent;
   RBTree *uncle = grandpa->left == father ? grandpa->right : grandpa->left;
 
-  if (father->color == Black) // Tree is valid
-    return;
-
-  if (uncle->color == Red) { // Case 1
+  if (uncle->color == Red) {
     father->color = Black;
     uncle->color = Black;
     grandpa->color = Red;
     fix(grandpa);
-  } else if (father->right == tree) { // Case 2
-    rotate_left(father);              // Always go to Case 3
+  } else if (father->right == tree) {
+    rotate_left(father);
     fix(father);
-  } else if (father->left == tree) { // Case 3
+  } else if (father->left == tree) {
     if (grandpa->left == father) {
       rotate_right(grandpa);
-      // Change colors
       grandpa->color = Red;
       father->color = Black;
     } else {
       rotate_left(grandpa);
-      // Change colors
       grandpa->color = Red;
       father->color = Black;
-      fix(tree); // Go to Case 2, then go back to leftmost case 3
+      fix(tree);
     }
   }
 }
@@ -115,7 +104,6 @@ void insert(RBTree **tree, int value) {
 }
 
 void visit(RBTree *tree, int layer) {
-
   for (int _ = 0; _ < layer; _++)
     printf(" ");
 
@@ -139,9 +127,8 @@ int main() {
   int values[] = {11, 14, 15, 2, 1, 7, 5, 8, 4};
   int SIZE = 9;
 
-  for (int *value = values; value < values + SIZE; value++) {
+  for (int *value = values; value < values + SIZE; value++)
     insert(&tree, *value);
-  }
+
   visit(tree, 0);
-  // printf("\n\n");
 }
