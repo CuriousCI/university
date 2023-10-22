@@ -32,7 +32,7 @@ ATTENZIONE: quando caricate il file assicuratevi che sia nella codifica UTF8
 
 
 def ex1(int_seq: str, subtotal: int) -> int:
-    numbers = [*map(int, int_seq.split(','))]
+    numbers = list(map(int, int_seq.split(',')))
 
     valid_substrings, tail, segment, zeros = 0, 0, 0, 0
 

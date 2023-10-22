@@ -14,6 +14,7 @@ fn main() {
             })),
         })),
     };
+
     println!("{:?}", search(Rc::new(ll), 2));
 }
 

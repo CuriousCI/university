@@ -79,6 +79,11 @@
     - [Differential Equations]()
 
 # II year 
+
+- [Probabilità]()
+    - [Indipendenza](./probability/independence.md)
+    - [Schema di Bernoulli](./probability/bernoulli.md)
+
 # III year
 
 ---
