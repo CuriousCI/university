@@ -80,9 +80,11 @@
 
 # II year 
 
-- [Probabilità]()
+- [Calcolo delle probabilità]()
     - [Indipendenza](./probability/independence.md)
     - [Schema di Bernoulli](./probability/bernoulli.md)
+    - [Probabilià condizionata](./probability/probabilita-condizionata.md)
+    
 
 # III year
 
