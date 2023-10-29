@@ -80,6 +80,9 @@
 
 # II year 
 
+- [Algebra]()
+    - [Equazioni congruenziali](./algebra/equazioni-congruenziali.md)
+
 - [Calcolo delle probabilità]()
     - [Indipendenza](./probability/independence.md)
     - [Schema di Bernoulli](./probability/bernoulli.md)
