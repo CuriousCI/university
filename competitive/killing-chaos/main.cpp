@@ -54,6 +54,17 @@ struct SegmentTree {
   }
 };
 
+// 0-5
+// 0-1 2-5
+// 0-1 2-3 4-5
+// 0-1 2-3 4-5
+// previous -= current sum in that range += sums in two new ranges!
+// return previous * new trains
+// Cases:
+// 5-5 (destroyed)
+// 3-3 (left destroyed) + 4-5 (stayed right)
+// 3-4 (left stayed) + 5-5 (right destroyed)
+
 struct RNode {
   int start, end;
   RNode *left, *right;
@@ -65,15 +76,19 @@ struct RNode {
     this->right = NULL;
   }
 
-  pair<int, int> split(int index) {
+  pair<pair<int, int>, pair<int, int>> split(int index) {
     if (this->left) {
       if (this->left->end >= index)
-        this->left->split(index);
+        return this->left->split(index);
       else
-        this->right->split(index);
+        return this->right->split(index);
     } else {
       this->left = new RNode(this->start, index);
-      this->right = new RNode(index, this->end);
+      this->right = new RNode(index + 1, this->end);
+      // cout << "(" << this->start << ";" << index << ")  (" << index + 1 <<
+      // ";"
+      //      << this->end << ")" << endl;
+      return {{this->start, index}, {index + 1, this->end}};
     }
   }
 };
@@ -85,36 +100,49 @@ int main() {
   cin >> n;
 
   vector<int> train;
-  // vector<int> prefix_sum;
-  // int total = 0;
   for (int i = 0; i < n; i++) {
     int coach;
     cin >> coach;
     train.push_back(coach);
-    // total += coach;
-    // prefix_sum.push_back(total);
   }
 
-  set<pair<int, int>> rs;
-  rs.insert({0, n});
+  auto seg_tree = SegmentTree(train);
+  auto ranges = RNode(0, n);
+
+  int segments = 1;
+  int max_chaos = round_up(seg_tree.query(0, n - 1)) * segments;
+  int chaos = max_chaos;
 
   for (int i = 0; i < n; i++) {
     int destroyed_coach;
     cin >> destroyed_coach;
+    destroyed_coach--;
+
+    auto new_ranges = ranges.split(destroyed_coach);
+    auto left_range = new_ranges.first;
+    auto right_range = new_ranges.second;
+
+    if (left_range.first == left_range.second &&
+        right_range.first == right_range.second) {
+      chaos -= round_up(train[destroyed_coach]);
+      max_chaos = max(max_chaos, chaos * segments);
+      segments--;
+    } else if (left_range.first == left_range.second) {
+      chaos -= round_up(train[destroyed_coach]);
+      max_chaos = max(max_chaos, chaos * segments);
+    } else if (right_range.first == right_range.second) {
+      chaos -= round_up(train[destroyed_coach]);
+      max_chaos = max(max_chaos, chaos * segments);
+    } else {
+      chaos -= round_up(seg_tree.query(left_range.first, right_range.second));
+      chaos += round_up(seg_tree.query(left_range.first, left_range.second));
+      chaos += round_up(seg_tree.query(right_range.first, right_range.second));
+      max_chaos = max(max_chaos, chaos * segments);
+      segments++;
+    }
+
+    // cout << chaos << " * " << segments << endl;
   }
 
-  // vector<bool> is_start;
-  // vector<bool> is_end;
-  //
-  // for (int i = 0; i < n; i++) {
-  //   is_start.push_back(false);
-  //   is_end.push_back(false);
-  // }
-
-  // auto seg_tree = SegmentTree(train);
-  //
-  // int max_chaos = round_up(seg_tree.query(0, train.size()));
-  // cout << max_chaos << endl;
-  // for (int i = 0; i < destroy_order.size(); i++) {
-  // }
+  cout << max_chaos << endl;
 }
