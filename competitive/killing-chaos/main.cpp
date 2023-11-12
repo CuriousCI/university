@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <limits>
 #include <map>
 #include <queue>
 #include <set>
@@ -57,143 +58,64 @@ struct SegmentTree {
   }
 };
 
-// 0-5
-// 0-1 2-5
-// 0-1 2-3 4-5
-// 0-1 2-3 4-5
-// previous -= current sum in that range += sums in two new ranges!
-// return previous * new trains
-// Cases:
-// 5-5 (destroyed)
-// 3-3 (left destroyed) + 4-5 (stayed right)
-// 3-4 (left stayed) + 5-5 (right destroyed)
-
-struct RNode {
-  ll start, end;
-  RNode *left, *right;
-
-  RNode(ll start, ll end) {
-    this->start = start;
-    this->end = end;
-    this->left = NULL;
-    this->right = NULL;
-  }
-
-  pair<pair<ll, ll>, pair<ll, ll>> split(ll index) {
-    if (this->left) {
-      if (this->left->end >= index)
-        return this->left->split(index);
-      else
-        return this->right->split(index);
-    } else {
-      if (this->start == index) {
-        ll old_start = this->start;
-        this->start = index + 1;
-        return {{old_start, index}, {index + 1, this->end}};
-      } else if (this->end == index) {
-        ll old_end = this->end;
-        this->end = index - 1;
-        return {{this->start, index}, {index + 1, old_end}};
-      } else {
-        this->left = new RNode(this->start, index);
-        this->right = new RNode(index + 1, this->end);
-        return {{this->start, index}, {index + 1, this->end}};
-      }
-    }
-  }
-};
-
 ll round_up(ll number) {
-  return number % 10 ? number + (10 - (number % 10)) : number;
+  ll remainder = number % 10;
+  return remainder ? number + (10 - remainder) : number;
 }
 
 int main() {
   cin.tie(0)->sync_with_stdio(false);
-  ll n;
-  cin >> n;
+  ll number_of_coaches;
+  cin >> number_of_coaches;
 
   vector<ll> train;
-  for (ll i = 0; i < n; i++) {
+  for (ll _ = 0; _ < number_of_coaches; _++) {
     ll coach;
     cin >> coach;
     train.push_back(coach);
   }
 
-  auto seg_tree = SegmentTree(train);
-  // auto ranges = RNode(0, n);
+  auto segment_tree = SegmentTree(train);
 
-  ll segments = 1;
-  ll sum = seg_tree.query(0, n);
-  ll max_chaos = round_up(sum) * segments;
-  ll chaos = max_chaos;
+  ll max_chaos = round_up(segment_tree.query(0, number_of_coaches)),
+     chaos = max_chaos;
+  set<pair<ll, ll>> segments{{0, number_of_coaches}};
 
-  map<pair<ll, ll>, ll> calculated;
-  set<pair<ll, ll>> rang;
-  rang.insert({0, n});
-  // rang.push_back();
-  // upper_bound (rang.begin(), rang.end(), {});
-  // for (int i = 0;
-  // priority_queue<pair<ll, ll>> rang;
-  // rang.push({0, n});
-  // rang.pop({3, 3});
-  // set<pair<ll, ll>> rang;
-  // rang.insert({0, n});
-  calculated[{0, n}] = sum;
-
-  for (ll i = 0; i < n / 2; i++) {
+  for (ll _ = 0; _ < number_of_coaches; _++) {
     ll destroyed_coach;
     cin >> destroyed_coach;
     destroyed_coach--;
 
-    // if (this->start == index) {
-    //   ll old_start = this->start;
-    //   this->start = index + 1;
-    //   return {{old_start, index}, {index + 1, this->end}};
-    // } else if (this->end == index) {
-    //   ll old_end = this->end;
-    //   this->end = index - 1;
-    //   return {{this->start, index}, {index + 1, old_end}};
-    // } else {
-    //   this->left = new RNode(this->start, index);
-    //   this->right = new RNode(index + 1, this->end);
-    //   return {{this->start, index}, {index + 1, this->end}};
-    // }
-    // auto new_ranges = ranges.split(destroyed_coach);
+    auto segment = *segments.upper_bound({0, destroyed_coach});
+    if (segment.second <= destroyed_coach)
+      segment = *segments.lower_bound({destroyed_coach, 0});
 
-    auto rr = rang.upper_bound({destroyed_coach, destroyed_coach});
-    cout << rr->first << " " << rr->second << endl;
-    pair<pair<ll, ll>, pair<ll, ll>> new_ranges = {{0, n}, {n, n}};
-    auto left_range = new_ranges.first;
-    auto right_range = new_ranges.second;
-
-    if (left_range.first == left_range.second &&
-        right_range.first == right_range.second) {
+    if (destroyed_coach == segment.first &&
+        destroyed_coach + 1 == segment.second) {
       chaos -= round_up(train[destroyed_coach]);
-      segments--;
-    } else if (left_range.first == left_range.second) {
-      ll original = calculated[{left_range.first, right_range.second}];
-      chaos -= round_up(original);
-      ll s = original - train[destroyed_coach];
-      calculated[right_range] = s;
-      chaos += round_up(s);
-    } else if (right_range.first == right_range.second) {
-      ll original = calculated[{left_range.first, right_range.second}];
-      chaos -= round_up(original);
-      ll s = original - train[destroyed_coach];
-      calculated[left_range] = s;
-      chaos += round_up(s);
+    } else if (destroyed_coach == segment.first) {
+      chaos -= round_up(segment_tree.query(segment.first, segment.second));
+      chaos +=
+          round_up(segment_tree.query(destroyed_coach + 1, segment.second));
+      segments.insert({destroyed_coach + 1, segment.second});
+    } else if (destroyed_coach + 1 == segment.second) {
+      chaos -= round_up(segment_tree.query(segment.first, segment.second));
+      chaos += round_up(segment_tree.query(segment.first, destroyed_coach));
+      segments.insert({segment.first, destroyed_coach});
     } else {
-      ll original = calculated[{left_range.first, right_range.second}];
-      chaos -= round_up(original);
-      ll l = seg_tree.query(left_range.first, left_range.second);
-      calculated[left_range] = l;
-      ll r = original - l - train[destroyed_coach];
-      calculated[right_range] = r;
-      chaos += round_up(l) + round_up(r);
-      segments++;
-    }
+      chaos -= round_up(segment_tree.query(segment.first, segment.second));
+      chaos += round_up(segment_tree.query(segment.first, destroyed_coach));
+      chaos +=
+          round_up(segment_tree.query(destroyed_coach + 1, segment.second));
 
-    max_chaos = max(max_chaos, chaos * segments);
+      segments.insert({segment.first, destroyed_coach});
+      segments.insert({destroyed_coach + 1, segment.second});
+    }
+    segments.erase(segment);
+    for (auto s : segments)
+      cout << "(" << s.first << ";" << s.second << ") ";
+    cout << endl;
+    max_chaos = max(max_chaos, (ll)(chaos * segments.size()));
   }
 
   cout << max_chaos << endl;
