@@ -84,9 +84,19 @@
     - [Equazioni congruenziali](./algebra/equazioni-congruenziali.md)
 
 - [Calcolo delle probabilità]()
-    - [Indipendenza](./probability/independence.md)
-    - [Schema di Bernoulli](./probability/bernoulli.md)
-    - [Probabilià condizionata](./probability/probabilita-condizionata.md)
+    - [Assiomatica della probabilità](./probabilita/assiomatica.md)
+    - [Calcolo combinaorio]()
+    - [Modelli di estrazioni]()
+    - [Il ruolo dell'indistinguibilità]()
+    - [Indipendenza](./probabilita/indipendenza.md)
+    - [Schema di Bernoulli](./probabilita/bernoulli.md)
+    - [Probabilià condizionata](./probabilita/probabilita-condizionata.md)
+    - [Variabili aleatorie](./probabilita/variabili-aleatorie.md)
+    - [Modelli di variabili aleatorie]()
+    - [Problemi noti]()
+        - [Accoppiamenti](./probabilita/accoppiamenti.md)
+        - [Monty Hall]()
+        - [La rovina del giocatore]()
     
 
 # III year
