@@ -7,7 +7,8 @@ def ex1(ftesto, filepng):
     rectangles = []
 
     with open(ftesto) as file:
-        rectangles.extend([[int(x) for x in r.split()] for r in file.readlines()])
+        rectangles.extend([[int(x) for x in r.split()]
+                          for r in file.readlines()])
 
     width = max([r[2] for r in rectangles]) + 10
     height = max([r[1] for r in rectangles]) + 10
@@ -27,7 +28,7 @@ def ex1(ftesto, filepng):
 
         line = [POSTER] * (right - left - 1)
         for y in range(top + 1, bottom):
-            image[y][left + 1 : right] = line
+            image[y][left + 1: right] = line
 
         for y in (bottom, top):
             for x in range(left, right + 1):
