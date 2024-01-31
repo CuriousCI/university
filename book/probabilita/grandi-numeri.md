@@ -1,9 +1,11 @@
 # Legge dei grandi numeri
 
-## Teorema (legge dei grandi numeri)
+## Disuguaglianza di Markov
 
-## Lemma (disuguaglianza di Čebyšëv)
+## Disuguaglianza di Čebyšëv
 
-## Lemma 2 (disuguaglianza di Markov)
+## Legge dei grandi numeri
 
-## Applicazioni (metodo Montecarlo per calcolo di integrali definiti)
+
+
+## Metodo Montecarlo

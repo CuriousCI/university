@@ -35,11 +35,11 @@ In the course, you will study the **recursive** implementation of the **binary s
 
 ## Exercise
 
-> Given \\(A\\), an `array of integers`, and two values \\(a\\) and \\(b\\), with \\(a \le b\\), count how many elements of \\(A\\) are included in the range \\([a, b]\\)
+> Given $A$, an `array of integers`, and two values $a$ and $b$, with $a \le b$, count how many elements of $A$ are included in the range $[a, b]$
 
-The simplest way to solve the problem is to implement two functions: `lower_bound` and `upper_bound`, which are basically binary searches that don't stop once they find the value in the array. In the case of `lower_bound`, it finds the index of _"the smallest value bigger or equal to \\(x\\)"_, and the `upper_bound` is _"the biggest value smaller or equal to \\(x\\)"_ with \\(x\\) being the value to find.
+The simplest way to solve the problem is to implement two functions: `lower_bound` and `upper_bound`, which are basically binary searches that don't stop once they find the value in the array. In the case of `lower_bound`, it finds the index of _"the smallest value bigger or equal to $x$"_, and the `upper_bound` is _"the biggest value smaller or equal to $x$"_ with $x$ being the value to find.
 
-This way, we can find the `upper_bound` of \\(b\\), and the `lower_bound` of \\(a\\), and do a subtraction of the two to find the number of elements inbetween. There are a few corner cases to consider both for `upper_bound`, `lower_bound` and `count_in_range` _(the function that solves the exercise)_ for which we return 0 _(open an [ISSUE](https://github.com/CuriousCI/university/issues) if you want me to discuss them)_.
+This way, we can find the `upper_bound` of $b$, and the `lower_bound` of $a$, and do a subtraction of the two to find the number of elements inbetween. There are a few corner cases to consider both for `upper_bound`, `lower_bound` and `count_in_range` _(the function that solves the exercise)_ for which we return 0 _(open an [ISSUE](https://github.com/CuriousCI/university/issues) if you want me to discuss them)_.
 
 ### Rust
 

@@ -1,8 +1,12 @@
 # University Notes - Computer Science 
 
-Just `code` and **projects** for university. All the study-related contents are just a **summary** of the actual material, for better explanations, check [Exyss' notes](https://github.com/Exyss/university-notes) and study on the books suggested by the courses. 
+Just `code` and **projects** for university. All the study-related contents are just a **summary** of the actual material. For better explanations check other material [here](https://sapienzastudents.net/informatica/risorse), study on books suggested by the teachers and learn by **writing your own material** 😀
 
-In no way, shape or form, you should study solely on these notes. You are encouraged to follow the lectures, write your own notes, and do exercises over and over again. The process of learning requires effort.
+<!-- check [Exyss' notes](https://github.com/Exyss/university-notes) and study on the books suggested by the courses.  -->
+
+<!-- In no way, shape or form, you should study solely on these notes. You are encouraged to follow the lectures, write your own notes, and do exercises over and over again. The process of learning requires effort. -->
+
+You are encouraged to follow the lectures and do exercises over and over again. The **process of learning requires effort**
 
 
 >A pottery teacher split her class into two halves

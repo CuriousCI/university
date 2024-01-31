@@ -2,7 +2,7 @@
 title = "Computer Science @ Sapienza"
 authors = ["Ionut Cicio"]
 description = "Just code & projects for university"
-language = "en"
+language = "it"
 src = "book"
 
 # [rust]
@@ -26,6 +26,9 @@ git-repository-url = "https://github.com/CuriousCI/university"
 [output.html.playground]
 editable = false 
 line-numbers = true
+
+[preprocessor.katex]
+after = ["links"]
 
 # [output.html.search]
 # limit-results = 15
