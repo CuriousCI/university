@@ -1,11 +1,11 @@
-pub fn insertion_sort<T: Ord>(vector: &mut [T]) {
-    for i in 1..vector.len() {
+pub fn insertion_sort<T: Ord>(array: &mut [T]) {
+    for i in 1..array.len() {
         for j in (1..=i).rev() {
-            if vector[j - 1] < vector[j] {
+            if array[j - 1] < array[j] {
                 break;
             }
 
-            vector.swap(j - 1, j);
+            array.swap(j - 1, j);
         }
     }
 }
