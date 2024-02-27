@@ -21,6 +21,7 @@ create-missing = false
 mathjax-support = true
 site-url = "/university/"
 git-repository-url = "https://github.com/CuriousCI/university"
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
 # additional-css = ["custom.css"]
 
 [output.html.playground]
@@ -29,6 +30,9 @@ line-numbers = true
 
 [preprocessor.katex]
 after = ["links"]
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
 
 # [output.html.search]
 # limit-results = 15

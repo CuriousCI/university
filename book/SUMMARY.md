@@ -110,6 +110,8 @@
    - [Legge dei grandi numeri](./probabilita/grandi-numeri.md)
 - [Basi di dati I](./basi-di-dati-1/basi-di-dati.md)
     <!-- - [Introduction](./basi-di-dati-1/dbms.pdf) -->
+- [Basi di dati II]()
+    - [Azienda 1](./basi-di-dati-2/azienda-1.md)
     
 
 <!-- # III year -->
