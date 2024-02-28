@@ -27,6 +27,9 @@ I dati di interesse per il sistema sono **impiegati**, **dipartimenti**, **diret
 
 <style>
     .edgeLabel {
+        position: relative !important;
+        z-index: 10 !important;
+        background: lightgray;
     }
 </style>
 
@@ -34,35 +37,37 @@ I dati di interesse per il sistema sono **impiegati**, **dipartimenti**, **diret
 
 ```mermaid
 classDiagram
-	namespace Diagramma {
-		class Impiegato {
-            nome: Stringa
-            cognome: Stringa
-            data_di_nascita: Data
-            stipendio: Razionale >= 0
-		}
-		class Impiegato["fa:fa-users Impiegato"]
+	%%namespace Diagramma {
+    class Impiegato {
+        nome: Stringa
+        cognome: Stringa
+        data_di_nascita: Data
+        stipendio: Razionale >= 0
+    }
+    class Impiegato["fa:fa-users Impiegato"]
 
-		class Dipartimento {
-			nome: Stringa
-			telefono: Stringa
-		}
-		class Dipartimento["fa:fa-building Dipartimento"]
+    class Dipartimento {
+        nome: Stringa
+        telefono: Stringa
+    }
+    class Dipartimento["fa:fa-building Dipartimento"]
 
-		class Afferenza {
-			data: Data
-		}
+    class Afferenza {
+        data: Data
+    }
 
-		class Progetto {
-			nome: Stringa
-			budget: Razionale >= 0
-		}
-	}
+    class Progetto {
+        nome: Stringa
+        budget: Razionale >= 0
+    }
+    class Progetto["fa:fa-wrench Progetto"]
+
+	%%}
 
 	Impiegato "0..*" --> "0..*" Progetto : partecipa a
+	Impiegato "1..1" --> "0..1" Dipartimento : dirige
 	Afferenza "1..1" --> "1..1" Impiegato : imp_aff
 	Afferenza "1..1" --> "1..1" Dipartimento : dip_aff
-	Impiegato "1..1" --> "0..1" Dipartimento : dirige
 ```
 
 <!-- namespace Istanze { -->
@@ -96,34 +101,37 @@ classDiagram
 <!-- dipartimento_1 ..> Dipartimento : <i><< istanza di >></i> -->
 <!-- progetto_1 ..> Progetto : <i><< istanza di >></i> -->
 <!-- afferenza_1 ..> Afferenza : <i><< istanza di >></i> -->
+
+## Istanze
+
 ```mermaid
 classDiagram
-	namespace Istanze {
-		class impiegato_1 {
-			nome = "Luigi"
-			cognome = "Spada"
-			data_di_nascita = 1989-06-05
-			stipendio = 1350.00€
-		}
-		class impiegato_1["impiegato_1: Impiegato"]
+	%%namespace Istanze {
+    class impiegato_1 {
+        nome = "Luigi"
+        cognome = "Spada"
+        data_di_nascita = 1989-06-05
+        stipendio = 1350.00€
+    }
+    class impiegato_1["impiegato_1: Impiegato"]
 
-		class afferenza_1 {
-			data = 2003-08-02
-		}
-		class afferenza_1["afferenza_1: Afferenza"]
+    class afferenza_1 {
+        data = 2003-08-02
+    }
+    class afferenza_1["afferenza_1: Afferenza"]
 
-		class dipartimento_1 {
-			nome = "grafica"
-			telefono = "+61 892187581"
-		}
-		class dipartimento_1["grafica: Dipartimento"]
+    class dipartimento_1 {
+        nome = "grafica"
+        telefono = "+61 892187581"
+    }
+    class dipartimento_1["grafica: Dipartimento"]
 
-		class progetto_1 {
-			nome = "TesLaX"
-			budget = 2500000.00€
-		}
-		class progetto_1["tesla: Progetto"]
-	}
+    class progetto_1 {
+        nome = "TesLaX"
+        budget = 2500000.00€
+    }
+    class progetto_1["tesla: Progetto"]
+	%%}
 
 	impiegato_1 "0..*" --> "0..*" progetto_1 : partecipa a
 	afferenza_1 "1..1" --> "1..1" impiegato_1 : imp_aff

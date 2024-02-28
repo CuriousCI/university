@@ -112,6 +112,7 @@
     <!-- - [Introduction](./basi-di-dati-1/dbms.pdf) -->
 - [Basi di dati II]()
     - [Azienda 1](./basi-di-dati-2/azienda-1.md)
+- [Algoritmi II](./algoritmi-2/algoritmi.md)
     
 
 <!-- # III year -->

@@ -24,8 +24,13 @@ mermaid.initialize({
         // 'border5Color': '#32302f' // Gruvbox darker gray for quinary borders
     },
     flowchart: {
-        nodeSpacing: 200,
-        rankSpacing: 200,
+        nodeSpacing: 100,
+        rankSpacing: 100,
         curve: "linear",
+        subGraphTitleMargin: {
+            top: 10,
+            bottom: 10
+        },
+        defaultRenderer: 'elk'
     }
 });
