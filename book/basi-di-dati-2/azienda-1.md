@@ -26,8 +26,6 @@ I dati di interesse per il sistema sono **impiegati**, **dipartimenti**, **diret
 - Ogni **impiegato** può partecipare ad un numero qualsiasi di **progetti**.
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
     .edgeLabel {
     }
 </style>
@@ -61,6 +59,45 @@ classDiagram
 		}
 	}
 
+	Impiegato "0..*" --> "0..*" Progetto : partecipa a
+	Afferenza "1..1" --> "1..1" Impiegato : imp_aff
+	Afferenza "1..1" --> "1..1" Dipartimento : dip_aff
+	Impiegato "1..1" --> "0..1" Dipartimento : dirige
+```
+
+<!-- namespace Istanze { -->
+<!-- 	class impiegato_1 { -->
+<!-- 		nome = "Luigi" -->
+<!-- 		cognome = "Spada" -->
+<!-- 		data_di_nascita = 1989-06-05 -->
+<!-- 		stipendio = 1350.00€ -->
+<!-- 	} -->
+<!-- 	class impiegato_1["impiegato_1: Impiegato"] -->
+<!---->
+<!-- 	class afferenza_1 { -->
+<!-- 		data = 2003-08-02 -->
+<!-- 	} -->
+<!-- 	class afferenza_1["afferenza_1: Afferenza"] -->
+<!---->
+<!-- 	class dipartimento_1 { -->
+<!-- 		nome = "grafica" -->
+<!-- 		telefono = "+61 892187581" -->
+<!-- 	} -->
+<!-- 	class dipartimento_1["grafica: Dipartimento"] -->
+<!---->
+<!-- 	class progetto_1 { -->
+<!-- 		nome = "TesLaX" -->
+<!-- 		budget = 2500000.00€ -->
+<!-- 	} -->
+<!-- 	class progetto_1["tesla: Progetto"] -->
+<!-- } -->
+
+<!-- impiegato_1 ..> Impiegato : <i><< istanza di >></i> -->
+<!-- dipartimento_1 ..> Dipartimento : <i><< istanza di >></i> -->
+<!-- progetto_1 ..> Progetto : <i><< istanza di >></i> -->
+<!-- afferenza_1 ..> Afferenza : <i><< istanza di >></i> -->
+```mermaid
+classDiagram
 	namespace Istanze {
 		class impiegato_1 {
 			nome = "Luigi"
@@ -88,17 +125,12 @@ classDiagram
 		class progetto_1["tesla: Progetto"]
 	}
 
-
-	Impiegato "0..*" --> "0..*" Progetto : partecipa a
-	Afferenza "1..1" --> "1..1" Impiegato : imp_aff
-	Afferenza "1..1" --> "1..1" Dipartimento : dip_aff
-	Impiegato "1..1" --> "0..1" Dipartimento : dirige
-
-	impiegato_1 ..> Impiegato : <i><< istanza di >></i>
-	dipartimento_1 ..> Dipartimento : <i><< istanza di >></i>
-	progetto_1 ..> Progetto : <i><< istanza di >></i>
-	afferenza_1 ..> Afferenza : <i><< istanza di >></i>
+	impiegato_1 "0..*" --> "0..*" progetto_1 : partecipa a
+	afferenza_1 "1..1" --> "1..1" impiegato_1 : imp_aff
+	afferenza_1 "1..1" --> "1..1" dipartimento_1 : dip_aff
+	impiegato_1 "1..1" --> "0..1" dipartimento_1 : dirige
 ```
+
 
 <!-- afferenza_1 --|> impiegato_1 : impiegato_afferenza -->
 <!-- afferenza_1 --|> dipartimento_1 : dipartimento_afferenza -->
