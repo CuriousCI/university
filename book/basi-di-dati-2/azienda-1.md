@@ -1,6 +1,7 @@
 # Azienda 1
 
 Si vuole sviluppare un sistema informativo per la gestione dei dati sul personale di una certa azienda costituita da diversi dipartimenti. Durante la fase di raccolta dei requisiti è stata prodotta la specifica dei requisiti mostrata di seguito. Si chiede di iniziare la fase di Analisi dei requisiti ed in particolare di:
+
 1. raffinare la specifica dei requisiti eliminando _inconsistenze_, _omissioni_ o _ridondanze_ e produrre un elenco numerato di requisiti il meno ambiguo possibile
 2. produrre un diagramma UML delle classi concettuale che modelli i dati di interesse, utilizzando solo i costrutti di `classe`, `associazione`, `attributo`
 
@@ -25,8 +26,9 @@ I dati di interesse per il sistema sono **impiegati**, **dipartimenti**, **diret
 - Ogni **impiegato** può partecipare ad un numero qualsiasi di **progetti**.
 
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
     .edgeLabel {
-        /* font-weight: bolder; */
     }
 </style>
 
@@ -41,11 +43,13 @@ classDiagram
             data_di_nascita: Data
             stipendio: Razionale >= 0
 		}
+		class Impiegato["fa:fa-users Impiegato"]
 
 		class Dipartimento {
 			nome: Stringa
 			telefono: Stringa
 		}
+		class Dipartimento["fa:fa-building Dipartimento"]
 
 		class Afferenza {
 			data: Data
@@ -59,10 +63,10 @@ classDiagram
 
 	namespace Istanze {
 		class impiegato_1 {
-			nome = Luigi
-			cognome = Spada
+			nome = "Luigi"
+			cognome = "Spada"
 			data_di_nascita = 1989-06-05
-			stipendio = 1350.00€"
+			stipendio = 1350.00€
 		}
 		class impiegato_1["impiegato_1: Impiegato"]
 
@@ -78,16 +82,16 @@ classDiagram
 		class dipartimento_1["grafica: Dipartimento"]
 
 		class progetto_1 {
-			nome = "TeslaX"
-			budget = 2_000_000_069€
+			nome = "TesLaX"
+			budget = 2500000.00€
 		}
 		class progetto_1["tesla: Progetto"]
 	}
 
 
 	Impiegato "0..*" --> "0..*" Progetto : partecipa a
-	Afferenza "1..1" --> "1..1" Impiegato : impiegato_afferenza
-	Afferenza "1..1" --> "1..1" Dipartimento : dipartimento_afferenza
+	Afferenza "1..1" --> "1..1" Impiegato : imp_aff
+	Afferenza "1..1" --> "1..1" Dipartimento : dip_aff
 	Impiegato "1..1" --> "0..1" Dipartimento : dirige
 
 	impiegato_1 ..> Impiegato : <i><< istanza di >></i>
