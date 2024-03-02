@@ -1,6 +1,7 @@
 # Algoritmi II
 
 Un **grafo** è una coppia $(V, E)$, e si dice
+\\(O(n)\\)
 
 - **semplice** se ogni coppia di nodi è collegata con al massimo un arco, e non ci sono cappi
 - *diretto* se gli archi sono orientati
@@ -26,6 +27,20 @@ input: grafo con ogni vertice di grado $\geq 2$
 output: un ciclo un grafo _(come elenco di vicini)_
 complessità: $O(n + m)$
 
+DEF un **cammino è una passeggiata che non ripete vertici _(quindi neanche archi)_
+
+
+- **fortemente connesso**: per ogni coppia di vertici esiste un cammino da x a y e viceversa
+
+> PROBLEMA
+
+dato un grafo G, esiste un cammino da X a Y?
+
+> DFS
+
+> PROBLEMA
+
+dato un grafo G, determinare tutte le 
 ```rust
 {{#include ./src/main.rs:3:25 }}
 ```
