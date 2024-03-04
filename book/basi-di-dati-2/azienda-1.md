@@ -33,7 +33,7 @@ I dati di interesse per il sistema sono **impiegati**, **dipartimenti**, **diret
     }
 </style>
 
-## Diagramma
+## UML
 
 ```mermaid
 classDiagram

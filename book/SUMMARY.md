@@ -112,6 +112,8 @@
     <!-- - [Introduction](./basi-di-dati-1/dbms.pdf) -->
 - [Basi di dati II]()
     - [Azienda 1](./basi-di-dati-2/azienda-1.md)
+    - [Voli Aerei 1](./basi-di-dati-2/voli-aerei-1.md)
+    - [Università 1](./basi-di-dati-2/universita-1.md)
 - [Algoritmi II](./algoritmi-2/algoritmi.md)
     - [Esercizi](./algoritmi-2/esercizi.md)
     
