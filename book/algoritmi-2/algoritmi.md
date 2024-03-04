@@ -31,6 +31,11 @@ $$
     padding: 3px 5px !important;
     text-align: center;
 }
+
+blockquote > h4 {
+    margin-bottom: 0;
+    margin-top: 16px;
+}
 </style>
 
 <div class="matrix">
@@ -87,7 +92,7 @@ la dimensione della matrice è $O(n + m)$, con
 > #### Definizione
 > Un **ciclo** in un grafo è un **sottografo connesso** con ogni vertice di grado 2
 
-> ### Osservazione
+> #### Osservazione
 > Se $\exists$ una passeggiata da $x$ a $y \implies \exists$ un cammino da $x$ a $y$
 
 si dimostra con l'algoritmo
@@ -121,8 +126,50 @@ $V_i \in \text{visited} \implies V_i$ è stato inserito nello stack $\implies$ m
 > TODO: complessità $O(n + m)$
 
 > #### Definizione
-> L'**albero di visita** di un grafo diretto è detto **arborescenza** 
+> L'**albero di visita** è un sottografo composto dagli archi che usiamo per raggiungere i vertici nuovi non ancora visitati
+> - è connesso
+> - è aciclico
+
+> #### Definizione
+> L'**albero di visita** di un grafo **diretto** è detto **arborescenza** 
 > - diretto
 > - ogni arco orientato dalla radice alle foglie
 
 Se $G$ è un graffo connesso $\implies \text{visited}$ contiene tutti i nodi del grafo
+
+Se $G$ non è connesso $\implies \text{visited}$ è il componennte che contiene $X$
+
+## Ordine topologico
+
+Consideriamo un progetto diviso in $X_1, X_2, ..., X_n$ task, con dipendenze fra i vari task (Es. $X_1$ va eseguito dopo $X_2$ e $X_3$, e $X_3$ dopo $X_2$; in questo caso l'ordine sarebbe $X_2, X_3, X_1$)
+
+Indicando i vertici con $X_1, X_2, ..., X_n$ e gli archi con $(X_i, X_j)$ se $X_i$ dipende da $X_j$, una **programmazione dei task** corrisponde ad un ordine dei vertici con tutti gli **archi da destra verso sinistra**
+
+Se il grafo ha un ciclo _(diretto)_, non è possibile dare un **ordine topologico**
+
+#### Dimostrazione
+
+Suppponiamo per assurdo che esiste un tale ordine, allora uno dei vertici deve essere per forza l'ultimo nell'ordine; ma essendo ciclico esiste un arco che va da sinistra verso destra da uno dei vertici "centrali" della sequenza all'ultimo vertice, quindi tale ordine non esiste.
+
+> #### Definizione
+> Un grafo diretto ha un **ordine topologico** se $\exists$ un ordine deivertici con tutti gli ordini degli archi da destra verso sinistra
+
+> #### Proposizione
+> Se un grafo diretto ha la proprietà che ogni vertice ha almeno un arco uscente $\implies \exists$ un ciclo
+
+stessa dimostrazione dell'algoritmo del primo giorno: se ogni vertice  ha un arco uscente e i vertici sono finiti, alora prima o poi dovrà tornare... (creare un ciclo) 
+
+L'implicazione $\impliedby$ non è vera!
+
+> #### Corollario
+> Se $\notexists$ un ciclo $\implies \exists$ un nodo senza archi uscenti
+
+### Soluzione naive
+
+> TODO: algoritmo $O(n(n + m))$ per trovare l'ordine topologico!
+
+### Soluzione con DFS
+
+
+
+
