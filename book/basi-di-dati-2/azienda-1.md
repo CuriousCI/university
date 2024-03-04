@@ -25,19 +25,29 @@ I dati di interesse per il sistema sono **impiegati**, **dipartimenti**, **diret
 
 - Ogni **impiegato** può partecipare ad un numero qualsiasi di **progetti**.
 
+
 <style>
     .edgeLabel {
         position: relative !important;
         z-index: 10 !important;
-        background: lightgray;
+        background: rgb(240, 240, 240);
     }
 </style>
 
-## UML
+## UML _(opzione 1)_
+
+### Osservazioni
+
+Questa è l'opzione più _"complessa"_
+
+- Un dipartimento non deve avere per forza un dirigente assegnato _(quindi `0..1`)_
+- Un impiegato può dirigere più dipartimenti _(non afferisce al dipartimento che dirige, ci potrebbe essere un dipartimento apposta per i dirigenti, quindi `0..*`)_
+- La classe `Afferenza` ci serve per tenere uno storico dei dipartimenti in cui ha lavorato un impiegato
+- Usiamo la classe `Partecipazione` per i progetti perché un impiegato può lavorare ad un progetto più volte in periodi diversi di tempo _(N.B. è fondamentale avere come attributi `data_inizio` e `data_fine`, altrimenti l'utilizzo della classe non regge in questo contesto)_
+- Usare il tipo `Stringa` per l'attributo `telefono` non va bene, ma la soluzione originale lo includeva e preferisco attenermi a quella
 
 ```mermaid
 classDiagram
-	%%namespace Diagramma {
     class Impiegato {
         nome: Stringa
         cognome: Stringa
@@ -62,112 +72,57 @@ classDiagram
     }
     class Progetto["fa:fa-wrench Progetto"]
 
-	%%}
+    class Partecipazione {
+        data_inizio: Data
+        data_fine: Data
+    }
 
-	Impiegato "0..*" --> "0..*" Progetto : partecipa a
-	Impiegato "1..1" --> "0..1" Dipartimento : dirige
-	Afferenza "1..1" --> "1..1" Impiegato : imp_aff
-	Afferenza "1..1" --> "1..1" Dipartimento : dip_aff
+
+	Impiegato "1..1" -- "0..*" Partecipazione : impiegato_partecipante 
+    Partecipazione "0..*" -- "1..1" Progetto : progetto_partecipazione
+	Impiegato "0..1" -- "0..*" Dipartimento : dirige
+	Afferenza "1..*" -- "1..1" Impiegato : impiegato_afferente
+	Afferenza "0..*" -- "1..1" Dipartimento : dipartimento_afferenza
 ```
 
-<!-- namespace Istanze { -->
-<!-- 	class impiegato_1 { -->
-<!-- 		nome = "Luigi" -->
-<!-- 		cognome = "Spada" -->
-<!-- 		data_di_nascita = 1989-06-05 -->
-<!-- 		stipendio = 1350.00€ -->
-<!-- 	} -->
-<!-- 	class impiegato_1["impiegato_1: Impiegato"] -->
-<!---->
-<!-- 	class afferenza_1 { -->
-<!-- 		data = 2003-08-02 -->
-<!-- 	} -->
-<!-- 	class afferenza_1["afferenza_1: Afferenza"] -->
-<!---->
-<!-- 	class dipartimento_1 { -->
-<!-- 		nome = "grafica" -->
-<!-- 		telefono = "+61 892187581" -->
-<!-- 	} -->
-<!-- 	class dipartimento_1["grafica: Dipartimento"] -->
-<!---->
-<!-- 	class progetto_1 { -->
-<!-- 		nome = "TesLaX" -->
-<!-- 		budget = 2500000.00€ -->
-<!-- 	} -->
-<!-- 	class progetto_1["tesla: Progetto"] -->
-<!-- } -->
+## UML _(opzione 2)_
 
-<!-- impiegato_1 ..> Impiegato : <i><< istanza di >></i> -->
-<!-- dipartimento_1 ..> Dipartimento : <i><< istanza di >></i> -->
-<!-- progetto_1 ..> Progetto : <i><< istanza di >></i> -->
-<!-- afferenza_1 ..> Afferenza : <i><< istanza di >></i> -->
+### Osservazioni
 
-## Istanze
+Questa è l'opzione più _"minimale"_
+
+- Un dipartimento non deve avere per forza un dirigente assegnato _(quindi `0..1`)_
+- Un impiegato può dirigere al più un dipartimento
+- L'impiegato afferisce ad un solo dipartimento, quindi possiamo mettere la `data_di_afferenza` come attributo dell'impiegato
+- Un dipendente o partecipa ad un determinato progetto o non vi partecipa, la relazione è binaria e non serve una classe
+- Usare il tipo `Stringa` per l'attributo `telefono` non va bene, ma la soluzione originale lo includeva e preferisco attenermi a quella
+
 
 ```mermaid
 classDiagram
-	%%namespace Istanze {
-    class impiegato_1 {
-        nome = "Luigi"
-        cognome = "Spada"
-        data_di_nascita = 1989-06-05
-        stipendio = 1350.00€
+    class Impiegato {
+        nome: Stringa
+        cognome: Stringa
+        data_di_nascita: Data
+        stipendio: Razionale >= 0
+        data_di_afferenza: Data
     }
-    class impiegato_1["impiegato_1: Impiegato"]
+    class Impiegato["fa:fa-users Impiegato"]
 
-    class afferenza_1 {
-        data = 2003-08-02
+    class Dipartimento {
+        nome: Stringa
+        telefono: Stringa
     }
-    class afferenza_1["afferenza_1: Afferenza"]
+    class Dipartimento["fa:fa-building Dipartimento"]
 
-    class dipartimento_1 {
-        nome = "grafica"
-        telefono = "+61 892187581"
+    class Progetto {
+        nome: Stringa
+        budget: Razionale >= 0
     }
-    class dipartimento_1["grafica: Dipartimento"]
+    class Progetto["fa:fa-wrench Progetto"]
 
-    class progetto_1 {
-        nome = "TesLaX"
-        budget = 2500000.00€
-    }
-    class progetto_1["tesla: Progetto"]
-	%%}
 
-	impiegato_1 "0..*" --> "0..*" progetto_1 : partecipa a
-	afferenza_1 "1..1" --> "1..1" impiegato_1 : imp_aff
-	afferenza_1 "1..1" --> "1..1" dipartimento_1 : dip_aff
-	impiegato_1 "1..1" --> "0..1" dipartimento_1 : dirige
+	Impiegato "0..*" -- "0..*" Progetto : partecipa a 
+	Impiegato "0..1" -- "0..1" Dipartimento : dirige
+    Impiegato "0..*" -- "1..1" Dipartimento : afferisce a
 ```
-
-
-<!-- afferenza_1 --|> impiegato_1 : impiegato_afferenza -->
-<!-- afferenza_1 --|> dipartimento_1 : dipartimento_afferenza -->
-<!-- impiegato_1 --|> dipartimento_1 : dirige -->
-<!-- impiegato_1 --|> progetto_1 : partecipa a -->
-<style>
-	.er.relationshipLine{
-		marker-start: none;
-		marker-end: none;
-	}
-	.er.attributeBoxEven {
-		/* 	The box containing attributes on even-numbered rows  */ 
-	}
-	.er.attributeBoxOdd {
-		/* 	The box containing attributes on odd-numbered rows  */ 
-	}
-	.er.entityBox {
-		/* 	The box representing an entity  */ 
-	}
-	.er.entityLabel {
-		/* 	The label for an entity  */ 
-	}
-	.er.relationshipLabel {
-		/* 	The label for a relationship  */ 
-	}
-	.er.relationshipLabelBox {
-		/* 	The box surrounding a relationship label  */ 
-	}
-	.er.relationshipLine {
-		/* 	The line representing a relationship between entities  */ 
-	}
-</style>
