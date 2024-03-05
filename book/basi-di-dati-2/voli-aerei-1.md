@@ -46,7 +46,7 @@ Il volo più lungo è stato di circa 20 ore, ma non è importante dare un limite
 
 - nome _("Paperopoli" pare lecito qui)_
 - codice [IATA](https://www.uniquevisitor.it/magazine/codici-voli-compagnie-aeree.php) di 2 lettere!
-- anno di fondazione dopo il [1903](https://www.corriere.it/tecnologia/23_dicembre_17/il-primo-volo-dei-fratelli-wright-ha-decollato-120-anni-fa-e-duro-solo-12-secondi-f737b3c3-be79-475b-89c2-de129a206xlk.shtml), se vogliamo essere pedanti (1909)[https://it.wikipedia.org/wiki/Compagnia_aerea#DELAG,\_la_prima_compagnia_aerea_del_mondo]
+- anno di fondazione dopo il [1903](https://www.corriere.it/tecnologia/23_dicembre_17/il-primo-volo-dei-fratelli-wright-ha-decollato-120-anni-fa-e-duro-solo-12-secondi-f737b3c3-be79-475b-89c2-de129a206xlk.shtml), se vogliamo essere pedanti [1909](https://it.wikipedia.org/wiki/Compagnia_aerea#DELAG,\_la_prima_compagnia_aerea_del_mondo)
 - sede _(tecnicamente può cambiare, e vogliamo tenere lo storico)_
 
 ### Città
