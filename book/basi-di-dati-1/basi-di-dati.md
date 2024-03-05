@@ -275,6 +275,8 @@ $X \to A \in F^+ \; \forall A \in Y \implies \forall \text{ legal } r \text{ of 
 
 ### Union
 
+$(X)^+_F$ LaTeX
+
 $X \to Y, X \to Z \in F^A \implies$ by augmentation $X \to XY, XY \to YZ \in F^A \implies$ by transitivity $X \to YZ \in F^A$
 
 ### Decomposition
@@ -289,6 +291,7 @@ $X \to Y, WY \to Z \in F^A \implies$ by augmentation $WX \to WY \in F^A \implies
 
 # $(X)^+_F$
 
+$(
 [PDF 8 slide 9](08%20-%20Closure%20of%20F.pdf#page=9)
 
 Given a relation schema $R$, a set $F$ of dependencies on $R$ and $X \subseteq R$. The **closure** of $X$ with respect to $F$, denoted $(X)^+_F$ is defined as

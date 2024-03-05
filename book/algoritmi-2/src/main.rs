@@ -1,6 +1,6 @@
 use std::{collections::VecDeque, vec};
 
-fn find_cycle(graph: &Vec<Vec<usize>>, x: usize) -> Vec<usize> {
+fn find_cycle(graph: &[Vec<usize>], x: usize) -> Vec<usize> {
     let mut cycle: VecDeque<usize> = VecDeque::new();
     cycle.push_back(x);
 
@@ -24,7 +24,7 @@ fn find_cycle(graph: &Vec<Vec<usize>>, x: usize) -> Vec<usize> {
     cycle.into_iter().collect()
 }
 
-fn dfs(graph: &Vec<Vec<usize>>, node: usize, visited: &mut Vec<bool>) {
+fn dfs(graph: &[Vec<usize>], node: usize, visited: &mut Vec<bool>) {
     visited[node] = true;
 
     for &neighbour in &graph[node] {
@@ -34,7 +34,7 @@ fn dfs(graph: &Vec<Vec<usize>>, node: usize, visited: &mut Vec<bool>) {
     }
 }
 
-fn dfs_iterative(graph: &Vec<Vec<usize>>, node: usize) -> Vec<bool> {
+fn dfs_iterative(graph: &[Vec<usize>], node: usize) -> Vec<bool> {
     let mut stack = VecDeque::from([node]);
     let mut visited = vec![false; graph.len()];
     let mut indexes = vec![0; graph.len()];
