@@ -32,6 +32,10 @@ jobs:
       MDBOOK_VERSION: 0.4.37
     steps:
       - uses: actions/checkout@v3
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: cargo-binaries
       - name: Install mdBook
         run: |
           curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -y | sh
