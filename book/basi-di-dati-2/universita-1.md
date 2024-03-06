@@ -12,7 +12,17 @@ I dati di interesse per il sistema sono studenti, facoltà, professori e corsi.
 
 - Di ogni insegnamento interessa il codice, il nome, il numero di ore di lezione, e i corsi di laurea a cui appartiene.
 
-> Regione non è di certo un ENUM?
+### Studente
+
+- Di ogni studente interessa conoscere il nome, il codice fiscale, il numero di matricola, la data di nascita, il luogo di nascita (città e regione), il corso di laurea a cui è iscritto (con l’anno di iscrizione), e gli insegnamenti di cui ha superato l’esame.
+
+- codice fiscale [per pedanti](https://www.studioaleo.it/struttura-codice-fiscale.html)
+
+### Facoltà
+
+### Professore
+
+### Corso
 
 ## UML
 
