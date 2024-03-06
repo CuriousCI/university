@@ -29,7 +29,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      MDBOOK_VERSION: 0.4.21
+      MDBOOK_VERSION: 0.4.37
     steps:
       - uses: actions/checkout@v3
       - name: Install mdBook
@@ -39,6 +39,11 @@ jobs:
           cargo install --version ${MDBOOK_VERSION} mdbook
           cargo install mdbook-katex
           cargo install mdbook-mermaid
+      - name: Save artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: cargo-binaries
+          path: ~/.cargo/bin/
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3

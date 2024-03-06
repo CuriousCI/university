@@ -14,15 +14,39 @@ I dati di interesse per il sistema sono studenti, facoltà, professori e corsi.
 
 ### Studente
 
-- Di ogni studente interessa conoscere il nome, il codice fiscale, il numero di matricola, la data di nascita, il luogo di nascita (città e regione), il corso di laurea a cui è iscritto (con l’anno di iscrizione), e gli insegnamenti di cui ha superato l’esame.
+- nome _("Paperopoli" pare lecito qui)_
+- codice fiscale _(nome [A-Z]{3}, cognome [A-Z]{3}, anno [0-9]{2}, mese [A-Z]{1}, giorno [0-9]{2}, comune [A-Z][0-9]{3}, codice_controllo [A-Z])_ [per pedanti](https://www.studioaleo.it/struttura-codice-fiscale.html)
+- matricola (Stringa [0-9]{7})
+- data di nascita (all my fellas be born after 1400?)
+- luogo di nascita
+- corso di laurea a cui è iscritto con anno di iscrizione _(all my fellas be iscritti a più di un corso di laurea, ovvero 2 [lo dice il Gov](https://www.mur.gov.it/it/news/lunedi-01082022/doppia-laurea-iscrizione-due-corsi-di-studio-gia-dallanno-accademico-2022-2023))_
+- insegnamenti superati con voto
 
-- codice fiscale [per pedanti](https://www.studioaleo.it/struttura-codice-fiscale.html)
+_(prima account su infostud, e solo dopo iscrizione ad un corso)_
+
+### Insegnamento
+
+- codice 100000..999999
+- nome
+- corsi di appartenenza
+- ore di lezione intero > 0
+
+### Corso
+
+- nome
+- facoltà di appartenenza
 
 ### Facoltà
 
+- nome
+
 ### Professore
 
-### Corso
+- nome _("X Æ A-12" pare lecito qui)_
+- codice fiscale _(stessa pappardella di sopra)_
+- data di nascita
+- luogo di nascita
+- insegnamenti erogati
 
 ## UML
 
@@ -30,8 +54,8 @@ I dati di interesse per il sistema sono studenti, facoltà, professori e corsi.
 classDiagram
     class Studente {
         nome: Stringa
-        codice_fiscale: Stringa (per ora)
-        matricola: Stringa (per ora)
+        codice_fiscale: [A-Z]3[A-Z]3[0-9]2[A-Z][0-9]2[A-Z][0-9]3[A-Z]
+        matricola: Stringa [0-9]7
         data_di_nascita: Data
     }
 
@@ -42,33 +66,35 @@ classDiagram
 
     class Regione {
         nome: Stringa
-        codice: Stringa lunga 2?
+        codice: [A-Z]2 
     }
-
-	Citta "0..*" -- "1..1" Regione : sta in 
-
-	Studente "0..*" -- "1..1" Citta : è nato a 
 
     class Corso {
         nome: Stringa
     }
 
-	Studente "0..*" -- "1..2" Corso : è iscritto a TODO add anno iscrizione
-
     class Insegnamento {
-        codice: Stringa?
+        codice: (codice_insegnamento: 100000..999999)
         nome: Stringa
         ore_di_lezione: intero >= 1
     }
 
-    Insegnamento "21..*" -- "1..1" Corso : 
+    class Facolta {
+        nome: Stringa
+    }
+    class Facolta["Facoltà"]
 
     class Professore {
         nome: Stringa
         data_di_nascita: Data
-        codice_fiscale: Stringa un po' speciale
+        codice_fiscale: come sopra 
     }
 
-    Professore "0..*" -- "1..1" Citta
-    Professore "0..*" -- "0..*" Insegnamento
+    Citta "0..*" -- "1..1" Regione : sta in
+    Studente "0..*" -- "1..1" Citta : nato a
+    Studente "0..*" -- "0..2" Corso : iscritto a
+    Studente "" -- "" Insegnamento : superato (voto 18..30, e la lode?)
+    Insegnamento "0..*" -- "0..*" Corso : in (potrei considerare 21..* a sinistra? Nah, la magistrale ne avra' di meno)
+    Corso "0..*" -- "1..1" Facolta : appartiene a
+    Professore "1..1" -- "0..*" Insegnamento : insegna
 ```
