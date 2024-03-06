@@ -87,7 +87,7 @@ classDiagram
     class Professore {
         nome: Stringa
         data_di_nascita: Data
-        codice_fiscale: come sopra 
+        codice_fiscale: [A-Z]3[A-Z]3[0-9]2[A-Z][0-9]2[A-Z][0-9]3[A-Z]
     }
 
     Citta "0..*" -- "1..1" Regione : sta in
