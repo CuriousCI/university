@@ -107,4 +107,5 @@ classDiagram
     Citta "0..*" -- "1..1" Nazione : si_trova_in
     Compagnia "0..*" -- "1..1" Citta : ha_sede_a 
     Charter --|> Volo
+    Charter "0..*" -- "0..*" Aeroporto : tappa (numero > 0, univoco per ogni tappa del volo charter?)
 ```
