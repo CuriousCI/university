@@ -84,10 +84,11 @@ classDiagram
 
     class Compagnia {
         nome: Stringa
-        codice: CodiceIATACompagnia 
         anno_di_fondazione: Intero
     }
+    Compagnia : codice&#58 CodiceIATACompagnia 
     class Compagnia["Compagnia aerea"]
+
 
     class Citta {
         nome: Stringa
@@ -96,9 +97,9 @@ classDiagram
     class Citta["Città"]
 
     class Nazione {
-        codice: CodiceISO_3166-1_alpha-2 
         nome: Stringa
     }
+    Nazione: codice&#58 CodiceISO_3166-1_alpha-2 {id}
 
     Volo "0..*" -- "1..1" Compagnia : gestito_da
     Volo "0..*" -- "1..1" Aeroporto : parte_da
