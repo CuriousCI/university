@@ -15,11 +15,11 @@
 <!--     - [Logic Gates]() -->
 <!--     - [Boolean Algebra]() -->
 <!--     - [Combinatorial Circuits]() -->
-<!--         <!-- - [Tristates, Muxes, Decoders]() --> -->
-<!--         <!-- - [Timing]() --> -->
+<!--         <!-- - [Tristates, Muxes, Decoders]() -->
+<!--         <!-- - [Timing]() --> 
 <!--     - [Sequential Circuits]() -->
 <!--     - [Finite State Machines]() -->
-<!--         <!-- - [Timing]() --> -->
+<!--         <!-- - [Timing]() -->
 <!--     - [Arithmetic Circuits]() -->
 <!--     - [Memory Arrays]() -->
 <!--     - [Logic Arrays]() -->
@@ -72,11 +72,11 @@
         - [Dictionaries]()
         - [Binary Search Tree]()
         - [Red-Black Tree](./algorithms/rbtree.md)
-
 <!-- - [Calculus I +]() -->
 <!--     - [Series]() -->
 <!--     - [Integrals]() -->
 <!--     - [Differential Equations]() -->
+
 
 # II year 
 
@@ -114,6 +114,8 @@
     - [Azienda 1](./basi-di-dati-2/azienda-1.md)
     - [Voli Aerei 1](./basi-di-dati-2/voli-aerei-1.md)
     - [Università 1](./basi-di-dati-2/universita-1.md)
+    - [Voli Aerei 2]()
+    - [Accademia 1]()
 - [Algoritmi II](./algoritmi-2/algoritmi.md)
     - [Esercizi](./algoritmi-2/esercizi.md)
     

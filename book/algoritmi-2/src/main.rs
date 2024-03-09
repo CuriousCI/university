@@ -1,11 +1,13 @@
+#![allow(dead_code)]
+
 use std::{collections::VecDeque, vec};
 
-fn find_cycle(graph: &[Vec<usize>], x: usize) -> Vec<usize> {
+fn find_cycle(graph: &[Vec<usize>], node: usize) -> Vec<usize> {
     let mut cycle: VecDeque<usize> = VecDeque::new();
-    cycle.push_back(x);
+    cycle.push_back(node);
 
-    let mut current = x;
-    let mut next = graph[x][0];
+    let mut current = node;
+    let mut next = graph[node][0];
 
     let mut visited: Vec<bool> = vec![false; graph.len()];
     visited[current] = true;
@@ -187,7 +189,7 @@ fn dfs_bipartito(
     true
 }
 
-// G = (V, E) grafo: 
+// G = (V, E) grafo:
 
 fn main() {
     let g1 = vec![vec![1, 4], vec![3, 2], vec![3], vec![], vec![]];
