@@ -114,8 +114,8 @@
     - [Azienda 1](./basi-di-dati-2/azienda-1.md)
     - [Voli Aerei 1](./basi-di-dati-2/voli-aerei-1.md)
     - [Università 1](./basi-di-dati-2/universita-1.md)
-    - [Voli Aerei 2]()
-    - [Accademia 1]()
+    - [Voli Aerei 2](./basi-di-dati-2/voli-aerei-2.md)
+    - [Accademia 1](./basi-di-dati-2/accademia-1.md)
 - [Algoritmi II](./algoritmi-2/algoritmi.md)
     - [Esercizi](./algoritmi-2/esercizi.md)
     
