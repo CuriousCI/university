@@ -14,63 +14,119 @@ Il sistema deve permettere ai docenti di registrare impegni di diverso tipo.
 
 Degli impegni interessa sapere il giorno in cui avvengono, la durata in ore e la tipologia di impegno con relativa motivazione.
 
+Devo mettere gli ID!
 
-### 1. Docenti
-    1.1 nome
-    1.2 cognome
-    1.3 data di nascita
+### Docenti
+- nome
+- cognome
+- data di nascita
+- matricola {id}
+- posizione universitaria 
+    - ricercatore
+    - professore associato
+    - professore ordinario
+- progetti a cui partecipa (più di 1)
+- impegni (più di 1?)
 
-### 2. Progetti di ricerca
+### Progetti di ricerca
+- nome
+- acronimo [A-Z]{10}? {id?} 
+- data inizio
+- data fine (opzionale? [0..1])
+- i docenti che vi partecipano (più di 1)
 
-### 3. Attività dei docenti
+### Work Package
+- nome
+- progetto di cui fanno parte
+- data inizio
+- data fine (opzionale? [0..1])
+
+### Attività 
+- impegni di diverso tipo?
+- giorno
+- durata in ore
+- motivazione
+
+### Tipologia
+- Mi aspetto che il professore scelga la tipologia da un elenco prefissato dall'università, quindi lo tengo in una classe separata
+
 
 ## UML
 
 ```mermaid
 classDiagram
-    class Studente {
+    class Docente {
         nome: Stringa
-        codice_fiscale: [A-Z]3[A-Z]3[0-9]2[A-Z][0-9]2[A-Z][0-9]3[A-Z]
-        matricola: Stringa [0-9]7
+        cognome: Stringa
         data_di_nascita: Data
+        posizione: ["ricercatore", "professore associato",  "professore ordinario"]
     }
+    Docente : matricola&#58 [A-Z0-9]{10} {id}
+    class Docente["Docente 👨‍🏫"]
 
-    class Citta {
+    class Progetto {
+        acronimo: [A-Z]+
+    }
+    class Progetto["Progetto di ricerca 🏗️"]
+
+    class WP {
+        nome: Stringa
+        data_inizio: Data
+        data_fine: Data [0..1]
+    }
+    class WP["Work Package 📦"]
+
+    class Attivita {
+        giorno: Data,
+        durata_ore: intero > 0,
+    }
+    class Attivita["Attività ⌚"]
+
+    class Tipologia {
         nome: Stringa
     }
-    class Citta["Città"]
 
-    class Regione {
-        nome: Stringa
-        codice: [A-Z]2 
-    }
-
-    class Corso {
-        nome: Stringa
-    }
-
-    class Insegnamento {
-        codice: (codice_insegnamento: 100000..999999)
-        nome: Stringa
-        ore_di_lezione: intero >= 1
-    }
-
-    class Facolta {
-        nome: Stringa
-    }
-    class Facolta["Facoltà"]
-
-    class Professore {
-        nome: Stringa
-        data_di_nascita: Data
-        codice_fiscale: [A-Z]3[A-Z]3[0-9]2[A-Z][0-9]2[A-Z][0-9]3[A-Z]
-    }
-
-    Citta "0..*" -- "1..1" Regione : sta in
-    Studente "0..*" -- "1..1" Citta : nato a
-    Studente "0..*" -- "0..2" Corso : iscritto a
-    Studente "" -- "" Insegnamento : superato (voto 18..30, e la lode?)
-    Insegnamento "0..*" -- "0..*" Corso : in (potrei considerare 21..* a sinistra? Nah, la magistrale ne avra' di meno)
-    Corso "0..*" -- "1..1" Facolta : appartiene a
-    Professore "1..1" -- "0..*" Insegnamento : insegna
+    Docente "0..*" -- "0..*" Progetto : partecipa_a
+    Docente "1..1" -- "0..*" Attivita : ha_un
+    WP "0..*" -- "1..1" Progetto : fa_parte_di
+    WP <|-- Progetto
+    Attivita "0..*" -- "1..1" Tipologia : di_tipo `(motivazione Stringa)`
 ```
+
+<!-- class Progetto { -->
+<!--     nome: Stringa -->
+<!--     acronimo: [A-Z]+ -->
+<!--     data_inizio: Data -->
+<!--     data_fine: Data [0..1] -->
+<!-- } -->
+
+<!-- ### Docenti -->
+<!-- - [x] nome -->
+<!-- - [x] cognome -->
+<!-- - [x] data di nascita -->
+<!-- - [x] matricola -->
+<!-- - [x] posizione universitaria  -->
+<!--     - ricercatore -->
+<!--     - professore associato -->
+<!--     - professore ordinario -->
+<!-- - [x] progetti a cui partecipa (più di 1) -->
+<!-- - [x] impegni (0 o più) -->
+<!---->
+<!-- ### Progetti di ricerca -->
+<!-- - [x] nome -->
+<!-- - [x] acronimo [A-Z]{10}? -->
+<!-- - [x] data inizio -->
+<!-- - [x] data fine (opzionale? [0..1], potrebbe non essere ancora finito) -->
+<!-- - [x] i docenti che vi partecipano (0 o più) -->
+<!---->
+<!-- ### Work Package -->
+<!-- - [x] nome -->
+<!-- - [x] progetto di cui fanno parte -->
+<!-- - [x] data inizio -->
+<!-- - [x] data fine (opzionale? [0..1]) -->
+<!---->
+<!-- ### Impegni  -->
+<!-- - [x] impegni di diverso tipo? -->
+<!-- - [x] giorno -->
+<!-- - [x] durata in ore -->
+<!-- - [x] motivazione -->
