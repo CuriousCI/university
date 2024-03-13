@@ -2,15 +2,25 @@
 
 use std::{collections::VecDeque, vec};
 
-fn find_cycle(graph: &[Vec<usize>], node: usize) -> Vec<usize> {
+// enum Graph {
+//     Directed,
+//     Undirected,
+// }
+// fn generate_graph(graph_type: Graph) {
+//     match graph_type {
+//         Graph::Directed => (),
+//         Graph::Undirected => (),
+//     };
+// }
+
+fn find_cycle(graph: &[Vec<usize>], x: usize) -> Vec<usize> {
     let mut cycle: VecDeque<usize> = VecDeque::new();
-    cycle.push_back(node);
-
-    let mut current = node;
-    let mut next = graph[node][0];
-
     let mut visited: Vec<bool> = vec![false; graph.len()];
+    cycle.push_back(x);
+
+    let mut current = x;
     visited[current] = true;
+    let mut next = graph[x][0];
 
     while !visited[next] {
         cycle.push_back(next);
@@ -23,15 +33,22 @@ fn find_cycle(graph: &[Vec<usize>], node: usize) -> Vec<usize> {
         };
     }
 
-    cycle.into_iter().collect()
+    cycle.into_iter().skip_while(|&y| y != next).collect()
 }
 
-fn dfs(graph: &[Vec<usize>], node: usize, visited: &mut Vec<bool>) {
-    visited[node] = true;
+fn does_path_exist(graph: &[Vec<usize>], x: usize, y: usize) -> bool {
+    let mut visited = vec![false; graph.len()];
+    dfs(graph, x, &mut visited);
 
-    for &neighbour in &graph[node] {
-        if !visited[neighbour] {
-            dfs(graph, neighbour, visited)
+    visited[y]
+}
+
+fn dfs(graph: &[Vec<usize>], x: usize, visited: &mut Vec<bool>) {
+    visited[x] = true;
+
+    for &y in &graph[x] {
+        if !visited[y] {
+            dfs(graph, y, visited)
         }
     }
 }
@@ -57,33 +74,36 @@ fn dfs_iterative(graph: &[Vec<usize>], node: usize) -> Vec<bool> {
     visited
 }
 
-fn dfs_components(
-    graph: &Vec<Vec<usize>>,
-    node: usize,
-    components: &mut Vec<usize>,
-    component: usize,
-) {
-    components[node] = component;
-    for &neighbour in &graph[node] {
-        if components[neighbour] == 0 {
-            dfs_components(graph, neighbour, components, component)
-        }
-    }
-}
-
-pub fn components(graph: &Vec<Vec<usize>>) -> Vec<usize> {
+pub fn find_components(graph: &Vec<Vec<usize>>) -> Vec<usize> {
+    let mut visited = vec![false; graph.len()];
     let mut components = vec![0; graph.len()];
-    let mut component = 1;
+    let mut component = 0;
 
-    for node in 0..graph.len() {
-        if components[node] == 0 {
-            components[node] = component;
-            dfs_components(graph, node, &mut components, component);
+    for x in 0..graph.len() {
+        if !visited[x] {
+            dfs_components(graph, x, &mut visited, &mut components, component);
             component += 1;
         }
     }
 
     components
+}
+
+fn dfs_components(
+    graph: &Vec<Vec<usize>>,
+    x: usize,
+    visited: &mut Vec<bool>,
+    components: &mut Vec<usize>,
+    component: usize,
+) {
+    visited[x] = true;
+    components[x] = component;
+
+    for &y in &graph[x] {
+        if !visited[y] {
+            dfs_components(graph, y, visited, components, component)
+        }
+    }
 }
 
 mod exercise {
@@ -196,10 +216,17 @@ fn main() {
         vec![2, 4],
         vec![1, 2, 3],
         vec![1],
+        vec![],
     ];
 
     let g2 = vec![vec![4], vec![2, 3], vec![1], vec![1, 4], vec![0, 3]];
 
-    println!("Is bipartite? {}", is_bipartite(&g1));
-    println!("Is bipartite? {}", is_bipartite(&g2));
+    // println!("Is bipartite? {}", is_bipartite(&g1));
+    // println!("Is bipartite? {}", is_bipartite(&g2));
+    // println!("Does path exist? {}", does_path_exist(&g1, 1, 2));
+    // println!("Does path exist? {}", does_path_exist(&g1, 1, 6));
+    // println!("Does path exist? {}", does_path_exist(&g2, 1, 2));
+    // println!("Does path exist? {}", does_path_exist(&g2, 0, 2));
+    print!("Components {:?}", find_components(&g1));
+    print!("Components {:?}", find_components(&g2));
 }
