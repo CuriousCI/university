@@ -2,31 +2,6 @@
 
 use std::{collections::VecDeque, vec};
 
-fn find_cycle(graph: &[Vec<usize>], x: usize) -> Vec<usize> {
-    let mut cycle: VecDeque<usize> = VecDeque::from([x]);
-    let mut visited: Vec<bool> = vec![false; graph.len()];
-
-    let mut current = x;
-    let mut next = graph[current][0];
-
-    visited[current] = true;
-
-    while !visited[next] {
-        cycle.push_back(next);
-
-        current = next;
-        visited[current] = true;
-
-        next = if visited[graph[current][0]] {
-            graph[current][1]
-        } else {
-            graph[current][0]
-        };
-    }
-
-    cycle.into_iter().skip_while(|&y| y != next).collect()
-}
-
 fn does_path_exist(graph: &[Vec<usize>], x: usize, y: usize) -> bool {
     let mut visited = vec![false; graph.len()];
     dfs(graph, x, &mut visited);
@@ -308,6 +283,44 @@ fn dfs_bipartite(
 
 // G = (V, E) grafo:
 
+fn find_cycle(graph: &[Vec<usize>], mut x: usize) -> Vec<usize> {
+    let mut cycle = vec![];
+    let mut visited = vec![false; graph.len()];
+
+    let mut z = x;
+    while !visited[x] {
+        cycle.push(x);
+        visited[x] = true;
+
+        let next = if graph[x][0] == z { 1 } else { 0 };
+        z = x;
+        x = graph[x][next];
+    }
+
+    cycle.into_iter().skip_while(|&y| y != x).collect()
+}
+
+// let next = if graph[x][0] == x { 1 } else { 0 };
+// println!("{x}");
+// println!("{x}");
+// println!("{:?}", cycle);
+
+// let mut cycle = Vec::from([x]);
+// let mut x = x;
+// let mut next = x;
+// let mut current = x;
+// let mut current = x;
+// let mut next = graph[current][0];
+// visited[current] = true;
+// current = next;
+// visited[current] = true;
+// visited[next] = true;
+// next = if visited[graph[current][0]] {
+//     graph[current][1]
+// } else {
+//     graph[current][0]
+// };
+
 fn main() {
     let g1 = vec![
         vec![1, 2],
@@ -327,9 +340,19 @@ fn main() {
         vec![3],
         vec![3],
     ];
+    let g4 = vec![
+        vec![1, 5],
+        vec![0, 2],
+        vec![1, 3],
+        vec![2, 4],
+        vec![3, 5],
+        vec![4, 0],
+    ];
 
     println!("{:?}", find_cycle(&g1, 0));
     println!("{:?}", find_cycle(&g1, 3));
+    println!("{:?}", find_cycle(&g4, 0));
+    println!("{:?}", find_cycle(&g4, 3));
     // println!("{:?}", find_cycle(&g2, 0));
     // println!("{:?}", find_cycle(&g3, 2));
 
