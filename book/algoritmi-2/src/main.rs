@@ -2,30 +2,21 @@
 
 use std::{collections::VecDeque, vec};
 
-// enum Graph {
-//     Directed,
-//     Undirected,
-// }
-// fn generate_graph(graph_type: Graph) {
-//     match graph_type {
-//         Graph::Directed => (),
-//         Graph::Undirected => (),
-//     };
-// }
-
 fn find_cycle(graph: &[Vec<usize>], x: usize) -> Vec<usize> {
-    let mut cycle: VecDeque<usize> = VecDeque::new();
+    let mut cycle: VecDeque<usize> = VecDeque::from([x]);
     let mut visited: Vec<bool> = vec![false; graph.len()];
-    cycle.push_back(x);
 
     let mut current = x;
+    let mut next = graph[current][0];
+
     visited[current] = true;
-    let mut next = graph[x][0];
 
     while !visited[next] {
         cycle.push_back(next);
+
         current = next;
         visited[current] = true;
+
         next = if visited[graph[current][0]] {
             graph[current][1]
         } else {
@@ -106,27 +97,136 @@ fn dfs_components(
     }
 }
 
-mod exercise {
-    pub fn dfs(
-        graph: &Vec<Vec<usize>>,
-        x: usize,
-        visited: &mut Vec<bool>,
-        t: &mut Vec<(usize, usize)>,
-        counter: usize,
-    ) -> usize {
-        visited[x] = true;
-        let mut last = counter;
+fn bridges(graph: &[Vec<usize>]) -> Vec<(usize, usize)> {
+    let mut first_visit = vec![0; graph.len()];
+    let mut bridges: Vec<(usize, usize)> = vec![];
 
-        for &y in &graph[x] {
-            if !visited[y] {
-                last = dfs(graph, y, visited, t, counter + 1)
-            }
-        }
+    dfs_bridges(graph, 0, 0, &mut first_visit, 1, &mut bridges);
 
-        t[x] = (counter, last);
-        last
-    }
+    bridges
 }
+
+fn dfs_bridges(
+    graph: &[Vec<usize>],
+    x: usize,
+    z: usize,
+    first_visit: &mut Vec<usize>,
+    visited_count: usize,
+    bridges: &mut Vec<(usize, usize)>,
+) -> usize {
+    first_visit[x] = visited_count;
+    let mut back = visited_count;
+
+    for &y in &graph[x] {
+        if first_visit[y] == 0 {
+            back = back.min(dfs_bridges(
+                graph,
+                y,
+                x,
+                first_visit,
+                visited_count + 1,
+                bridges,
+            ))
+        } else if first_visit[y] < back && y != z {
+            back = first_visit[y]
+        }
+    }
+
+    if back == first_visit[x] && x != z {
+        bridges.push((z, x));
+    }
+
+    back
+}
+
+// mod exercise {
+//     pub fn dfs(
+//         graph: &Vec<Vec<usize>>,
+//         x: usize,
+//         visited: &mut Vec<bool>,
+//         t: &mut Vec<(usize, usize)>,
+//         counter: usize,
+//     ) -> usize {
+//         visited[x] = true;
+//         let mut last = counter;
+//
+//         for &y in &graph[x] {
+//             if !visited[y] {
+//                 last = dfs(graph, y, visited, t, counter + 1)
+//             }
+//         }
+//
+//         t[x] = (counter, last);
+//         last
+//     }
+// }
+
+// fn categorize_edges(
+//     graph: &[Vec<usize>],
+// ) -> (
+//     Vec<(usize, usize)>,
+//     Vec<(usize, usize)>,
+//     Vec<(usize, usize)>,
+// ) {
+//     let mut forward = vec![];
+//     let mut backward = vec![];
+//     let mut traversal = vec![];
+//
+//     let mut visited = vec![false; graph.len()];
+//     let mut first_visit = vec![0; graph.len()];
+//     let mut last_visit = vec![0; graph.len()];
+//
+//     dfs_edges(
+//         graph,
+//         0,
+//         &mut visited,
+//         1,
+//         &mut first_visit,
+//         &mut last_visit,
+//         &mut forward,
+//         &mut backward,
+//         &mut traversal,
+//     );
+//
+//     (forward, backward, traversal)
+// }
+//
+// fn dfs_edges(
+//     graph: &[Vec<usize>],
+//     x: usize,
+//     visited: &mut Vec<bool>,
+//     visited_count: usize,
+//     first_visit: &mut Vec<usize>,
+//     last_visit: &mut Vec<usize>,
+//     forward: &mut Vec<(usize, usize)>,
+//     backward: &mut Vec<(usize, usize)>,
+//     traversal: &mut Vec<(usize, usize)>,
+// ) -> usize {
+//     first_visit[x] = visited_count;
+//     let mut closing_time = visited_count;
+//
+//     for &y in &graph[x] {
+//         if !visited[y] {
+//             closing_time = closing_time.max(dfs_edges(
+//                 graph,
+//                 y,
+//                 visited,
+//                 visited_count + 1,
+//                 first_visit,
+//                 last_visit,
+//                 forward,
+//                 backward,
+//                 traversal,
+//             ))
+//         } else {
+//             // classifica l'arco!
+//         }
+//     }
+//
+//     last_visit[x] = closing_time;
+//
+//     closing_time
+// }
 
 // G = (V, E)
 // diretto
@@ -214,12 +314,27 @@ fn main() {
         vec![0, 4, 5],
         vec![0, 3, 4],
         vec![2, 4],
-        vec![1, 2, 3],
-        vec![1],
-        vec![],
+        vec![1, 2, 3, 5],
+        vec![1, 4],
     ];
 
     let g2 = vec![vec![4], vec![2, 3], vec![1], vec![1, 4], vec![0, 3]];
+    let g3 = vec![
+        vec![1, 2],
+        vec![0, 2],
+        vec![0, 1, 3],
+        vec![2, 4, 5],
+        vec![3],
+        vec![3],
+    ];
+
+    println!("{:?}", find_cycle(&g1, 0));
+    println!("{:?}", find_cycle(&g1, 3));
+    // println!("{:?}", find_cycle(&g2, 0));
+    // println!("{:?}", find_cycle(&g3, 2));
+
+    // println!("{:?}", bridges(&g2));
+    // println!("{:?}", bridges(&g3));
 
     // println!("Is bipartite? {}", is_bipartite(&g1));
     // println!("Is bipartite? {}", is_bipartite(&g2));
@@ -227,6 +342,6 @@ fn main() {
     // println!("Does path exist? {}", does_path_exist(&g1, 1, 6));
     // println!("Does path exist? {}", does_path_exist(&g2, 1, 2));
     // println!("Does path exist? {}", does_path_exist(&g2, 0, 2));
-    print!("Components {:?}", find_components(&g1));
-    print!("Components {:?}", find_components(&g2));
+    // print!("Components {:?}", find_components(&g1));
+    // print!("Components {:?}", find_components(&g2));
 }
