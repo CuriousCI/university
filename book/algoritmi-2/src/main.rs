@@ -2,31 +2,6 @@
 
 use std::{collections::VecDeque, vec};
 
-fn find_cycle(graph: &[Vec<usize>], x: usize) -> Vec<usize> {
-    let mut cycle: VecDeque<usize> = VecDeque::from([x]);
-    let mut visited: Vec<bool> = vec![false; graph.len()];
-
-    let mut current = x;
-    let mut next = graph[current][0];
-
-    visited[current] = true;
-
-    while !visited[next] {
-        cycle.push_back(next);
-
-        current = next;
-        visited[current] = true;
-
-        next = if visited[graph[current][0]] {
-            graph[current][1]
-        } else {
-            graph[current][0]
-        };
-    }
-
-    cycle.into_iter().skip_while(|&y| y != next).collect()
-}
-
 fn does_path_exist(graph: &[Vec<usize>], x: usize, y: usize) -> bool {
     let mut visited = vec![false; graph.len()];
     dfs(graph, x, &mut visited);
@@ -44,35 +19,34 @@ fn dfs(graph: &[Vec<usize>], x: usize, visited: &mut Vec<bool>) {
     }
 }
 
-fn dfs_iterative(graph: &[Vec<usize>], node: usize) -> Vec<bool> {
-    let mut stack = VecDeque::from([node]);
+fn dfs_iterative(graph: &[Vec<usize>], x: usize) -> Vec<bool> {
+    let mut stack = Vec::from([x]);
     let mut visited = vec![false; graph.len()];
-    let mut indexes = vec![0; graph.len()];
+    let mut adjacent = vec![0; graph.len()];
 
-    while let Some(&node) = stack.back() {
-        if let Some(&neighbour) = graph[node].get(indexes[node]) {
-            if !visited[neighbour] {
-                stack.push_back(neighbour);
-                visited[neighbour] = true;
+    while let Some(&x) = stack.last() {
+        if let Some(&y) = graph[x].get(adjacent[x]) {
+            if !visited[y] {
+                stack.push(y);
+                visited[y] = true;
             }
 
-            indexes[node] += 1;
+            adjacent[x] += 1;
         } else {
-            stack.pop_back();
+            stack.pop();
         }
     }
 
     visited
 }
 
-pub fn find_components(graph: &Vec<Vec<usize>>) -> Vec<usize> {
-    let mut visited = vec![false; graph.len()];
+pub fn find_components(graph: &[Vec<usize>]) -> Vec<usize> {
     let mut components = vec![0; graph.len()];
-    let mut component = 0;
+    let mut component = 1;
 
     for x in 0..graph.len() {
-        if !visited[x] {
-            dfs_components(graph, x, &mut visited, &mut components, component);
+        if components[x] == 0 {
+            dfs_components(graph, x, &mut components, component);
             component += 1;
         }
     }
@@ -80,22 +54,23 @@ pub fn find_components(graph: &Vec<Vec<usize>>) -> Vec<usize> {
     components
 }
 
-fn dfs_components(
-    graph: &Vec<Vec<usize>>,
-    x: usize,
-    visited: &mut Vec<bool>,
-    components: &mut Vec<usize>,
-    component: usize,
-) {
-    visited[x] = true;
+fn dfs_components(graph: &[Vec<usize>], x: usize, components: &mut Vec<usize>, component: usize) {
     components[x] = component;
 
     for &y in &graph[x] {
-        if !visited[y] {
-            dfs_components(graph, y, visited, components, component)
+        if components[y] == 0 {
+            dfs_components(graph, y, components, component)
         }
     }
 }
+
+// let mut visited = vec![false; graph.len()];
+// if !visited[x] {
+// dfs_components(graph, x, &mut visited, &mut components, component);
+// visited: &mut Vec<bool>,
+// visited[x] = true;
+// if !visited[y] {
+// dfs_components(graph, y, visited, components, component)
 
 fn bridges(graph: &[Vec<usize>]) -> Vec<(usize, usize)> {
     let mut first_visit = vec![0; graph.len()];
@@ -421,4 +396,101 @@ fn main() {
 //     last_visit[x] = closing_time;
 //
 //     closing_time
+// }
+
+// G = (V, E)
+// diretto
+// aciclico \iff non ha cicli diretti
+// pseudo codice per controllare se è aciclico o no con DFS
+// si può fare in n + m?
+//
+// fn dfs_cycles(graph: &[Vec<usize>], node: usize) -> bool {
+//     let mut stack = VecDeque::from([node]);
+//     let mut visited = vec![false; graph.len()];
+//     let mut indexes = vec![0; graph.len()];
+//     let mut first_visit = vec![0; graph.len()];
+//
+//     let mut visited_nodes = 0;
+//
+//     while let Some(&node) = stack.back() {
+//         if let Some(&neighbour) = graph[node].get(indexes[node]) {
+//             if !visited[neighbour] {
+//                 stack.push_back(neighbour);
+//                 visited[neighbour] = true;
+//                 visited_nodes += 1;
+//                 first_visit[neighbour] = visited_nodes;
+//             } else if first_visit[neighbour] < first_visit[node]
+//                 && first_visit[neighbour] < visited_nodes
+//             {
+//                 return true;
+//             }
+//
+//             indexes[node] += 1;
+//         } else {
+//             stack.pop_back();
+//         }
+//     }
+//
+//     false
+// }
+//
+// // G = (V, E) non diretto si dice bipartito se
+// // V = U u W
+// // U n W = vuoto
+// // (u, V) in E, u in U, v in W o viceverso
+// // G è bipartito \iff G non ha cicli dispari O(n + m)
+//
+// fn is_bipartite(graph: &[Vec<usize>]) -> bool {
+//     let mut visited = vec![false; graph.len()];
+//     let mut partitions = vec![false; graph.len()];
+//
+//     for x in 0..graph.len() {
+//         if !visited[x] && !dfs_bipartite(graph, x, &mut visited, &mut partitions, true) {
+//             return false;
+//         }
+//     }
+//
+//     true
+// }
+//
+// fn dfs_bipartite(
+//     graph: &[Vec<usize>],
+//     x: usize,
+//     visited: &mut Vec<bool>,
+//     partitions: &mut Vec<bool>,
+//     partition: bool,
+// ) -> bool {
+//     visited[x] = true;
+//     partitions[x] = partition;
+//
+//     for &y in &graph[x] {
+//         if !visited[y] {
+//             if !dfs_bipartite(graph, y, visited, partitions, !partition) {
+//                 return false;
+//             }
+//         } else if partitions[y] == partition {
+//             return false;
+//         }
+//     }
+//
+//     true
+// }
+//
+// // G = (V, E) grafo:
+//
+// fn find_cycle(graph: &[Vec<usize>], mut x: usize) -> Vec<usize> {
+//     let mut cycle = vec![];
+//     let mut visited = vec![false; graph.len()];
+//
+//     let mut z = x;
+//     while !visited[x] {
+//         cycle.push(x);
+//         visited[x] = true;
+//
+//         let next = if graph[x][0] == z { 1 } else { 0 };
+//         z = x;
+//         x = graph[x][next];
+//     }
+//
+//     cycle.into_iter().skip_while(|&y| y != x).collect()
 // }
