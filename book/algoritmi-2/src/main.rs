@@ -136,73 +136,6 @@ fn dfs_bridges(
 //     }
 // }
 
-// fn categorize_edges(
-//     graph: &[Vec<usize>],
-// ) -> (
-//     Vec<(usize, usize)>,
-//     Vec<(usize, usize)>,
-//     Vec<(usize, usize)>,
-// ) {
-//     let mut forward = vec![];
-//     let mut backward = vec![];
-//     let mut traversal = vec![];
-//
-//     let mut visited = vec![false; graph.len()];
-//     let mut first_visit = vec![0; graph.len()];
-//     let mut last_visit = vec![0; graph.len()];
-//
-//     dfs_edges(
-//         graph,
-//         0,
-//         &mut visited,
-//         1,
-//         &mut first_visit,
-//         &mut last_visit,
-//         &mut forward,
-//         &mut backward,
-//         &mut traversal,
-//     );
-//
-//     (forward, backward, traversal)
-// }
-//
-// fn dfs_edges(
-//     graph: &[Vec<usize>],
-//     x: usize,
-//     visited: &mut Vec<bool>,
-//     visited_count: usize,
-//     first_visit: &mut Vec<usize>,
-//     last_visit: &mut Vec<usize>,
-//     forward: &mut Vec<(usize, usize)>,
-//     backward: &mut Vec<(usize, usize)>,
-//     traversal: &mut Vec<(usize, usize)>,
-// ) -> usize {
-//     first_visit[x] = visited_count;
-//     let mut closing_time = visited_count;
-//
-//     for &y in &graph[x] {
-//         if !visited[y] {
-//             closing_time = closing_time.max(dfs_edges(
-//                 graph,
-//                 y,
-//                 visited,
-//                 visited_count + 1,
-//                 first_visit,
-//                 last_visit,
-//                 forward,
-//                 backward,
-//                 traversal,
-//             ))
-//         } else {
-//             // classifica l'arco!
-//         }
-//     }
-//
-//     last_visit[x] = closing_time;
-//
-//     closing_time
-// }
-
 // G = (V, E)
 // diretto
 // aciclico \iff non ha cicli diretti
@@ -300,26 +233,72 @@ fn find_cycle(graph: &[Vec<usize>], mut x: usize) -> Vec<usize> {
     cycle.into_iter().skip_while(|&y| y != x).collect()
 }
 
-// let next = if graph[x][0] == x { 1 } else { 0 };
-// println!("{x}");
-// println!("{x}");
-// println!("{:?}", cycle);
+fn categorize_edges(
+    graph: &[Vec<usize>],
+) -> (
+    Vec<(usize, usize)>,
+    Vec<(usize, usize)>,
+    Vec<(usize, usize)>,
+) {
+    let mut forward = vec![];
+    let mut backward = vec![];
+    let mut traversal = vec![];
 
-// let mut cycle = Vec::from([x]);
-// let mut x = x;
-// let mut next = x;
-// let mut current = x;
-// let mut current = x;
-// let mut next = graph[current][0];
-// visited[current] = true;
-// current = next;
-// visited[current] = true;
-// visited[next] = true;
-// next = if visited[graph[current][0]] {
-//     graph[current][1]
-// } else {
-//     graph[current][0]
-// };
+    let mut visited = vec![false; graph.len()];
+    let mut first_visit = vec![0; graph.len()];
+    let mut last_visit = vec![0; graph.len()];
+
+    dfs_edges(
+        graph,
+        0,
+        &mut visited,
+        1,
+        &mut first_visit,
+        &mut last_visit,
+        &mut forward,
+        &mut backward,
+        &mut traversal,
+    );
+
+    (forward, backward, traversal)
+}
+
+fn dfs_edges(
+    graph: &[Vec<usize>],
+    x: usize,
+    visited: &mut Vec<bool>,
+    visited_count: usize,
+    first_visit: &mut Vec<usize>,
+    last_visit: &mut Vec<usize>,
+    forward: &mut Vec<(usize, usize)>,
+    backward: &mut Vec<(usize, usize)>,
+    traversal: &mut Vec<(usize, usize)>,
+) -> usize {
+    first_visit[x] = visited_count;
+    let mut closing_time = visited_count;
+
+    for &y in &graph[x] {
+        if !visited[y] {
+            closing_time = closing_time.max(dfs_edges(
+                graph,
+                y,
+                visited,
+                visited_count + 1,
+                first_visit,
+                last_visit,
+                forward,
+                backward,
+                traversal,
+            ))
+        } else {
+            // classifica l'arco!
+        }
+    }
+
+    last_visit[x] = closing_time;
+
+    closing_time
+}
 
 fn main() {
     let g1 = vec![

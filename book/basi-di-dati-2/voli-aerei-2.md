@@ -66,7 +66,7 @@ Dei voli charter interessa rappresentare anche il modello di velivolo usato.
 
 ```mermaid
 classDiagram
-    note for Duck "TIPI\nCodiceIATACompagnia = Stringa [A-Z]{2}\nCodiceIATAAeroporto = Stringa [A-Z]{3}\nCodiceIATAVolo = (codice_IATA: CodiceIATACompagnia, numero_di_volo: 1..9999)\nCodiceISO_3166-1_alpha-2: Stringa [A-Z]{2}"
+    note "TIPI\nCodiceIATACompagnia = Stringa [A-Z]{2}\nCodiceIATAAeroporto = Stringa [A-Z]{3}\nCodiceIATAVolo = (codice_IATA: CodiceIATACompagnia, numero_di_volo: 1..9999)\nCodiceISO_3166-1_alpha-2: Stringa [A-Z]{2}"
 
     class Volo {
         durata: Durata 
