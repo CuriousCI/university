@@ -196,16 +196,53 @@ fn dfs_bridges(
     back
 }
 
-fn daddies(tree: &[usize], x: usize) -> Vec<usize> {
-    vec![]
+fn daddies(tree: &[usize], mut x: usize) -> Vec<usize> {
+    let mut daddies = vec![];
+
+    while x != tree[x] {
+        x = tree[x];
+        daddies.push(x);
+    }
+
+    daddies
 }
 
-fn common_daddies(tree: &[usize], x: usize, y: usize) -> Vec<usize> {
-    vec![]
+fn common_daddies(tree: &[usize], mut x: usize, mut y: usize) -> Vec<usize> {
+    let mut daddies = vec![];
+
+    let mut x_daddies = vec![false; tree.len()];
+
+    while x != tree[x] {
+        x = tree[x];
+        x_daddies[x] = true;
+    }
+
+    while y != tree[y] {
+        y = tree[y];
+        if x_daddies[y] {
+            daddies.push(y);
+        }
+    }
+
+    daddies
 }
 
-fn first_common_daddy(tree: &[usize], x: usize, y: usize) -> Vec<usize> {
-    vec![]
+fn first_common_daddy(tree: &[usize], mut x: usize, mut y: usize) -> usize {
+    let mut x_daddies = vec![false; tree.len()];
+
+    while x != tree[x] {
+        x = tree[x];
+        x_daddies[x] = true;
+    }
+
+    while y != tree[y] {
+        y = tree[y];
+        if x_daddies[y] {
+            return y;
+        }
+    }
+
+    x
 }
 
 // Tarjan's algorithm
@@ -232,4 +269,18 @@ fn main() {
         vec![3],
         vec![3],
     ];
+
+    let d = vec![3, 1, 1, 4, 1, 2, 4, 4, 2, 5];
+    println!("{:?}", daddies(&d, 0));
+    println!("{:?}", common_daddies(&d, 0, 9));
+    println!("{:?}", common_daddies(&d, 5, 8));
+    println!("{:?}", common_daddies(&d, 9, 8));
+    println!("{:?}", first_common_daddy(&d, 0, 9));
+    println!("{:?}", first_common_daddy(&d, 5, 8));
+    println!("{:?}", first_common_daddy(&d, 9, 8));
+
+    // 1
+    // 2 4
+    // 5 8, 3 6 7
+    // 9, , 0
 }
