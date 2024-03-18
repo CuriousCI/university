@@ -1,3 +1,7 @@
+# Travel to the Moon
+
+## Requisiti
+
 1. Requisiti sulle crociere:
   1.1. codice 
   1.2. data di inizio
@@ -58,3 +62,34 @@
   6.1. istante di prenotazione (DataOra?)
   6.2. crociera prenotatata (v. req. 1)
   6.3. posti prenotati (Intero > 0)
+
+## UML
+
+<!-- Partiamo dalle classi ovvie! -->
+
+```mermaid
+classDiagram
+    class Nave {
+        nome: Stringa
+        conformt: 3..5
+        capienza: Intero > 0
+    }
+
+    class Destinazione {
+        nome: Stringa
+        tipo: [Romantico, Divertente] [1..2]
+    }
+
+    class Continente {
+        nome: Stringa
+    }
+
+    class PostoDaVedere {
+        nome: Stringa
+    }
+
+    Destinazione "0..*" -- "1..1" Continente : "porto_cont"
+    Destinazione "0..*" -- "0..*" PostoDaVedere : "porto_post"
+```
+
+Requisiti 1 e 4 (crociere e itinerari)
