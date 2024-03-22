@@ -270,14 +270,18 @@ fn main() {
         vec![3],
     ];
 
-    let d = vec![3, 1, 1, 4, 1, 2, 4, 4, 2, 5];
-    println!("{:?}", daddies(&d, 0));
-    println!("{:?}", common_daddies(&d, 0, 9));
-    println!("{:?}", common_daddies(&d, 5, 8));
-    println!("{:?}", common_daddies(&d, 9, 8));
-    println!("{:?}", first_common_daddy(&d, 0, 9));
-    println!("{:?}", first_common_daddy(&d, 5, 8));
-    println!("{:?}", first_common_daddy(&d, 9, 8));
+    println!("{:?}", practice::to_dag(&g1));
+    println!("{:?}", practice::to_dag(&g2));
+    println!("{:?}", practice::to_dag(&g3));
+
+    // let d = vec![3, 1, 1, 4, 1, 2, 4, 4, 2, 5];
+    // println!("{:?}", daddies(&d, 0));
+    // println!("{:?}", common_daddies(&d, 0, 9));
+    // println!("{:?}", common_daddies(&d, 5, 8));
+    // println!("{:?}", common_daddies(&d, 9, 8));
+    // println!("{:?}", first_common_daddy(&d, 0, 9));
+    // println!("{:?}", first_common_daddy(&d, 5, 8));
+    // println!("{:?}", first_common_daddy(&d, 9, 8));
 
     // 1
     // 2 4

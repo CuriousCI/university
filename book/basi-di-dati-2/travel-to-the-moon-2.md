@@ -93,3 +93,10 @@ classDiagram
 ```
 
 Requisiti 1 e 4 (crociere e itinerari)
+
+<!-- TODO: disjoint su luna di miele e famiglie -->
+<!-- TODO: [1..2] su TipoDestinazione -->
+<!-- TODO: nome su itinerario -->
+<!-- TODO: ordine delle tappe? stesso giorno? -->
+<!-- TODO: Itinerario -- partenza: ora di partenza -->
+<!-- TODO: Itinerario -- arrivo: giorno e ora di arrivo dalla partenza -->

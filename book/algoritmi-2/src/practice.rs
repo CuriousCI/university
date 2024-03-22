@@ -2,7 +2,7 @@ pub fn find_direct_cycle(graph: &[Vec<usize>]) -> Vec<usize> {
     vec![]
 }
 
-fn is_bipartite(graph: &[Vec<usize>]) -> bool {
+pub fn is_bipartite(graph: &[Vec<usize>]) -> bool {
     let mut visited = vec![false; graph.len()];
     let mut parts = vec![false; graph.len()];
 
@@ -15,7 +15,7 @@ fn is_bipartite(graph: &[Vec<usize>]) -> bool {
     true
 }
 
-fn dfs_bipartite(
+pub fn dfs_bipartite(
     graph: &[Vec<usize>],
     x: usize,
     visited: &mut Vec<bool>,
@@ -38,7 +38,7 @@ fn dfs_bipartite(
     true
 }
 
-fn cutvertexes(graph: &[Vec<usize>]) -> Vec<usize> {
+pub fn cutvertexes(graph: &[Vec<usize>]) -> Vec<usize> {
     let mut first_visit = vec![0; graph.len()];
     let mut cutvertexes = vec![];
     let mut visit = 0;
@@ -48,7 +48,7 @@ fn cutvertexes(graph: &[Vec<usize>]) -> Vec<usize> {
     cutvertexes
 }
 
-fn dfs_cutvertexes(
+pub fn dfs_cutvertexes(
     graph: &[Vec<usize>],
     x: usize,
     visit: &mut usize,
@@ -74,33 +74,33 @@ fn dfs_cutvertexes(
     back
 }
 
-fn to_dag(graph: &[Vec<usize>]) -> Vec<Vec<usize>> {
-    let mut visited = vec![false; graph.len()];
-    let mut signed = vec![false; graph.len()];
-    let mut new_graph = vec![Vec::new(); graph.len()];
+pub fn to_dag(graph: &[Vec<usize>]) -> Vec<Vec<usize>> {
+    let mut new_graph = vec![vec![]; graph.len()];
+    let mut first_visit = vec![0; graph.len()];
+    let mut visit = 1;
 
-    dag_dfs(graph, 0, &mut visited, &mut signed, &mut new_graph);
+    dag_dfs(graph, 0, 0, &mut visit, &mut first_visit, &mut new_graph);
 
     new_graph
 }
 
-fn dag_dfs(
+pub fn dag_dfs(
     graph: &[Vec<usize>],
     x: usize,
-    visited: &mut Vec<bool>,
-    signed: &mut Vec<bool>,
+    z: usize,
+    visit: &mut usize,
+    first_visit: &mut Vec<usize>,
     new_graph: &mut [Vec<usize>],
 ) {
-    visited[x] = true;
+    first_visit[x] = *visit;
+    *visit += 1;
 
     for &y in &graph[x] {
-        if !visited[y] {
+        if first_visit[y] == 0 {
             new_graph[x].push(y);
-            dag_dfs(graph, y, visited, signed, new_graph)
-        } else if !signed[x] {
+            dag_dfs(graph, y, x, visit, first_visit, new_graph)
+        } else if first_visit[x] > first_visit[y] && y != z {
             new_graph[y].push(x);
-            signed[x] = true;
         }
     }
 }
-
