@@ -104,3 +104,34 @@ pub fn dag_dfs(
         }
     }
 }
+
+pub fn path(graph: &[Vec<usize>]) -> Vec<(usize, usize)> {
+    let mut path = vec![];
+    let mut visited = vec![false; graph.len()];
+
+    dfs_path(graph, 0, 0, &mut visited, &mut path);
+
+    path
+}
+
+pub fn dfs_path(
+    graph: &[Vec<usize>],
+    x: usize,
+    z: usize,
+    visited: &mut Vec<bool>,
+    path: &mut Vec<(usize, usize)>,
+) {
+    visited[x] = true;
+
+    for &y in &graph[x] {
+        if y != z {
+            path.push((x, y));
+
+            if !visited[y] {
+                dfs_path(graph, y, x, visited, path);
+            }
+
+            path.push((y, x));
+        }
+    }
+}
