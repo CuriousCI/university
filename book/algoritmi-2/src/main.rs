@@ -313,65 +313,157 @@ fn count_min_paths(graph: &[Vec<usize>], x: usize) -> Vec<usize> {
     count
 }
 
-fn main() {}
+fn distance_from_big_daddy(tree: &[usize]) -> Vec<Option<usize>> {
+    let mut distance: Vec<Option<usize>> = vec![None; tree.len()];
 
-// println!("{:?}", count_min_paths(&g1, 0));
-// println!("{:?}", count_min_paths(&g2, 0));
-// println!("{:?}", count_min_paths(&g3, 0));
-// println!("{:?}", count_min_paths(&g4, 0));
+    for x in 0..tree.len() {
+        distance_from_big_daddy_rec(tree, x, &mut distance);
+    }
 
-// println!("{:?}", bridges(&g5));
-// println!("{:?}", bfs(&g1, 0));
-// println!("{:?}", bfs(&g2, 0));
-// println!("{:?}", bfs(&g3, 0));
+    distance
+}
 
-// println!("{:?}", practice::to_dag(&g1));
-// println!("{:?}", practice::to_dag(&g2));
-// println!("{:?}", practice::to_dag(&g3));
+fn distance_from_big_daddy_rec(
+    tree: &[usize],
+    x: usize,
+    distance: &mut Vec<Option<usize>>,
+) -> usize {
+    if x == tree[x] {
+        distance[x] = Some(0);
+        return 0;
+    }
 
-// let d = vec![3, 1, 1, 4, 1, 2, 4, 4, 2, 5];
-// println!("{:?}", daddies(&d, 0));
-// println!("{:?}", common_daddies(&d, 0, 9));
-// println!("{:?}", common_daddies(&d, 5, 8));
-// println!("{:?}", common_daddies(&d, 9, 8));
-// println!("{:?}", first_common_daddy(&d, 0, 9));
-// println!("{:?}", first_common_daddy(&d, 5, 8));
-// println!("{:?}", first_common_daddy(&d, 9, 8));
+    match distance[x] {
+        Some(d) => d,
+        None => {
+            let d = distance_from_big_daddy_rec(tree, tree[x], distance);
+            distance[x] = Some(d + 1);
+            d
+        }
+    }
+}
 
-// 1
-// 2 4
-// 5 8, 3 6 7
-// 9, , 0
+fn subgraphs_distance(
+    graph: &[Vec<usize>],
+    origin: Vec<usize>,
+    destination: Vec<usize>,
+) -> Option<usize> {
+    let mut queue = VecDeque::from(origin.clone());
+    let mut distance = vec![0; graph.len()];
+    let mut visited = vec![false; graph.len()];
+
+    let mut origin_subset = vec![false; graph.len()];
+    let mut destination_subset = vec![false; graph.len()];
+
+    for x in origin {
+        origin_subset[x] = true;
+    }
+
+    for y in destination {
+        destination_subset[y] = true;
+    }
+
+    while let Some(x) = queue.pop_back() {
+        for &y in &graph[x] {
+            if !visited[y] {
+                queue.push_front(y);
+                visited[y] = true;
+
+                if origin_subset[y] {
+                    distance[y] = 0;
+                } else {
+                    distance[y] = distance[x] + 1;
+                }
+
+                if destination_subset[y] {
+                    return Some(distance[y]);
+                }
+            }
+        }
+    }
+
+    None
+}
+
+// fn bfs(graph: &[Vec<usize>], x: usize) -> Vec<bool> {
+//     let mut queue = VecDeque::from([x]);
+//     let mut visited = vec![false; graph.len()];
 //
-// let g1 = vec![
-//     vec![1, 2],
-//     vec![0, 4, 5],
-//     vec![0, 3, 4],
-//     vec![2, 4],
-//     vec![1, 2, 3, 5],
-//     vec![1, 4],
-// ];
-// let g2 = vec![vec![4], vec![2, 3], vec![1], vec![1, 4], vec![0, 3]];
-// let g3 = vec![
-//     vec![1, 2],
-//     vec![0, 2],
-//     vec![0, 1, 3],
-//     vec![2, 4, 5],
-//     vec![3],
-//     vec![3],
-// ];
-// let g4 = vec![
-//     vec![1, 2],
-//     vec![0, 3],
-//     vec![0, 4],
-//     vec![1, 5],
-//     vec![2, 5],
-//     vec![3, 4],
-// ];
-// let g5 = vec![vec![1, 2, 3], vec![0, 2], vec![0, 1], vec![0, 4], vec![3]];
+//     while let Some(x) = queue.pop_back() {
+//         for &y in &graph[x] {
+//             if !visited[y] {
+//                 queue.push_front(y);
+//                 visited[y] = true;
+//             }
+//         }
+//     }
 //
-// println!("{:?}", path(&g1));
-// println!("{:?}", path(&g2));
-// println!("{:?}", path(&g3));
-// println!("{:?}", path(&g4));
-// println!("{:?}", path(&g5));
+//     visited
+// }
+
+fn max_subarray(vec: &[isize]) -> isize {
+    if vec.len() == 1 {
+        return vec[0].max(0);
+    }
+
+    fn max<'a>(x: impl Iterator<Item = &'a isize>) -> isize {
+        x.scan(0, |acc, &x| {
+            *acc += x;
+            Some(*acc)
+        })
+        .max()
+        .unwrap()
+    }
+
+    let middle = vec.len() / 2;
+
+    let prefix = max(vec[..middle].iter().rev());
+    let suffix = max(vec[middle..].iter());
+
+    (prefix + suffix)
+        .max(max_subarray(&vec[..middle]))
+        .max(max_subarray(&vec[middle..]))
+}
+
+fn solitary_number(vec: &[isize]) -> isize {
+    if vec.len() == 1 || vec.len() == 2 {
+        return vec[0];
+    }
+
+    let middle = vec.len() / 2;
+
+    let left = vec[middle - 1];
+    let right = vec[middle + 1];
+
+    if vec[middle] == left {
+        return solitary_number(&vec[..middle - 1]);
+    }
+
+    if vec[middle] == right {
+        return solitary_number(&vec[middle + 2..]);
+    }
+
+    vec[middle]
+}
+
+fn majority_element(vec: &[usize]) -> usize {
+    if vec.len() == 1 {
+        return vec[0];
+    }
+
+    let middle = vec.len() / 2;
+
+    0
+}
+
+fn main() {
+    let vec = &[1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
+    println!("{}", solitary_number(vec));
+}
+
+// let vec = &[2, 0, -2, 1, -3, 1, 0, 4, -2, 3, -1, 2, -2];
+// let vec2 = &[2, 0, -2, 1];
+// let vec3 = &[10, -1, 3, 1];
+// println!("{}", max_subarray(vec));
+// println!("{}", max_subarray(vec2));
+// println!("{}", max_subarray(vec3));

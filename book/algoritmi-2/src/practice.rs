@@ -119,6 +119,7 @@ pub fn dfs_path(
     x: usize,
     z: usize,
     visited: &mut Vec<bool>,
+    // todo: first_visit
     path: &mut Vec<(usize, usize)>,
 ) {
     visited[x] = true;
