@@ -313,6 +313,94 @@ fn count_min_paths(graph: &[Vec<usize>], x: usize) -> Vec<usize> {
     count
 }
 
+fn distance_from_big_daddy(tree: &[usize]) -> Vec<Option<usize>> {
+    let mut distance: Vec<Option<usize>> = vec![None; tree.len()];
+
+    for x in 0..tree.len() {
+        distance_from_big_daddy_rec(tree, x, &mut distance);
+    }
+
+    distance
+}
+
+fn distance_from_big_daddy_rec(
+    tree: &[usize],
+    x: usize,
+    distance: &mut Vec<Option<usize>>,
+) -> usize {
+    if x == tree[x] {
+        distance[x] = Some(0);
+        return 0;
+    }
+
+    match distance[x] {
+        Some(d) => d,
+        None => {
+            let d = distance_from_big_daddy_rec(tree, tree[x], distance);
+            distance[x] = Some(d + 1);
+            d
+        }
+    }
+}
+
+fn subgraphs_distance(
+    graph: &[Vec<usize>],
+    origin: Vec<usize>,
+    destination: Vec<usize>,
+) -> Option<usize> {
+    let mut queue = VecDeque::from(origin.clone());
+    let mut distance = vec![0; graph.len()];
+    let mut visited = vec![false; graph.len()];
+
+    let mut origin_subset = vec![false; graph.len()];
+    let mut destination_subset = vec![false; graph.len()];
+
+    for x in origin {
+        origin_subset[x] = true;
+    }
+
+    for y in destination {
+        destination_subset[y] = true;
+    }
+
+    while let Some(x) = queue.pop_back() {
+        for &y in &graph[x] {
+            if !visited[y] {
+                queue.push_front(y);
+                visited[y] = true;
+
+                if origin_subset[y] {
+                    distance[y] = 0;
+                } else {
+                    distance[y] = distance[x] + 1;
+                }
+
+                if destination_subset[y] {
+                    return Some(distance[y]);
+                }
+            }
+        }
+    }
+
+    None
+}
+
+// fn bfs(graph: &[Vec<usize>], x: usize) -> Vec<bool> {
+//     let mut queue = VecDeque::from([x]);
+//     let mut visited = vec![false; graph.len()];
+//
+//     while let Some(x) = queue.pop_back() {
+//         for &y in &graph[x] {
+//             if !visited[y] {
+//                 queue.push_front(y);
+//                 visited[y] = true;
+//             }
+//         }
+//     }
+//
+//     visited
+// }
+
 fn main() {
     let g1 = vec![
         vec![1, 2],
@@ -341,11 +429,14 @@ fn main() {
     ];
     let g5 = vec![vec![1, 2, 3], vec![0, 2], vec![0, 1], vec![0, 4], vec![3]];
 
-    println!("{:?}", path(&g1));
-    println!("{:?}", path(&g2));
-    println!("{:?}", path(&g3));
-    println!("{:?}", path(&g4));
-    println!("{:?}", path(&g5));
+    // println!("{:?}", path(&g1));
+    // println!("{:?}", path(&g2));
+    // println!("{:?}", path(&g3));
+    // println!("{:?}", path(&g4));
+    // println!("{:?}", path(&g5));
+
+    let p1 = vec![0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7];
+    println!("{:?}", distance_from_big_daddy(&p1));
 
     // println!("{:?}", count_min_paths(&g1, 0));
     // println!("{:?}", count_min_paths(&g2, 0));
