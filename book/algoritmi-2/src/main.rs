@@ -313,48 +313,14 @@ fn count_min_paths(graph: &[Vec<usize>], x: usize) -> Vec<usize> {
     count
 }
 
-fn main() {
-    let g1 = vec![
-        vec![1, 2],
-        vec![0, 4, 5],
-        vec![0, 3, 4],
-        vec![2, 4],
-        vec![1, 2, 3, 5],
-        vec![1, 4],
-    ];
-    let g2 = vec![vec![4], vec![2, 3], vec![1], vec![1, 4], vec![0, 3]];
-    let g3 = vec![
-        vec![1, 2],
-        vec![0, 2],
-        vec![0, 1, 3],
-        vec![2, 4, 5],
-        vec![3],
-        vec![3],
-    ];
-    let g4 = vec![
-        vec![1, 2],
-        vec![0, 3],
-        vec![0, 4],
-        vec![1, 5],
-        vec![2, 5],
-        vec![3, 4],
-    ];
-    let g5 = vec![vec![1, 2, 3], vec![0, 2], vec![0, 1], vec![0, 4], vec![3]];
+fn main() {}
 
-    println!("{:?}", path(&g1));
-    println!("{:?}", path(&g2));
-    println!("{:?}", path(&g3));
-    println!("{:?}", path(&g4));
-    println!("{:?}", path(&g5));
+// println!("{:?}", count_min_paths(&g1, 0));
+// println!("{:?}", count_min_paths(&g2, 0));
+// println!("{:?}", count_min_paths(&g3, 0));
+// println!("{:?}", count_min_paths(&g4, 0));
 
-    // println!("{:?}", count_min_paths(&g1, 0));
-    // println!("{:?}", count_min_paths(&g2, 0));
-    // println!("{:?}", count_min_paths(&g3, 0));
-    // println!("{:?}", count_min_paths(&g4, 0));
-
-    // println!("{:?}", bridges(&g5));
-}
-
+// println!("{:?}", bridges(&g5));
 // println!("{:?}", bfs(&g1, 0));
 // println!("{:?}", bfs(&g2, 0));
 // println!("{:?}", bfs(&g3, 0));
@@ -376,3 +342,36 @@ fn main() {
 // 2 4
 // 5 8, 3 6 7
 // 9, , 0
+//
+// let g1 = vec![
+//     vec![1, 2],
+//     vec![0, 4, 5],
+//     vec![0, 3, 4],
+//     vec![2, 4],
+//     vec![1, 2, 3, 5],
+//     vec![1, 4],
+// ];
+// let g2 = vec![vec![4], vec![2, 3], vec![1], vec![1, 4], vec![0, 3]];
+// let g3 = vec![
+//     vec![1, 2],
+//     vec![0, 2],
+//     vec![0, 1, 3],
+//     vec![2, 4, 5],
+//     vec![3],
+//     vec![3],
+// ];
+// let g4 = vec![
+//     vec![1, 2],
+//     vec![0, 3],
+//     vec![0, 4],
+//     vec![1, 5],
+//     vec![2, 5],
+//     vec![3, 4],
+// ];
+// let g5 = vec![vec![1, 2, 3], vec![0, 2], vec![0, 1], vec![0, 4], vec![3]];
+//
+// println!("{:?}", path(&g1));
+// println!("{:?}", path(&g2));
+// println!("{:?}", path(&g3));
+// println!("{:?}", path(&g4));
+// println!("{:?}", path(&g5));
