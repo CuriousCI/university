@@ -1,6 +1,7 @@
 # Summary
 
 [README](../README.md)
+[GitHub Classroom](./gh-classroom.md) 
 
 # I year
 
